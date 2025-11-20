@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Reportes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#22d3ee", // Bright Cyan Accent
+              "background-light": "#f6f6f8",
+              "background-dark": "#0a0a0a",
+              "surface-dark": "#18181b",
+              "border-dark": "#27272a"
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-dark font-display text-gray-100">
+<div class="flex min-h-screen w-full flex-row">
+<aside class="flex w-64 flex-col border-r border-border-dark bg-background-dark p-4 text-gray-100">
+<div class="flex items-center gap-3 p-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPXDaH4tXzBQsDnfTCamMG-WACKgZ1sowgl31Ucl4w_egTQXmMLAYS9U4j8LBgVLd--RnnO-VJHBJwc-o1B_wdao1FurYauUpizL5ovPxkhBQemAaEtaiPzyGGpOqBiQ5XY7xTtup5dFkK21zxvErIoG3l3hi4Acwb4kmwJlNZrSeV6CkKpngfgd8CbWWzmI1tdowpJEZNGhnxDL1kEG9veppDsy0Y7aUnfpumwwTxwJTtcTOTH61hPvWCKIXAk7v_fdgxeoaf1g");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-semibold leading-normal text-gray-100">Admin</h1>
+<p class="text-sm font-normal leading-normal text-gray-400">ShowTime Hub</p>
+</div>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-colors hover:bg-surface-dark hover:text-white" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-colors hover:bg-surface-dark hover:text-white" href="#">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium leading-normal">Gestión de Usuarios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-colors hover:bg-surface-dark hover:text-white" href="#">
+<span class="material-symbols-outlined">theater_comedy</span>
+<p class="text-sm font-medium leading-normal">Gestión de Artistas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-colors hover:bg-surface-dark hover:text-white" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Gestión de Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary" href="#">
+<span class="material-symbols-outlined text-primary">bar_chart</span>
+<p class="text-sm font-medium leading-normal text-primary">Reportes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 transition-colors hover:bg-surface-dark hover:text-white" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Configuración</p>
+</a>
+</nav>
+</aside>
+<main class="flex-1">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-border-dark p-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-white">Reportes</h1>
+<p class="text-sm text-gray-400">Visualiza datos clave sobre la actividad de la plataforma.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-black transition-opacity hover:opacity-90">
+<span class="material-symbols-outlined text-base">download</span>
+Exportar Datos
+</button>
+<div class="flex items-center gap-2">
+<select class="rounded-lg border border-border-dark bg-surface-dark px-3 py-2 text-sm text-white focus:border-primary focus:ring-primary">
+<option>Últimos 30 días</option>
+<option>Mensual</option>
+<option>Anual</option>
+</select>
+</div>
+</div>
+</header>
+<div class="p-6">
+<section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+<div class="rounded-lg border border-border-dark bg-surface-dark p-6">
+<h2 class="text-xl font-semibold leading-tight tracking-tight text-white">Reporte de Ingresos</h2>
+<p class="mb-4 text-sm text-gray-400">Evolución de los ingresos en el periodo seleccionado.</p>
+<div class="flex h-72 items-center justify-center rounded-lg bg-background-dark">
+<div class="flex flex-col items-center gap-2 text-center text-gray-500">
+<span class="material-symbols-outlined text-4xl text-primary">show_chart</span>
+<p class="text-sm">Gráfico de líneas de ingresos</p>
+</div>
+</div>
+</div>
+<div class="rounded-lg border border-border-dark bg-surface-dark p-6">
+<h2 class="text-xl font-semibold leading-tight tracking-tight text-white">Nuevos Usuarios vs. Nuevos Artistas</h2>
+<p class="mb-4 text-sm text-gray-400">Comparativa de crecimiento en el periodo.</p>
+<div class="flex h-72 items-center justify-center rounded-lg bg-background-dark">
+<div class="flex flex-col items-center gap-2 text-center text-gray-500">
+<span class="material-symbols-outlined text-4xl text-primary">bar_chart</span>
+<p class="text-sm">Gráfico de barras comparativo</p>
+</div>
+</div>
+</div>
+</section>
+<section class="mt-8">
+<h2 class="mb-4 px-1 text-xl font-semibold leading-tight tracking-tight text-white">Reporte Detallado de Reservas</h2>
+<div class="overflow-hidden rounded-lg border border-border-dark bg-surface-dark">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-gray-300">
+<thead class="bg-background-dark text-xs uppercase text-gray-400">
+<tr>
+<th class="px-6 py-3" scope="col">ID Reserva</th>
+<th class="px-6 py-3" scope="col">Artista</th>
+<th class="px-6 py-3" scope="col">Cliente</th>
+<th class="px-6 py-3" scope="col">Fecha</th>
+<th class="px-6 py-3" scope="col">Monto</th>
+<th class="px-6 py-3" scope="col">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-t border-border-dark hover:bg-background-dark/50">
+<td class="whitespace-nowrap px-6 py-4 font-mono text-xs text-gray-400">#8A3F5B</td>
+<td class="px-6 py-4 font-medium text-white">DJ Electra</td>
+<td class="px-6 py-4">Carlos Pérez</td>
+<td class="px-6 py-4">2023-10-28</td>
+<td class="px-6 py-4">$450.00</td>
+<td class="px-6 py-4"><span class="rounded-full bg-cyan-400/10 px-2.5 py-0.5 text-xs font-medium text-cyan-400">Completada</span></td>
+</tr>
+<tr class="border-t border-border-dark hover:bg-background-dark/50">
+<td class="whitespace-nowrap px-6 py-4 font-mono text-xs text-gray-400">#7G2D9C</td>
+<td class="px-6 py-4 font-medium text-white">Mago Supremo</td>
+<td class="px-6 py-4">Ana Gómez</td>
+<td class="px-6 py-4">2023-10-25</td>
+<td class="px-6 py-4">$300.00</td>
+<td class="px-6 py-4"><span class="rounded-full bg-cyan-400/10 px-2.5 py-0.5 text-xs font-medium text-cyan-400">Completada</span></td>
+</tr>
+<tr class="border-t border-border-dark hover:bg-background-dark/50">
+<td class="whitespace-nowrap px-6 py-4 font-mono text-xs text-gray-400">#K9B4E1</td>
+<td class="px-6 py-4 font-medium text-white">Banda "The Echoes"</td>
+<td class="px-6 py-4">Luisa Fernández</td>
+<td class="px-6 py-4">2023-11-05</td>
+<td class="px-6 py-4">$1,200.00</td>
+<td class="px-6 py-4"><span class="rounded-full bg-gray-400/20 px-2.5 py-0.5 text-xs font-medium text-gray-300">Pendiente</span></td>
+</tr>
+<tr class="border-t border-border-dark hover:bg-background-dark/50">
+<td class="whitespace-nowrap px-6 py-4 font-mono text-xs text-gray-400">#P5H8J2</td>
+<td class="px-6 py-4 font-medium text-white">Comediante Risa</td>
+<td class="px-6 py-4">Miguel Rodríguez</td>
+<td class="px-6 py-4">2023-10-22</td>
+<td class="px-6 py-4">$250.00</td>
+<td class="px-6 py-4"><span class="rounded-full bg-gray-600/30 px-2.5 py-0.5 text-xs font-medium text-gray-400">Cancelada</span></td>
+</tr>
+<tr class="border-t border-border-dark hover:bg-background-dark/50">
+<td class="whitespace-nowrap px-6 py-4 font-mono text-xs text-gray-400">#L3M1N0</td>
+<td class="px-6 py-4 font-medium text-white">Acróbatas Volare</td>
+<td class="px-6 py-4">Sofia López</td>
+<td class="px-6 py-4">2023-11-10</td>
+<td class="px-6 py-4">$850.00</td>
+<td class="px-6 py-4"><span class="rounded-full bg-primary/20 px-2.5 py-0.5 text-xs font-medium text-primary">Confirmada</span></td>
+</tr>
+<tr class="border-t border-border-dark hover:bg-background-dark/50">
+<td class="whitespace-nowrap px-6 py-4 font-mono text-xs text-gray-400">#Q6R9T7</td>
+<td class="px-6 py-4 font-medium text-white">Saxofonista Jazz</td>
+<td class="px-6 py-4">Javier Torres</td>
+<td class="px-6 py-4">2023-10-19</td>
+<td class="px-6 py-4">$350.00</td>
+<td class="px-6 py-4"><span class="rounded-full bg-cyan-400/10 px-2.5 py-0.5 text-xs font-medium text-cyan-400">Completada</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+
+</body></html>

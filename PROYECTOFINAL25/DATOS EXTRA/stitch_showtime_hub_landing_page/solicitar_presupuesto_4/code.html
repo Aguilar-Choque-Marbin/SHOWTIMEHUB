@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reserva Confirmada - ShowTime Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "accent": "#00BCD4",
+                        "background-dark": "#000000",
+                        "container-dark": "#1A1A1A",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<header class="sticky top-0 z-10 flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 bg-background-dark/80 px-4 py-3 backdrop-blur-sm sm:px-8 md:px-10 lg:px-20">
+<div class="flex items-center gap-4 text-white">
+<span class="material-symbols-outlined text-accent text-3xl">
+                local_activity
+            </span>
+<h1 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">ShowTime Hub</h1>
+</div>
+</header>
+<main class="flex flex-1 items-center justify-center px-4 py-8 sm:py-12 md:py-16">
+<div class="flex w-full max-w-2xl flex-col items-center gap-8 text-center">
+<div class="flex flex-col items-center gap-4">
+<div class="flex h-20 w-20 items-center justify-center rounded-full bg-accent/20">
+<span class="material-symbols-outlined text-accent !text-5xl">
+                        check_circle
+                    </span>
+</div>
+<h2 class="text-white text-4xl sm:text-5xl font-black leading-tight tracking-[-0.033em]">¡Reserva Confirmada!</h2>
+<p class="text-gray-300 max-w-md text-base sm:text-lg">Recibirás un correo electrónico con todos los detalles de tu reserva. El artista se pondrá en contacto contigo pronto.</p>
+</div>
+<div class="w-full rounded-xl bg-container-dark p-6 sm:p-8 text-left">
+<h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-4 mb-6 border-b border-white/10">Detalles de la Reserva</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+<div>
+<p class="text-sm text-gray-400">Artista</p>
+<p class="text-base text-white font-medium">DJ Elena</p>
+</div>
+<div>
+<p class="text-sm text-gray-400">Servicio</p>
+<p class="text-base text-white font-medium">Sesión DJ para Bodas</p>
+</div>
+<div>
+<p class="text-sm text-gray-400">Fecha</p>
+<p class="text-base text-white font-medium">26 de Octubre, 2024</p>
+</div>
+<div>
+<p class="text-sm text-gray-400">Hora</p>
+<p class="text-base text-white font-medium">20:00 - 23:00</p>
+</div>
+<div class="sm:col-span-2">
+<p class="text-sm text-gray-400">Precio Final</p>
+<p class="text-lg text-accent font-bold">Bs. 3.000</p>
+</div>
+</div>
+</div>
+<div class="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center pt-4">
+<button class="flex w-full sm:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-accent text-black gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-8 transition-transform duration-200 hover:scale-105 active:scale-100">
+                    Volver al Dashboard
+                </button>
+<button class="flex w-full sm:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-white border border-white/30 gap-2 text-base font-medium leading-normal min-w-0 px-8 transition-colors duration-200 hover:bg-white/10 active:bg-white/5">
+                    Ver Detalles de la Reserva
+                </button>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

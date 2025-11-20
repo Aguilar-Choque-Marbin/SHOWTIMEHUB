@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Editar Perfil de Artista</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "accent": "#00f5d4", // Bright mint green
+                    "background-dark": "#0d0d0d",
+                    "surface-dark": "#1a1a1a",
+                    "text-light": "#f0f0f0",
+                    "text-muted": "#a3a3a3",
+                    "border-dark": "rgba(240, 240, 240, 0.1)",
+                },
+                fontFamily: {
+                    "display": ["Spline Sans", "sans-serif"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 24px;
+    }
+    input, select, textarea {
+        background-color: var(--tw-bg-surface-dark);
+        border-color: var(--tw-border-dark);
+        color: var(--tw-text-light);
+    }
+    input::placeholder, textarea::placeholder {
+        color: var(--tw-text-muted);
+    }
+    .form-input-style {
+        @apply w-full rounded-lg border border-border-dark bg-background-dark px-3 py-2 text-text-light text-sm focus:border-accent focus:ring-0;
+    }
+</style>
+</head>
+<body class="bg-background-dark font-display text-text-light">
+<div class="flex min-h-screen w-full">
+<aside class="flex w-64 flex-col border-r border-border-dark bg-background-dark">
+<div class="flex grow flex-col p-4">
+<div class="mb-8 flex items-center gap-3 px-2">
+<div class="aspect-square size-10 rounded-full bg-cover bg-center bg-no-repeat" data-alt="ShowTime Hub logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Jpv7oZxAg6dS8rET5IY6UJWAn35Ph_4yHN7E1F2twJ5i9rfPrFAGM_WcUeJSmFsg1W_yeoYhFXqr1RcMTyT24YsUt4HL0fWIsm-015WEtKkDDlr1GApSaXnghE6u_9jMLshvRbLJLHfeZBRgxukWeELkYaFP_u44CakWopnRXM0czZawX_L77tHke6aoAYi25PK_i6YvzkwY-mRvEuZbXmZaUx_QqW0sC81Qkp34z7Su2YO7ldvK_2H_MA0E5NSQ32rVVTn3UQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-medium leading-normal text-text-light">ShowTime Hub</h1>
+<p class="text-sm font-normal leading-normal text-text-muted">Panel de Artista</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">work</span>
+<p class="text-sm font-medium leading-normal">Mis Servicios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-sm font-medium leading-normal">Calendario</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">mail</span>
+<p class="text-sm font-medium leading-normal">Mensajes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">payments</span>
+<p class="text-sm font-medium leading-normal">Ganancias</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-accent px-3 py-2 font-medium text-background-dark" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-sm leading-normal">Perfil</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1 border-t border-border-dark p-4">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Ajustes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Cerrar Sesión</p>
+</a>
+</div>
+</aside>
+<main class="flex-1 overflow-auto">
+<header class="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b border-border-dark bg-background-dark/80 px-6 backdrop-blur-sm">
+<h1 class="text-xl font-bold leading-tight tracking-tight text-text-light">Editar Perfil</h1>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center gap-2 rounded-lg border border-border-dark bg-surface-dark px-4 py-2 text-center text-sm font-medium text-text-light hover:bg-surface-dark/80">
+Ver Perfil Público
+</button>
+<button class="relative rounded-full p-2 text-text-muted hover:bg-surface-dark hover:text-text-light">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute right-1.5 top-1.5 flex h-2.5 w-2.5">
+<span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+<span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent"></span>
+</span>
+</button>
+</div>
+</header>
+<div class="p-6 md:p-8 lg:p-10">
+<div class="mx-auto max-w-5xl">
+<form action="#" method="POST">
+<div class="space-y-6">
+<div class="rounded-xl border border-border-dark bg-surface-dark p-6">
+<div class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
+<div class="md:col-span-1">
+<h2 class="text-lg font-semibold text-text-light">Información Pública</h2>
+<p class="mt-1 text-sm text-text-muted">Esta información se mostrará públicamente en tu perfil.</p>
+</div>
+<div class="grid grid-cols-1 gap-6 md:col-span-2 sm:grid-cols-6">
+<div class="sm:col-span-6">
+<label class="block text-sm font-medium text-text-light" for="profile-photo">Foto de Perfil</label>
+<div class="mt-2 flex items-center gap-x-4">
+<div class="flex h-24 w-24 items-center justify-center rounded-full bg-background-dark">
+<span class="material-symbols-outlined text-4xl text-text-muted">person</span>
+</div>
+<button class="rounded-lg border border-border-dark bg-background-dark px-3 py-2 text-sm font-medium text-text-light hover:border-text-muted" type="button">Cambiar Foto</button>
+</div>
+</div>
+<div class="sm:col-span-6">
+<label class="block text-sm font-medium text-text-light" for="artist-name">Nombre Artístico</label>
+<input class="form-input-style mt-1" id="artist-name" name="artist-name" type="text" value="Alex Drummer"/>
+</div>
+<div class="sm:col-span-3">
+<label class="block text-sm font-medium text-text-light" for="category">Categoría Principal</label>
+<select class="form-input-style mt-1" id="category" name="category">
+<option>Músico</option>
+<option selected="">Baterista</option>
+<option>Mago</option>
+<option>Comediante</option>
+</select>
+</div>
+<div class="sm:col-span-3">
+<label class="block text-sm font-medium text-text-light" for="location">Ubicación</label>
+<input class="form-input-style mt-1" id="location" name="location" type="text" value="Madrid, España"/>
+</div>
+<div class="sm:col-span-6">
+<label class="block text-sm font-medium text-text-light" for="description">Descripción / Biografía</label>
+<textarea class="form-input-style mt-1" id="description" name="description" rows="4">Baterista profesional con más de 10 años de experiencia en giras internacionales y sesiones de estudio. Especializado en rock, funk y jazz.</textarea>
+</div>
+<div class="sm:col-span-6">
+<label class="block text-sm font-medium text-text-light">Rango de Precios (€)</label>
+<div class="mt-1 grid grid-cols-2 gap-4">
+<div>
+<label class="sr-only" for="price-from">Desde</label>
+<input class="form-input-style" id="price-from" name="price-from" placeholder="Desde" type="number" value="150"/>
+</div>
+<div>
+<label class="sr-only" for="price-to">Hasta</label>
+<input class="form-input-style" id="price-to" name="price-to" placeholder="Hasta" type="number" value="1200"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="rounded-xl border border-border-dark bg-surface-dark p-6">
+<div class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
+<div class="md:col-span-1">
+<h2 class="text-lg font-semibold text-text-light">Portafolio y Redes</h2>
+<p class="mt-1 text-sm text-text-muted">Añade enlaces a tu trabajo y perfiles sociales.</p>
+</div>
+<div class="grid grid-cols-1 gap-6 md:col-span-2 sm:grid-cols-6">
+<div class="sm:col-span-6">
+<label class="block text-sm font-medium text-text-light" for="portfolio-url">Enlace a Portafolio (web, Behance, etc.)</label>
+<input class="form-input-style mt-1" id="portfolio-url" name="portfolio-url" type="url" value="https://alexdrummer.com"/>
+</div>
+<div class="sm:col-span-3">
+<label class="block text-sm font-medium text-text-light" for="instagram-url">Instagram</label>
+<input class="form-input-style mt-1" id="instagram-url" name="instagram-url" placeholder="https://instagram.com/..." type="url" value="https://instagram.com/alexdrummer"/>
+</div>
+<div class="sm:col-span-3">
+<label class="block text-sm font-medium text-text-light" for="youtube-url">YouTube</label>
+<input class="form-input-style mt-1" id="youtube-url" name="youtube-url" placeholder="https://youtube.com/..." type="url" value="https://youtube.com/c/alexdrummer"/>
+</div>
+</div>
+</div>
+</div>
+<div class="rounded-xl border border-border-dark bg-surface-dark p-6">
+<div class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
+<div class="md:col-span-1">
+<h2 class="text-lg font-semibold text-text-light">Fotos y Videos</h2>
+<p class="mt-1 text-sm text-text-muted">Sube imágenes y videos que muestren tu talento.</p>
+</div>
+<div class="md:col-span-2">
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+<div class="aspect-square rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAg0k63eK-LoTR5azghYYbhZtad3FqqiZT6kVB5_4Lh3a_KlZCOWHuuShEwc_0XEaLUhVcuaivKUredapiaxa89M8_8BsF2pN-On9skX7VGEmM6dlApxLVHiYbTvFpL9QhlyUE0QqyG9FYEc9gls2yGgNojogUy8u0sCepid8n4WwsCbZQl24-Mmt4cafuX9sRZ7MqRlXnGP8aXzPj_0ymc6ayfPy-2Q1tSUSwyCch49rQJaEvkBC3bNHjOguGUSK4ENyUbTnoDw")'></div>
+<div class="aspect-square rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A")'></div>
+<div class="aspect-square rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A")'></div>
+<div class="flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-border-dark bg-background-dark hover:border-text-muted">
+<div class="text-center">
+<span class="material-symbols-outlined text-4xl text-text-muted">add_photo_alternate</span>
+<p class="mt-1 text-sm text-text-muted">Añadir</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="rounded-xl border border-border-dark bg-surface-dark">
+<div class="flex items-center justify-between p-6">
+<div class="flex flex-col">
+<h2 class="text-lg font-semibold text-text-light">Verificación de Perfil</h2>
+<p class="mt-1 text-sm text-text-muted">Aumenta la confianza de los clientes con un perfil verificado.</p>
+</div>
+<div class="flex shrink-0 items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-accent" style="font-variation-settings: 'FILL' 1;">verified</span>
+<p class="font-medium text-text-light">Verificado</p>
+</div>
+<button class="text-sm font-medium text-accent hover:underline" type="button">Gestionar</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-end gap-4">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-center text-sm font-bold text-background-dark hover:bg-accent/90 focus:outline-none focus:ring-4 focus:ring-accent/30 sm:w-auto" type="submit">
+<span class="material-symbols-outlined" style="font-size: 20px;">save</span>
+Guardar Cambios
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+</div>
+</body></html>

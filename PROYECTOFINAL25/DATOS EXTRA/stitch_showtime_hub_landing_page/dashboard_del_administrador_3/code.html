@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Gestión de Artistas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "accent": "#22d3ee","accent-hover": "#67e8f9",
+              "background-dark": "#0a0a0a","surface-dark": "#171717","border-dark": "#262626",
+              "text-primary": "#f5f5f5","text-secondary": "#a3a3a3",},
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-dark font-display">
+<div class="flex min-h-screen w-full flex-row">
+<aside class="flex w-64 flex-col bg-surface-dark p-4 text-text-primary">
+<div class="flex items-center gap-3 p-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPXDaH4tXzBQsDnfTCamMG-WACKgZ1sowgl31Ucl4w_egTQXmMLAYS9U4j8LBgVLd--RnnO-VJHBJwc-o1B_wdao1FurYauUpizL5ovPxkhBQemAaEtaiPzyGGpOqBiQ5XY7xTtup5dFkK21zxvErIoG3l3hi4Acwb4kmwJlNZrSeV6CkKpngfgd8CbWWzmI1tdowpJEZNGhnxDL1kEG9veppDsy0Y7aUnfpumwwTxwJTtcTOTH61hPvWCKIXAk7v_fdgxeoaf1g");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-semibold leading-normal text-text-primary">Admin</h1>
+<p class="text-sm font-normal leading-normal text-text-secondary">ShowTime Hub</p>
+</div>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium leading-normal">Gestión de Usuarios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-accent/20 px-3 py-2 text-accent" href="#">
+<span class="material-symbols-outlined text-accent">theater_comedy</span>
+<p class="text-sm font-medium leading-normal">Gestión de Artistas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Gestión de Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Reportes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Configuración</p>
+</a>
+</nav>
+</aside>
+<main class="flex-1">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-border-dark p-6">
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-text-primary">Gestión de Artistas</h1>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-accent-hover">
+<span class="material-symbols-outlined">add</span>
+Agregar Nuevo Artista
+</button>
+<button class="rounded-full p-2 text-text-secondary hover:bg-white/10 hover:text-text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<div class="p-6">
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary">search</span>
+<input class="w-full rounded-lg border border-border-dark bg-surface-dark py-2 pl-10 pr-4 text-text-primary placeholder-text-secondary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Buscar artista..." type="text"/>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<select class="w-40 rounded-lg border border-border-dark bg-surface-dark py-2 pl-3 pr-8 text-text-primary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent">
+<option>Categoría</option>
+<option>Músico</option>
+<option>Mago</option>
+<option>Comediante</option>
+</select>
+<select class="w-40 rounded-lg border border-border-dark bg-surface-dark py-2 pl-3 pr-8 text-text-primary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent">
+<option>Estado</option>
+<option>Aprobado</option>
+<option>Pendiente</option>
+<option>Rechazado</option>
+</select>
+<button class="rounded-lg border border-border-dark px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:border-text-primary hover:text-text-primary">Filtrar</button>
+</div>
+</div>
+<div class="overflow-hidden rounded-lg border border-border-dark bg-surface-dark">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-text-secondary">
+<thead class="bg-black/20 text-xs uppercase text-text-secondary">
+<tr>
+<th class="px-6 py-3" scope="col">Nombre Artístico</th>
+<th class="px-6 py-3" scope="col">Categoría</th>
+<th class="px-6 py-3" scope="col">Ubicación</th>
+<th class="px-6 py-3" scope="col">Rating</th>
+<th class="px-6 py-3" scope="col">Estado</th>
+<th class="px-6 py-3 text-center" scope="col">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-t border-border-dark transition-colors hover:bg-white/5">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-primary">DJ Electra</td>
+<td class="px-6 py-4">Músico</td>
+<td class="px-6 py-4">Madrid, España</td>
+<td class="px-6 py-4"><div class="flex items-center gap-1"><span class="text-yellow-400">4.8</span><span class="material-symbols-outlined text-base text-yellow-400">star</span></div></td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-400">Aprobado</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-secondary hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-text-secondary hover:text-yellow-400"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-text-secondary hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-dark transition-colors hover:bg-white/5">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-primary">Mago Supremo</td>
+<td class="px-6 py-4">Mago</td>
+<td class="px-6 py-4">Barcelona, España</td>
+<td class="px-6 py-4"><div class="flex items-center gap-1"><span class="text-yellow-400">4.9</span><span class="material-symbols-outlined text-base text-yellow-400">star</span></div></td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-yellow-500/20 px-2.5 py-0.5 text-xs font-medium text-yellow-400">Pendiente</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-secondary hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-text-secondary hover:text-green-500"><span class="material-symbols-outlined">check_circle</span></button>
+<button class="p-1 text-text-secondary hover:text-red-500"><span class="material-symbols-outlined">cancel</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-dark transition-colors hover:bg-white/5">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-primary">Banda "The Echoes"</td>
+<td class="px-6 py-4">Músico</td>
+<td class="px-6 py-4">Valencia, España</td>
+<td class="px-6 py-4"><div class="flex items-center gap-1"><span class="text-yellow-400">4.5</span><span class="material-symbols-outlined text-base text-yellow-400">star</span></div></td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-400">Aprobado</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-secondary hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-text-secondary hover:text-yellow-400"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-text-secondary hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-dark transition-colors hover:bg-white/5">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-primary">Comediante Risa</td>
+<td class="px-6 py-4">Comediante</td>
+<td class="px-6 py-4">Sevilla, España</td>
+<td class="px-6 py-4"><div class="flex items-center gap-1"><span class="text-yellow-400">4.7</span><span class="material-symbols-outlined text-base text-yellow-400">star</span></div></td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs font-medium text-green-400">Aprobado</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-secondary hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-text-secondary hover:text-yellow-400"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-text-secondary hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-border-dark transition-colors hover:bg-white/5">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-primary">Acróbatas Volare</td>
+<td class="px-6 py-4">Acróbata</td>
+<td class="px-6 py-4">Bilbao, España</td>
+<td class="px-6 py-4"><div class="flex items-center gap-1"><span class="text-text-secondary">N/A</span></div></td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-red-500/20 px-2.5 py-0.5 text-xs font-medium text-red-400">Rechazado</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-secondary hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-text-secondary hover:text-yellow-400"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-text-secondary hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex flex-wrap items-center justify-between border-t border-border-dark px-6 py-4">
+<p class="text-sm text-text-secondary">Mostrando <span class="font-medium text-text-primary">1</span> a <span class="font-medium text-text-primary">5</span> de <span class="font-medium text-text-primary">128</span> resultados</p>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center rounded-lg border border-border-dark p-2 text-text-secondary transition-colors hover:bg-white/10 hover:text-text-primary" disabled=""><span class="material-symbols-outlined">chevron_left</span></button>
+<nav class="flex items-center gap-2">
+<a class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-medium text-black" href="#">1</a>
+<a class="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">2</a>
+<a class="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">3</a>
+<span class="text-text-secondary">...</span>
+<a class="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-text-secondary hover:bg-white/10 hover:text-text-primary" href="#">26</a>
+</nav>
+<button class="flex items-center justify-center rounded-lg border border-border-dark p-2 text-text-secondary transition-colors hover:bg-white/10 hover:text-text-primary"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

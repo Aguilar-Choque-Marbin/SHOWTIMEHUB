@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Perfil de Usuario - ShowTime Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "accent": "#00f5d4", // Bright mint green
+              "background-dark": "#000000",
+              "text-light": "#f0f0f0",
+              "text-muted": "#a0a0a0",
+              "card-dark": "#181818",
+              "border-dark": "#2a2a2a",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-dark font-display text-text-light">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex flex-grow">
+<aside class="sticky top-0 h-screen w-64 shrink-0 bg-background-dark p-4 border-r border-border-dark hidden md:flex flex-col justify-between">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="ShowTime Hub company logo, an abstract shape resembling a stage light" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATT-7QW1wp1JcF-OlaahqJuM2nhB3dtBbgQBuroSVMUhCYY8uAeBsO2-l2BziXUlhRPKU8I0FnOEH4nEJONYmbWJ35DhKRdWRhxqe8fy2lXVE5d5h4GWFrYZx88Dw20N_7lM4yfj_5kbbX4Q_CPQ-FWvPlA2Gdo6DkG5lHIY0m3UA3IqEyYLEDbOBL9x2eSmH0BmR4QBrfLKDq-I9dM4l01nseNVA2Cu-nXmq9zRg_OMx-0a_-PloKyrGTSMzlUGo2Igq9Q2N7zA");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light text-base font-medium leading-normal">ShowTime Hub</h1>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-text-light" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-sm font-medium leading-normal">Inicio</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-text-light" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-sm font-medium leading-normal">Mis Reservas</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-text-light" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<p class="text-sm font-medium leading-normal">Artistas Favoritos</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-text-light" href="#">
+<span class="material-symbols-outlined">mail</span>
+<p class="text-sm font-medium leading-normal">Mensajes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-text-light" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<p class="text-sm font-medium leading-normal">Notificaciones</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-accent text-black" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-sm font-medium leading-normal">Perfil</p>
+</a>
+</nav>
+</div>
+<div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-text-muted hover:text-text-light" href="#">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Cerrar Sesión</p>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+<div class="max-w-4xl mx-auto">
+<header class="mb-8">
+<h1 class="text-text-light text-3xl md:text-4xl font-bold tracking-tight">Mi Perfil</h1>
+<p class="text-text-muted mt-1">Gestiona tu información personal y la configuración de tu cuenta.</p>
+</header>
+<div class="space-y-10">
+<section>
+<h2 class="text-xl font-semibold text-text-light border-b border-border-dark pb-3 mb-6">Información Personal</h2>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="relative flex flex-col">
+<label class="text-sm font-medium text-text-muted mb-2" for="name">Nombre Completo</label>
+<input class="w-full rounded-md border-border-dark bg-card-dark text-text-light px-4 py-2.5 focus:border-accent focus:ring-accent" id="name" placeholder="Tu nombre" type="text" value="Elena Rodriguez"/>
+</div>
+<div class="relative flex flex-col">
+<label class="text-sm font-medium text-text-muted mb-2" for="email">Correo Electrónico</label>
+<input class="w-full rounded-md border-border-dark bg-card-dark text-text-light px-4 py-2.5 focus:border-accent focus:ring-accent" id="email" placeholder="tu@email.com" type="email" value="elena.rodriguez@email.com"/>
+</div>
+<div class="relative flex flex-col">
+<label class="text-sm font-medium text-text-muted mb-2" for="phone">Teléfono</label>
+<input class="w-full rounded-md border-border-dark bg-card-dark text-text-light px-4 py-2.5 focus:border-accent focus:ring-accent" id="phone" placeholder="+1 (555) 000-0000" type="tel" value="+34 600 123 456"/>
+</div>
+<div class="relative flex flex-col">
+<label class="text-sm font-medium text-text-muted mb-2" for="location">Ubicación</label>
+<input class="w-full rounded-md border-border-dark bg-card-dark text-text-light px-4 py-2.5 focus:border-accent focus:ring-accent" id="location" placeholder="Ciudad, País" type="text" value="Madrid, España"/>
+</div>
+</form>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-text-light border-b border-border-dark pb-3 mb-6">Historial de Reservas</h2>
+<a class="inline-flex items-center gap-2 text-accent hover:underline" href="#">
+<span>Ver listado completo de reservas</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</a>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-text-light border-b border-border-dark pb-3 mb-6">Métodos de Pago</h2>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 rounded-lg bg-card-dark border border-border-dark">
+<div class="flex items-center gap-4">
+<img alt="Visa card icon" class="h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZdRrHmqj4Ii6afFiOwqkxpbNRdiLJaEJ4MfMZIHfsXM5JTrSpEc0Oel3TEW7IcxahnsIXNAgZtPkkz9oKftasIT9QIAuVomJr8AldXPqkLkozQvNS1r0iS3mS94xkIt5ertxKOsdS3s9tAXOQFbAJMy9XJzraf5cZU38_qGYxreG3HMguNkVKr27k-FlHIPRQ0CQ3WIispPckltDBnfHL_lYebyHzqEIkyLSrMYaL3g7cxB_gGeSZsXyHmP4Ey-ux5Ofc-yMPlQ"/>
+<div>
+<p class="font-medium text-text-light">Visa terminada en 1234</p>
+<p class="text-sm text-text-muted">Expira 12/2025</p>
+</div>
+</div>
+<button class="text-text-muted hover:text-accent">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md h-10 px-4 border border-accent text-accent text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/10">
+<span class="material-symbols-outlined text-lg">add</span>
+<span class="truncate">Añadir nuevo método de pago</span>
+</button>
+</div>
+</section>
+<section>
+<h2 class="text-xl font-semibold text-text-light border-b border-border-dark pb-3 mb-6">Configuración de la Cuenta</h2>
+<div class="space-y-4">
+<a class="flex items-center justify-between text-text-light hover:text-accent group" href="#">
+<span>Cambiar contraseña</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-x-1">chevron_right</span>
+</a>
+<div class="flex items-center justify-between">
+<label class="cursor-pointer" for="notifications">Activar notificaciones por correo</label>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="notifications" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-accent/50 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent"></div>
+</div>
+</div>
+</div>
+</section>
+<div class="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-border-dark">
+<button class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-11 px-6 bg-accent text-black text-base font-bold leading-normal tracking-[0.015em] hover:bg-accent/80">
+<span class="truncate">Guardar Cambios</span>
+</button>
+<button class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-11 px-6 bg-transparent text-text-muted hover:bg-white/10 hover:text-text-light text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Cerrar Sesión</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

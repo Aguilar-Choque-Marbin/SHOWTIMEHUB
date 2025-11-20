@@ -1,0 +1,116 @@
+========================================
+  PASOS REALIZADOS - BACKEND SHOWTIME HUB
+========================================
+
+📅 Fecha: 19 de noviembre de 2025
+
+========================================
+✅ PASO 1: INICIALIZAR PROYECTO NODE.JS
+========================================
+
+Comandos ejecutados:
+  1. cd BACKEND
+  2. npm init -y
+  3. npm install express pg dotenv bcrypt jsonwebtoken cors
+  4. npm install --save-dev nodemon
+
+Paquetes instalados:
+  - express          → Framework para crear la API REST
+  - pg               → Conectar con PostgreSQL
+  - dotenv           → Variables de entorno (.env)
+  - bcrypt           → Encriptar contraseñas
+  - jsonwebtoken     → Autenticación JWT
+  - cors             → Permitir peticiones desde el frontend
+  - nodemon (dev)    → Reinicia servidor automáticamente
+
+Archivos creados:
+  ✅ package.json
+  ✅ package-lock.json
+  ✅ node_modules/
+
+========================================
+✅ PASO 2: CREAR ESTRUCTURA DE CARPETAS
+========================================
+
+Comandos ejecutados:
+  mkdir src
+  cd src
+  mkdir configuracion, controladores, modelos, rutas, middlewares, servicios, utilidades
+  cd ..
+
+Carpetas creadas en src/:
+  ✅ configuracion/    → Conexión BD, configuraciones
+  ✅ controladores/    → Funciones que manejan peticiones HTTP
+  ✅ modelos/         → Esquemas y consultas a la BD
+  ✅ rutas/           → Endpoints de la API
+  ✅ middlewares/     → Verificar login, validaciones
+  ✅ servicios/       → Lógica de negocio
+  ✅ utilidades/      → Funciones helpers
+
+========================================
+✅ PASO 3: CREAR ARCHIVO DE VARIABLES
+========================================
+
+Archivo creado:
+  ✅ .env
+
+Contenido del .env:
+  - PUERTO=3000
+  - DB_HOST=localhost
+  - DB_PUERTO=5432
+  - DB_USUARIO=showtime_admin
+  - DB_CONTRASENA=showtime2025
+  - DB_NOMBRE=showtime_hub
+  - JWT_SECRETO=tu_clave_secreta_super_segura_123
+  - JWT_EXPIRACION=24h
+
+========================================
+📋 PRÓXIMOS PASOS (PENDIENTES)
+========================================
+
+[ ] PASO 4: Crear archivo de conexión a BD
+    → Archivo: src/configuracion/baseDatos.js
+    → Conectar con PostgreSQL usando pg
+
+[ ] PASO 5: Crear servidor principal
+    → Archivo: servidor.js
+    → Configurar Express y middlewares
+
+[ ] PASO 6: Configurar scripts en package.json
+    → Agregar script "start" y "dev"
+
+[ ] PASO 7: Probar servidor
+    → Ejecutar: npm run dev
+    → Verificar: http://localhost:3000
+
+[ ] PASO 8: Crear rutas de autenticación
+    → Login, Registro
+
+[ ] PASO 9: Crear rutas de usuarios
+
+[ ] PASO 10: Crear rutas de artistas
+
+[ ] PASO 11: Crear rutas de organizadores
+
+[ ] PASO 12: Y más rutas según necesidad...
+
+========================================
+📊 RESUMEN ACTUAL
+========================================
+
+Estado del proyecto: ⚙️ EN CONFIGURACIÓN
+
+Completado:
+  ✅ Dependencias instaladas
+  ✅ Estructura de carpetas creada
+  ✅ Variables de entorno configuradas
+
+Por hacer:
+  ⏳ Configurar conexión a base de datos
+  ⏳ Crear servidor Express
+  ⏳ Crear rutas API
+  ⏳ Implementar autenticación
+  ⏳ Crear controladores
+  ⏳ Crear modelos
+
+========================================

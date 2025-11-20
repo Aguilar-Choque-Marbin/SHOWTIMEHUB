@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Perfil del Artista - ShowTime Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#45F3C2",
+              "background-light": "#f6f6f8",
+              "background-dark": "#0a0a0a",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-dark text-gray-200">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="sticky top-0 z-50 bg-background-dark/80 backdrop-blur-sm border-b border-gray-800">
+<div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between whitespace-nowrap h-16">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">ShowTime Hub</h1>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-gray-300 hover:text-primary text-sm font-medium leading-normal" href="#">Explorar</a>
+<a class="text-gray-300 hover:text-primary text-sm font-medium leading-normal" href="#">Cómo Funciona</a>
+<a class="text-gray-300 hover:text-primary text-sm font-medium leading-normal" href="#">Para Artistas</a>
+<a class="text-gray-300 hover:text-primary text-sm font-medium leading-normal" href="#">Iniciar Sesión</a>
+</nav>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-black text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Registrarse</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="layout-content-container flex flex-col flex-1">
+<div class="flex flex-col sm:flex-row items-center gap-6 mb-6">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-36 w-36 min-w-36 border-4 border-background-dark shadow-lg" data-alt="Headshot of a smiling magician in a suit." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhcMYcCg1cc9QKfzlP5WEGHDIjluEqhoSxt4uLUdqTUCeMAydbVDxUbFJPUyzlacI-PbfUu-aiYNkFzbtxEQSVK4u-azScRPfNMSJvm57c9uixc6r2Bvw15EsPiB1H7IfP_mgcgMSejg10qw5p9js6rcMUJg--GwvXDSq8E5nFXNxOrec6CRyFBOy5lq3L7vpM7MB_sHzT-1zGiIcl9NPwDELJtHCzb0LqrlTuAXUYfiPy07wlcdHKU3_6yAFrx5FZ8pyyPck_Ug");'></div>
+<div class="flex flex-col justify-center text-center sm:text-left">
+<p class="text-white text-3xl font-bold leading-tight tracking-[-0.015em]">Marco el Magnífico</p>
+<p class="text-gray-400 text-lg font-normal leading-normal">Mago</p>
+<p class="text-gray-400 text-base font-normal leading-normal">Nueva York, EE. UU.</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 py-6 border-b border-gray-800">
+<div class="flex items-center gap-6 text-gray-300">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-yellow-500" data-icon="star">star</span>
+<span class="font-bold text-white">4.9</span>
+<span class="text-sm">(124 reseñas)</span>
+</div>
+<div class="hidden sm:block border-l border-gray-800 h-6"></div>
+<p class="text-sm">Desde <span class="font-bold text-white">Bs. 500/hora</span></p>
+</div>
+<div class="flex w-full sm:w-auto max-w-[480px] gap-3">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-800 text-white text-sm font-bold leading-normal tracking-[0.015em] flex-1 hover:bg-gray-700">
+<span class="truncate">Contactar</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-black text-sm font-bold leading-normal tracking-[0.015em] flex-1 hover:bg-primary/90">
+<span class="truncate">Solicitar presupuesto</span>
+</button>
+</div>
+</div>
+<div class="py-3">
+<div class="flex border-b border-gray-800 gap-8 overflow-x-auto">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary pb-[13px] pt-4 whitespace-nowrap" href="#">
+<p class="text-white text-sm font-bold leading-normal tracking-[0.015em]">Acerca de</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-gray-400 hover:text-primary pb-[13px] pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Servicios y Precios</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-gray-400 hover:text-primary pb-[13px] pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Galería</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-gray-400 hover:text-primary pb-[13px] pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Reseñas</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-gray-400 hover:text-primary pb-[13px] pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Disponibilidad</p>
+</a>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-8">
+<div class="lg:col-span-2">
+<section id="about">
+<h2 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em] pb-4">Acerca de Marco</h2>
+<p class="text-gray-300 leading-relaxed mb-6">
+                                Con más de una década de experiencia profesional, Marco el Magnífico aporta un toque moderno a la magia clásica, creando experiencias inolvidables para eventos corporativos, fiestas privadas y grandes celebraciones. Especializado en magia de cerca y grandes ilusiones escénicas, el cautivador estilo de actuación y la carismática personalidad de Marco dejan asombrados a públicos de todas las edades. Su pasión por el arte de la ilusión solo es igualada por su dedicación a la profesionalidad y la satisfacción del cliente.
+                            </p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Eventos Corporativos</span>
+<span class="bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Fiestas Privadas</span>
+<span class="bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Magia de Cerca</span>
+<span class="bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Ilusiones de Escenario</span>
+<span class="bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Bodas</span>
+</div>
+</section>
+<section class="mt-12" id="services">
+<h2 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em] pb-4">Servicios y Precios</h2>
+<div class="space-y-4">
+<a class="block p-6 bg-gray-900/50 hover:bg-gray-900 rounded-xl border border-gray-800 transition-colors duration-200" href="#">
+<div class="flex flex-col sm:flex-row justify-between gap-4">
+<div>
+<h3 class="font-bold text-white text-lg">Show de Magia Estándar</h3>
+<p class="text-gray-400 mt-1 max-w-lg">Un espectáculo de 45 minutos de magia clásica y mentalismo, perfecto para fiestas de cumpleaños y reuniones familiares.</p>
+</div>
+<div class="flex-shrink-0 text-left sm:text-right">
+<p class="text-primary text-lg font-bold">Bs. 3,000 por evento</p>
+</div>
+</div>
+<div class="mt-4">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+                                        Solicitar este servicio
+                                        <span class="material-symbols-outlined">arrow_forward</span>
+</span>
+</div>
+</a>
+<a class="block p-6 bg-gray-900/50 hover:bg-gray-900 rounded-xl border border-gray-800 transition-colors duration-200" href="#">
+<div class="flex flex-col sm:flex-row justify-between gap-4">
+<div>
+<h3 class="font-bold text-white text-lg">Magia de Cerca Itinerante</h3>
+<p class="text-gray-400 mt-1 max-w-lg">Marco se mezcla con sus invitados, realizando trucos de cartas íntimos e ilusiones de manos para pequeños grupos. Ideal para bodas y eventos corporativos.</p>
+</div>
+<div class="flex-shrink-0 text-left sm:text-right">
+<p class="text-primary text-lg font-bold">Bs. 500/hora</p>
+</div>
+</div>
+<div class="mt-4">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+                                        Solicitar este servicio
+                                        <span class="material-symbols-outlined">arrow_forward</span>
+</span>
+</div>
+</a>
+<a class="block p-6 bg-gray-900/50 hover:bg-gray-900 rounded-xl border border-gray-800 transition-colors duration-200" href="#">
+<div class="flex flex-col sm:flex-row justify-between gap-4">
+<div>
+<h3 class="font-bold text-white text-lg">Gran Ilusión de Escenario</h3>
+<p class="text-gray-400 mt-1 max-w-lg">Un espectáculo completo de 90 minutos con grandes ilusiones, participación del público y efectos especiales. Requiere un escenario y equipo técnico.</p>
+</div>
+<div class="flex-shrink-0 text-left sm:text-right">
+<p class="text-primary text-lg font-bold">Bs. 10,000 por show</p>
+<p class="text-gray-500 text-sm">Consulta requerida</p>
+</div>
+</div>
+<div class="mt-4">
+<span class="inline-flex items-center gap-2 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+                                        Solicitar este servicio
+                                        <span class="material-symbols-outlined">arrow_forward</span>
+</span>
+</div>
+</a>
+</div>
+</section>
+<section class="mt-12" id="gallery">
+<h2 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em] pb-4">Galería</h2>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Magician performing a card trick at a corporate event." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6oxjWzhoCdsF1C7xeUTI5pWaILgFQVOgbgt6dtSlVgjrk3EYrUNovLXGwWyiORGsnbL1wOs3FxWiZNs5ZbZczBg_O8XE83yYLrrd33BHIYO1MODSJkVkjU865ySizdI-v_qxpZr4CTRn0Fd10qYFrAmQm-kTaq0BGUM_T_7hBAgDnKr-eUS7z7an307It3C1VlDl3cHQYU5VaoaYg0ozdd6VXuMac8OV1C5VEXc6xEAALRLS-T76nY5Sd-OS0AeDHnX1GXueWnA"/>
+</div>
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden cursor-pointer relative">
+<img class="w-full h-full object-cover" data-alt="A large stage performance with colorful lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcNziCl-toMD3tliq2mvt337eMX45AxOjREW14aS1ErsGnOnnltRdrATO_IIeV5xhCo95GWEoOue67IN6JrWDVhzhHwkK3aFvPibc2DJOlyDZeKFxKm43vrNE5ykcD0SfXOSWboDqEULSDNTSKRpOTwhw-TOKrRbE6PX4OIDo4epG8PCLTFgv9FLFQ9DZw_QsJpB-CHP1icuq4AGaqOikcB1lK4zpygPP9p07THRFtB2jCL-z33bEiR8w110ilN6NkoUkexxHhrw"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl" data-icon="play_circle">play_circle</span>
+</div>
+</div>
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Close-up shot of a magician's hands with playing cards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEt3y2zmgXzeXsMJLSet7SVUZfk3gpOV-tp0ZMWQjNbHvC-vVc7Rjm2TnqqGHKhmTGf_4OSb6esdYfewKQOfTr_6Jxgg1eLo5A9jduZZ-gYtVTMkS_qTfcAP6GyVtAqDBs8RpbxltWrc2d30xKpf8OWUbieWj-xlBORKFPJigLFScCcckYOMH4tiJgcIkRM4zWWiiGIO-Qz4glzCyCBkoBRXdCoD0NJ0FfNR6dPiXcCbsKoey09h38nbgiw9v1isXSCSUja7c5Xg"/>
+</div>
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A child looking amazed at a magic trick during a birthday party." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaIPG6U_u67_-LFS96x-z07ORF06AjPd6lTm0nzCTsvej1-ne64HKyQabcTHA2yq4k_GsLVEXyFScoszMPZbUfyFQcc6LnpgPPlOE5hEIUE8PlR1stZVKK5i9P8Tf6lYWWDaixq7fltzw2mb3QuSki3CFdeheyTBi_HmPFIfdIGyPicP6QTMNNh3JX2roJOpcFqTOAS3O5vkE8mVCS9F2ye5SzCR9rmc0-525ToUd3ErchLOZNbZfisBLMPJNeS7yxFSF2B10KXw"/>
+</div>
+<div class="aspect-square bg-gray-900 rounded-lg overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Magician on stage with a dove." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGM2Oren56tEefSBM4Gy2Ii7hWuaMi_1h6CDCM7H4-rB-11NTKkpBze2oCf0ijEOuYRh62OytrSugypwufFk0d31zPVrlJ1WcVCmZrlLAzRJkmi4Q7s4WSf4Ypv0bMcLEsvLPU9kjxqjaG3g-jwUjAziW_faknB_fmPoKhF9VwI0zuV7cOUEWPdQuYzjYa7TZWN367ZjtUHihFXHEK7bOGtR2o2myzGkKEdR1O5EtzkAXg5l9EezIckIBPmq0F3aCYHGG5KPk8Rg"/>
+</div>
+<div class="aspect-square bg-primary/20 rounded-lg flex items-center justify-center cursor-pointer">
+<span class="text-primary font-bold">+12 Más</span>
+</div>
+</div>
+</section>
+<section class="mt-12" id="reviews">
+<h2 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em] pb-4">Reseñas y Calificaciones</h2>
+<div class="space-y-6">
+<div class="border-b border-gray-800 pb-6">
+<div class="flex items-start gap-4">
+<img class="w-12 h-12 rounded-full" data-alt="Profile picture of Sarah L." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUn789o6-G8a9MZMJCIivtE1oQoXgrTvPqr_qT4SGUFxybOQIRcPKvl5KRfRy-xASL4-R03ZCH4l0FknvmoK-h8NrUtilQuyNIGXxTPkGVuNE73ZUSlPPMcGMKiMrQDfT2fKJ8KKsg6OBoO__ena5ctshpyNpmwwNKjX8yF8hUwKHqP4iNcXiNMOeWxum4AfTKGrDWoHaw-jIfV3iwlp3-wnYF2AraDK133hM5d2uv85zCXAKsshKjRVPl9IK-HZn0wYkvXrla0A"/>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h3 class="font-bold text-white">Lucía G.</h3>
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+</div>
+</div>
+<p class="text-sm text-gray-400">25 de octubre de 2023</p>
+<p class="mt-2 text-gray-300">¡Marco fue lo más destacado de la fiesta anual de nuestra empresa! Fue profesional, simpático y absolutamente alucinante. Nuestros empleados todavía hablan de su actuación. ¡Muy recomendable!</p>
+</div>
+</div>
+</div>
+<div class="border-b border-gray-800 pb-6">
+<div class="flex items-start gap-4">
+<img class="w-12 h-12 rounded-full" data-alt="Profile picture of David Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmu60hjpA4DT225QCRlPrDN-jMLQMVqvKA3_ZSOutUQTot3o52gKc62kJAcLSQnR46ZciSCD2Y266Tp307B8-e4zlsBmhMRWF3ozFeaC10UYIG2_es33sodZpPIXY_jAYwbvGpb5wft5IMl9mir2-MbLFTfKSCnfHtpyC0vaCbv7iEjJa-bHQKS0P9ddR8M9uv4BxiITNpzaMMNaUFG-1azEG_Su8B2-Uqn3TY783UhP-qi_yU0-E0UbkRAxoW9dXQDiX55d9fRw"/>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h3 class="font-bold text-white">David Pérez</h3>
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+<span class="material-symbols-outlined text-base" data-icon="star">star</span>
+</div>
+</div>
+<p class="text-sm text-gray-400">12 de septiembre de 2023</p>
+<p class="mt-2 text-gray-300">Contratamos a Marco para la recepción de nuestra boda y fue increíble. Se mezcló con los invitados realizando magia de cerca y todos quedaron asombrados. Añadió un toque verdaderamente mágico a nuestro día especial.</p>
+</div>
+</div>
+</div>
+<button class="text-primary font-bold text-sm hover:text-primary/90">Mostrar las 124 reseñas</button>
+</div>
+</section>
+</div>
+<aside class="lg:col-span-1">
+<div class="sticky top-24">
+<h2 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em] pb-4">Disponibilidad</h2>
+<div class="bg-gray-900 p-4 rounded-xl border border-gray-800">
+<div class="flex justify-between items-center mb-4">
+<button class="text-gray-400 hover:text-white">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<h3 class="font-bold text-white">Noviembre 2023</h3>
+<button class="text-gray-400 hover:text-white">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 text-center text-xs font-semibold text-gray-400 mb-2">
+<span>Do</span><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span>
+</div>
+<div class="grid grid-cols-7 text-center text-sm">
+<span class="text-gray-500">29</span><span class="text-gray-500">30</span><span class="text-gray-500">31</span><span class="p-2">1</span><span class="p-2">2</span><span class="p-2">3</span><span class="bg-red-500/20 text-red-300 font-semibold rounded-full p-2">4</span>
+<span class="p-2">5</span><span class="p-2">6</span><span class="p-2">7</span><span class="p-2">8</span><span class="p-2">9</span><span class="bg-primary text-black font-semibold rounded-full p-2">10</span><span class="bg-primary text-black font-semibold rounded-full p-2">11</span>
+<span class="p-2">12</span><span class="p-2">13</span><span class="p-2">14</span><span class="p-2">15</span><span class="p-2">16</span><span class="p-2">17</span><span class="p-2">18</span>
+<span class="p-2">19</span><span class="bg-yellow-400/20 text-yellow-300 font-semibold rounded-full p-2">20</span><span class="p-2">21</span><span class="p-2">22</span><span class="p-2">23</span><span class="p-2">24</span><span class="bg-primary text-black font-semibold rounded-full p-2">25</span>
+<span class="p-2">26</span><span class="p-2">27</span><span class="p-2">28</span><span class="p-2">29</span><span class="p-2">30</span><span class="text-gray-500">1</span><span class="text-gray-500">2</span>
+</div>
+<div class="mt-4 flex flex-col gap-2 text-xs text-gray-400">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary"></span> Reservado</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-400/20 border border-yellow-700"></span> Pendiente</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500/20 border border-red-700"></span> No disponible</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+</div>
+</body></html>

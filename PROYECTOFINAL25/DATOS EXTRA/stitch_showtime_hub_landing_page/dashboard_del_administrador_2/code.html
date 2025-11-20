@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Gestión de Usuarios</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "accent": "#00F5D4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#0A0A0A",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex min-h-screen w-full flex-row">
+<aside class="flex w-64 flex-col bg-[#141414] p-4 text-gray-200">
+<div class="flex items-center gap-3 p-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPXDaH4tXzBQsDnfTCamMG-WACKgZ1sowgl31Ucl4w_egTQXmMLAYS9U4j8LBgVLd--RnnO-VJHBJwc-o1B_wdao1FurYauUpizL5ovPxkhBQemAaEtaiPzyGGpOqBiQ5XY7xTtup5dFkK21zxvErIoG3l3hi4Acwb4kmwJlNZrSeV6CkKpngfgd8CbWWzmI1tdowpJEZNGhnxDL1kEG9veppDsy0Y7aUnfpumwwTxwJTtcTOTH61hPvWCKIXAk7v_fdgxeoaf1g");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-semibold leading-normal text-white">Admin</h1>
+<p class="text-sm font-normal leading-normal text-gray-400">ShowTime Hub</p>
+</div>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-accent/20 px-3 py-2 text-accent" href="#">
+<span class="material-symbols-outlined text-accent">groups</span>
+<p class="text-sm font-medium leading-normal text-accent">Gestión de Usuarios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined">theater_comedy</span>
+<p class="text-sm font-medium leading-normal">Gestión de Artistas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Gestión de Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Reportes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Configuración</p>
+</a>
+</nav>
+</aside>
+<main class="flex-1">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 p-6">
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-100">Gestión de Usuarios</h1>
+<div class="flex items-center gap-2">
+<button class="rounded-full p-2 text-gray-400 hover:bg-gray-800 hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="rounded-full p-2 text-gray-400 hover:bg-gray-800 hover:text-white">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="p-6">
+<div class="rounded-lg border border-gray-800 bg-[#141414]">
+<div class="flex flex-col gap-4 p-4 md:flex-row md:items-center md:justify-between">
+<div class="relative w-full md:max-w-xs">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">search</span>
+<input class="w-full rounded-lg border border-gray-700 bg-[#1F1F1F] py-2 pl-10 pr-4 text-gray-200 placeholder-gray-500 focus:border-accent focus:ring-accent" placeholder="Buscar usuario..." type="search"/>
+</div>
+<div class="flex flex-col gap-4 sm:flex-row">
+<div class="flex items-center gap-2">
+<select class="rounded-lg border border-gray-700 bg-[#1F1F1F] py-2 pl-3 pr-8 text-gray-200 focus:border-accent focus:ring-accent">
+<option>Filtrar por Rol</option>
+<option>Admin</option>
+<option>Artista</option>
+<option>Cliente</option>
+</select>
+<select class="rounded-lg border border-gray-700 bg-[#1F1F1F] py-2 pl-3 pr-8 text-gray-200 focus:border-accent focus:ring-accent">
+<option>Filtrar por Estado</option>
+<option>Activo</option>
+<option>Inactivo</option>
+<option>Suspendido</option>
+</select>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-bold text-black hover:bg-accent/90">
+<span class="material-symbols-outlined">add</span>
+                Agregar Nuevo Usuario
+            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-gray-300">
+<thead class="border-b border-gray-800 bg-transparent text-xs uppercase text-gray-400">
+<tr>
+<th class="px-6 py-3" scope="col">Nombre</th>
+<th class="px-6 py-3" scope="col">Correo Electrónico</th>
+<th class="px-6 py-3" scope="col">Rol</th>
+<th class="px-6 py-3" scope="col">Estado</th>
+<th class="px-6 py-3 text-center" scope="col">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-t border-gray-800 hover:bg-gray-800/50">
+<td class="px-6 py-4 font-medium text-gray-100">Elena García</td>
+<td class="px-6 py-4">elena.garcia@email.com</td>
+<td class="px-6 py-4">Artista</td>
+<td class="px-6 py-4"><span class="rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs text-green-400">Activo</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-gray-400 hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-gray-800 hover:bg-gray-800/50">
+<td class="px-6 py-4 font-medium text-gray-100">Carlos Rodriguez</td>
+<td class="px-6 py-4">carlos.r@email.com</td>
+<td class="px-6 py-4">Cliente</td>
+<td class="px-6 py-4"><span class="rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs text-green-400">Activo</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-gray-400 hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-gray-800 hover:bg-gray-800/50">
+<td class="px-6 py-4 font-medium text-gray-100">Sofia Martinez</td>
+<td class="px-6 py-4">sofia.martinez@email.com</td>
+<td class="px-6 py-4">Admin</td>
+<td class="px-6 py-4"><span class="rounded-full bg-yellow-500/20 px-2.5 py-0.5 text-xs text-yellow-400">Inactivo</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-gray-400 hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-gray-800 hover:bg-gray-800/50">
+<td class="px-6 py-4 font-medium text-gray-100">Javier Lopez</td>
+<td class="px-6 py-4">javier.lopez@email.com</td>
+<td class="px-6 py-4">Artista</td>
+<td class="px-6 py-4"><span class="rounded-full bg-red-500/20 px-2.5 py-0.5 text-xs text-red-400">Suspendido</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-gray-400 hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-t border-gray-800 hover:bg-gray-800/50">
+<td class="px-6 py-4 font-medium text-gray-100">Laura Sanchez</td>
+<td class="px-6 py-4">laura.s@email.com</td>
+<td class="px-6 py-4">Cliente</td>
+<td class="px-6 py-4"><span class="rounded-full bg-green-500/20 px-2.5 py-0.5 text-xs text-green-400">Activo</span></td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-1 text-gray-400 hover:text-accent"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-1 text-gray-400 hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex flex-col items-center justify-between gap-4 border-t border-gray-800 p-4 sm:flex-row">
+<span class="text-sm text-gray-400">Mostrando <span class="font-semibold text-gray-200">1-5</span> de <span class="font-semibold text-gray-200">100</span></span>
+<div class="inline-flex items-center -space-x-px text-sm">
+<a class="flex h-8 items-center justify-center rounded-l-lg border border-gray-700 bg-transparent px-3 leading-tight text-gray-400 hover:bg-gray-800 hover:text-gray-200" href="#">Anterior</a>
+<a class="flex h-8 items-center justify-center border border-accent bg-accent px-3 font-semibold leading-tight text-black" href="#">1</a>
+<a class="flex h-8 items-center justify-center border border-gray-700 bg-transparent px-3 leading-tight text-gray-400 hover:bg-gray-800 hover:text-gray-200" href="#">2</a>
+<a class="flex h-8 items-center justify-center border border-gray-700 bg-transparent px-3 leading-tight text-gray-400 hover:bg-gray-800 hover:text-gray-200" href="#">3</a>
+<a class="flex h-8 items-center justify-center rounded-r-lg border border-gray-700 bg-transparent px-3 leading-tight text-gray-400 hover:bg-gray-800 hover:text-gray-200" href="#">Siguiente</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

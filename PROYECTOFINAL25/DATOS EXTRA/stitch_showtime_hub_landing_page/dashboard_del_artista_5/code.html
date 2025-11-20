@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Mensajes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "accent": "#00f5d4", // Bright mint green
+                        "background-dark": "#0d0d0d",
+                        "surface-dark": "#1a1a1a",
+                        "text-light": "#f0f0f0",
+                        "text-muted": "#a3a3a3",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }.no-scrollbar {
+            -ms-overflow-style: none;scrollbar-width: none;}
+    </style>
+</head>
+<body class="bg-background-dark font-display text-text-light">
+<div class="flex h-screen w-full">
+<aside class="flex flex-col w-64 bg-background-dark border-r border-surface-dark/50">
+<div class="flex flex-col grow p-4">
+<div class="flex gap-3 items-center mb-8 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="ShowTime Hub logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Jpv7oZxAg6dS8rET5IY6UJWAn35Ph_4yHN7E1F2twJ5i9rfPrFAGM_WcUeJSmFsg1W_yeoYhFXqr1RcMTyT24YsUt4HL0fWIsm-015WEtKkDDlr1GApSaXnghE6u_9jMLshvRbLJLHfeZBRgxukWeELkYaFP_u44CakWopnRXM0czZawX_L77tHke6aoAYi25PK_i6YvzkwY-mRvEuZbXmZaUx_QqW0sC81Qkp34z7Su2YO7ldvK_2H_MA0E5NSQ32rVVTn3UQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light text-base font-medium leading-normal">ShowTime Hub</h1>
+<p class="text-text-muted text-sm font-normal leading-normal">Panel de Artista</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">work</span>
+<p class="text-sm font-medium leading-normal">Mis Servicios</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Reservas</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-sm font-medium leading-normal">Calendario</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-accent text-black" href="#">
+<span class="material-symbols-outlined">mail</span>
+<p class="text-sm font-medium leading-normal">Mensajes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<p class="text-sm font-medium leading-normal">Ganancias</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-sm font-medium leading-normal">Perfil</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-1 p-4 border-t border-surface-dark/50">
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Ajustes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-text-muted hover:bg-surface-dark hover:text-text-light rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Cerrar Sesión</p>
+</a>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-screen">
+<div class="flex w-full h-full">
+<div class="w-full md:w-1/3 lg:w-1/4 flex-col border-r border-surface-dark/50 bg-surface-dark hidden md:flex">
+<div class="p-4 border-b border-surface-dark/50">
+<h2 class="text-lg font-bold text-text-light">Conversaciones</h2>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar">
+<div class="flex flex-col">
+<a class="flex items-center gap-4 p-4 bg-background-dark border-r-2 border-accent" href="#">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A");'></div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-background-dark"></span>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold text-text-light truncate">Jane Doe</h3>
+<p class="text-xs text-text-muted">10:45 AM</p>
+</div>
+<p class="text-sm text-text-muted truncate">¡Absolutamente! Estoy deseando ver tu...</p>
+</div>
+</a>
+<a class="flex items-center gap-4 p-4 hover:bg-background-dark/50" href="#">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A");'></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold text-text-light truncate">John Smith</h3>
+<p class="text-xs text-text-muted">Ayer</p>
+</div>
+<p class="text-sm text-text-muted truncate">Gracias por la rápida respuesta. Te confirmo...</p>
+</div>
+</a>
+<a class="flex items-center gap-4 p-4 hover:bg-background-dark/50" href="#">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A");'></div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-background-dark"></span>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold text-text-light truncate">The Local Cafe</h3>
+<p class="text-xs text-text-muted">2d</p>
+</div>
+<p class="text-sm text-text-muted truncate">¡Nos encantó tu actuación! ¿Estarías dis...</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-1 flex-col bg-background-dark">
+<div class="flex items-center gap-4 p-3 border-b border-surface-dark/50">
+<button class="md:hidden text-text-light"><span class="material-symbols-outlined">arrow_back</span></button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A");'></div>
+<div class="flex flex-col">
+<h3 class="font-semibold text-text-light">Jane Doe</h3>
+<p class="text-xs text-text-muted">En línea</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<div class="flex items-start gap-3 max-w-lg">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A");'></div>
+<div class="flex flex-col gap-1">
+<div class="bg-surface-dark rounded-xl rounded-tl-none p-3">
+<p class="text-sm text-text-light">Hola Alex, solo quería confirmar los detalles para la fiesta de cumpleaños de mi hijo el próximo mes. ¿Está todo en orden?</p>
+</div>
+<span class="text-xs text-text-muted px-1">10:42 AM</span>
+</div>
+</div>
+<div class="flex items-start gap-3 justify-end">
+<div class="flex flex-col gap-1 items-end">
+<div class="bg-accent rounded-xl rounded-tr-none p-3 max-w-lg">
+<p class="text-sm text-black">¡Hola Jane! Sí, todo confirmado por mi parte. El equipo y yo estamos muy emocionados por el evento. ¿Tenéis alguna petición especial de canciones?</p>
+</div>
+<span class="text-xs text-text-muted px-1">10:44 AM</span>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAg0k63eK-LoTR5azghYYbhZtad3FqqiZT6kVB5_4Lh3a_KlZCOWHuuShEwc_0XEaLUhVcuaivKUredapiaxa89M8_8BsF2pN-On9skX7VGEmM6dlApxLVHiYbTvFpL9QhlyUE0QqyG9FYEc9gls2yGgNojogUy8u0sCepid8n4WwsCbZQl24-Mmt4cafuX9sRZ7MqRlXnGP8aXzPj_0ymc6ayfPy-2Q1tSUSwyCch49rQJaEvkBC3bNHjOguGUSK4ENyUbTnoDw");'></div>
+</div>
+<div class="flex items-start gap-3 max-w-lg">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEnx2-4DQDbD3DTFc4f_qFg5R0zyAadSOk5ojRGGYieN-QjN5E9CnogvopFaEvqm-LaMv85zUKyUhYoVBvwLen9nA4gdqnZUP6lW5tkNOwPdsE7ISnSUc5D4FHJwaWG7VxVsvD0qejE2yDmWziPBO6Wibcrk0_NILrP8Mlb0YI0lCix-Q8SItDqEX7rxoxuhypU97WQr6TNQ3LKxdVdax0j8uNit346AtatC10wG8js8HjWOzR2ChWH32WbBGBMK1nJPuQAY2l8A");'></div>
+<div class="flex flex-col gap-1">
+<div class="bg-surface-dark rounded-xl rounded-tl-none p-3">
+<p class="text-sm text-text-light">¡Absolutamente! Estoy deseando ver tu actuación. Te enviaré una lista de canciones más tarde hoy. ¡Gracias!</p>
+</div>
+<span class="text-xs text-text-muted px-1">10:45 AM</span>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-surface-dark/50 bg-background-dark">
+<div class="flex items-center gap-4">
+<input class="flex-1 bg-surface-dark border border-surface-dark/50 text-text-light text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-3.5" placeholder="Escribe tu mensaje..." type="text"/>
+<button class="inline-flex justify-center items-center p-3 text-black bg-accent rounded-full cursor-pointer hover:bg-accent/90">
+<span class="material-symbols-outlined" style="font-size: 24px;">send</span>
+<span class="sr-only">Enviar mensaje</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Gestión de Reservas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#00f5d4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#0a0a0a",
+              "surface-dark": "#1a1a1a",
+              "border-dark": "#2c2c2c",
+              "text-light": "#f0f0f0",
+              "text-dark": "#a3a3a3",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-dark font-display">
+<div class="flex min-h-screen w-full flex-row">
+<aside class="flex w-64 flex-col bg-background-dark p-4 text-text-light border-r border-border-dark">
+<div class="flex items-center gap-3 p-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPXDaH4tXzBQsDnfTCamMG-WACKgZ1sowgl31Ucl4w_egTQXmMLAYS9U4j8LBgVLd--RnnO-VJHBJwc-o1B_wdao1FurYauUpizL5ovPxkhBQemAaEtaiPzyGGpOqBiQ5XY7xTtup5dFkK21zxvErIoG3l3hi4Acwb4kmwJlNZrSeV6CkKpngfgd8CbWWzmI1tdowpJEZNGhnxDL1kEG9veppDsy0Y7aUnfpumwwTxwJTtcTOTH61hPvWCKIXAk7v_fdgxeoaf1g");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-semibold leading-normal text-text-light">Admin</h1>
+<p class="text-sm font-normal leading-normal text-text-dark">ShowTime Hub</p>
+</div>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-dark hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-dark hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium leading-normal">Gestión de Usuarios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-dark hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">theater_comedy</span>
+<p class="text-sm font-medium leading-normal">Gestión de Artistas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary" href="#">
+<span class="material-symbols-outlined text-primary">book_online</span>
+<p class="text-sm font-medium leading-normal text-primary">Gestión de Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-dark hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Reportes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-dark hover:bg-surface-dark hover:text-text-light" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Configuración</p>
+</a>
+</nav>
+</aside>
+<main class="flex-1">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-border-dark p-6">
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-text-light">Gestión de Reservas</h1>
+<div class="flex items-center gap-2">
+<button class="rounded-full p-2 text-text-dark hover:bg-surface-dark hover:text-text-light">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="rounded-full p-2 text-text-dark hover:bg-surface-dark hover:text-text-light">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="p-6">
+<div class="rounded-lg border border-border-dark bg-surface-dark p-6">
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+<div class="relative flex-grow sm:flex-grow-0 sm:w-80">
+<span class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-text-dark">search</span>
+<input class="w-full rounded-lg border border-border-dark bg-background-dark py-2 pl-10 pr-4 text-sm text-text-light placeholder-text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" id="search" name="search" placeholder="Buscar por artista, cliente..." type="text"/>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-border-dark bg-background-dark py-2 pl-3 pr-8 text-sm text-text-light focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:w-auto" id="status-filter">
+<option>Todos los estados</option>
+<option>Confirmada</option>
+<option>Pendiente</option>
+<option>Cancelada</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-text-dark">expand_more</span>
+</div>
+<button class="flex items-center gap-2 rounded-lg border border-border-dark bg-transparent px-4 py-2 text-sm font-medium text-text-light hover:bg-white/5">
+<span class="material-symbols-outlined text-base">filter_list</span>
+                Filtros
+            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-text-dark">
+<thead class="border-b border-border-dark text-xs uppercase text-text-dark">
+<tr>
+<th class="px-6 py-3" scope="col">Artista</th>
+<th class="px-6 py-3" scope="col">Cliente</th>
+<th class="px-6 py-3" scope="col">Fecha</th>
+<th class="px-6 py-3" scope="col">Servicio</th>
+<th class="px-6 py-3" scope="col">Estado</th>
+<th class="px-6 py-3 text-right" scope="col">Monto</th>
+<th class="px-6 py-3 text-center" scope="col">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border-dark hover:bg-background-dark">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-light">DJ Electra</td>
+<td class="px-6 py-4">Juan Pérez</td>
+<td class="px-6 py-4">2023-10-25</td>
+<td class="px-6 py-4">DJ Set (3h)</td>
+<td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400"><span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>Confirmada</span></td>
+<td class="px-6 py-4 text-right font-medium text-text-light">$500.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-dark hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="p-1 text-text-dark hover:text-red-500"><span class="material-symbols-outlined text-xl">cancel</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-dark hover:bg-background-dark">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-light">Mago Supremo</td>
+<td class="px-6 py-4">Ana Gómez</td>
+<td class="px-6 py-4">2023-11-12</td>
+<td class="px-6 py-4">Show de Magia</td>
+<td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-xs font-medium text-yellow-400"><span class="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>Pendiente</span></td>
+<td class="px-6 py-4 text-right font-medium text-text-light">$350.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-dark hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="p-1 text-text-dark hover:text-green-500"><span class="material-symbols-outlined text-xl">check_circle</span></button>
+<button class="p-1 text-text-dark hover:text-red-500"><span class="material-symbols-outlined text-xl">cancel</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-dark hover:bg-background-dark">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-light">Banda "The Echoes"</td>
+<td class="px-6 py-4">Carlos Ruiz</td>
+<td class="px-6 py-4">2023-11-18</td>
+<td class="px-6 py-4">Concierto Acústico</td>
+<td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400"><span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>Confirmada</span></td>
+<td class="px-6 py-4 text-right font-medium text-text-light">$1,200.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-dark hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="p-1 text-text-dark hover:text-red-500"><span class="material-symbols-outlined text-xl">cancel</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-border-dark hover:bg-background-dark">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-light">Comediante Risa</td>
+<td class="px-6 py-4">Laura Fernández</td>
+<td class="px-6 py-4">2023-10-30</td>
+<td class="px-6 py-4">Show de Stand-Up</td>
+<td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 rounded-full bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-400"><span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>Cancelada</span></td>
+<td class="px-6 py-4 text-right font-medium text-text-light">$250.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-dark hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-background-dark">
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-light">Acróbatas Volare</td>
+<td class="px-6 py-4">Mario Luna</td>
+<td class="px-6 py-4">2023-12-05</td>
+<td class="px-6 py-4">Show Aéreo</td>
+<td class="px-6 py-4"><span class="inline-flex items-center gap-1.5 rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-xs font-medium text-yellow-400"><span class="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>Pendiente</span></td>
+<td class="px-6 py-4 text-right font-medium text-text-light">$800.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1 text-text-dark hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="p-1 text-text-dark hover:text-green-500"><span class="material-symbols-outlined text-xl">check_circle</span></button>
+<button class="p-1 text-text-dark hover:text-red-500"><span class="material-symbols-outlined text-xl">cancel</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-6 flex flex-col items-center justify-between gap-4 border-t border-border-dark pt-4 sm:flex-row">
+<p class="text-sm text-text-dark">Mostrando <span class="font-medium text-text-light">1</span> a <span class="font-medium text-text-light">5</span> de <span class="font-medium text-text-light">890</span> resultados</p>
+<div class="inline-flex items-center gap-1 rounded-lg bg-background-dark p-1">
+<button class="rounded-md p-2 text-sm text-text-dark hover:bg-surface-dark hover:text-text-light"><span class="material-symbols-outlined text-base">chevron_left</span></button>
+<button class="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-background-dark">1</button>
+<button class="rounded-md px-3 py-1.5 text-sm text-text-dark hover:bg-surface-dark hover:text-text-light">2</button>
+<button class="rounded-md px-3 py-1.5 text-sm text-text-dark hover:bg-surface-dark hover:text-text-light">3</button>
+<span class="px-1 text-sm text-text-dark">...</span>
+<button class="rounded-md px-3 py-1.5 text-sm text-text-dark hover:bg-surface-dark hover:text-text-light">178</button>
+<button class="rounded-md p-2 text-sm text-text-dark hover:bg-surface-dark hover:text-text-light"><span class="material-symbols-outlined text-base">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

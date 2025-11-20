@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Mensajes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "accent": "#00f5d4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#000000",
+              "text-light": "#f0f0f0",
+              "text-muted": "#a0a0a0",
+              "card-dark": "#181818",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-dark font-display text-text-light">
+<div class="flex h-screen w-full flex-col group/design-root overflow-hidden">
+<div class="flex flex-grow h-full">
+<aside class="sticky top-0 h-screen w-64 shrink-0 bg-card-dark p-4 border-r border-white/5 hidden md:flex flex-col">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="ShowTime Hub company logo, an abstract shape resembling a stage light" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATT-7QW1wp1JcF-OlaahqJuM2nhB3dtBbgQBuroSVMUhCYY8uAeBsO2-l2BziXUlhRPKU8I0FnOEH4nEJONYmbWJ35DhKRdWRhxqe8fy2lXVE5d5h4GWFrYZx88Dw20N_7lM4yfj_5kbbX4Q_CPQ-FWvPlA2Gdo6DkG5lHIY0m3UA3IqEyYLEDbOBL9x2eSmH0BmR4QBrfLKDq-I9dM4l01nseNVA2Cu-nXmq9zRg_OMx-0a_-PloKyrGTSMzlUGo2Igq9Q2N7zA");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light text-base font-medium leading-normal">ShowTime Hub</h1>
+<p class="text-text-muted text-sm font-normal leading-normal">Marketplace Profesional</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">home</span>
+<p class="text-text-light text-sm font-medium leading-normal">Inicio</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">calendar_month</span>
+<p class="text-text-light text-sm font-medium leading-normal">Mis Reservas</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">favorite</span>
+<p class="text-text-light text-sm font-medium leading-normal">Artistas Favoritos</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-accent" href="#">
+<span class="material-symbols-outlined fill text-black">mail</span>
+<p class="text-black text-sm font-medium leading-normal">Mensajes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">notifications</span>
+<p class="text-text-light text-sm font-medium leading-normal">Notificaciones</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">person</span>
+<p class="text-text-light text-sm font-medium leading-normal">Perfil</p>
+</a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 flex h-screen overflow-hidden">
+<div class="flex-shrink-0 w-full md:w-80 lg:w-96 bg-card-dark border-r border-white/5 flex flex-col">
+<div class="p-4 border-b border-white/5">
+<h2 class="text-xl font-bold text-text-light">Mensajes</h2>
+<div class="relative mt-4">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">search</span>
+<input class="w-full bg-background-dark border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-text-light placeholder-text-muted focus:ring-accent focus:border-accent" placeholder="Buscar conversaciones..." type="search"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<nav>
+<a class="flex items-center gap-4 p-4 bg-white/5 border-b border-white/10 cursor-pointer" href="#">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of DJ Electra" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCh9yzmmVd6U44riEQKex9b_2v-jfyz2RSIE_gnuLXIKYCXRBtUGKVD2IQoIpvKupQ66jUZ3EbB9OsgIT6lH4VZvCIB7PNg6sJs7nyHzaef32Ltg62l_oNNnWrQkuhBHWMw5qE2pLf9ZJjusSGkavZdnIJq1t3SXpV26GigByHcaiyAiQ6ES0Vvhs1kQ0OTA_x93Gy184r6bGnbYHQXVDkKVmghWQJ8QcSwLeW7I3dhQ1GdDl9MDoLYSwWqAzHUeTvkti3zKEwgOg");'></div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 ring-2 ring-card-dark"></span>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="flex justify-between items-center">
+<p class="font-semibold text-text-light truncate">DJ Electra</p>
+<span class="text-xs text-text-muted">10:42 AM</span>
+</div>
+<p class="text-sm text-text-muted truncate">¡Claro! Enviaré la lista de canciones...</p>
+</div>
+</a>
+<a class="flex items-center gap-4 p-4 border-b border-white/10 hover:bg-white/5 cursor-pointer" href="#">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of Magnifico the Great" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDY7xgth6ItTKqr7soLIBM4G3iCqpRD1EoQsYRbiYmYnk-SyE-rYxppSjoCzH0ecnDuNRjIItP0plJmf44sTvi6wHwiIBXEp6nfGXGE-PnQTRsmAw9MzLkbs5sjrrvbwMaTNDz9wGqTuoAgMUpvre9N_H8qiQP3xvCdHCMiRny4DN4bl8AWkh4mAURIQuIiC0MkzZWyX83YhKg1Di3cPug8WiAztS3SsLiuNyF3iSIyvQiwgMU4jRIf8kkrZRTgV8q8VKt1QiJlIw");'></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="flex justify-between items-center">
+<p class="font-semibold text-text-light truncate">Magnifico the Great</p>
+<span class="text-xs text-text-muted">Ayer</span>
+</div>
+<p class="text-sm text-text-muted truncate">Gracias por la oportunidad, ¡será un...</p>
+</div>
+</a>
+<a class="flex items-center gap-4 p-4 border-b border-white/10 hover:bg-white/5 cursor-pointer" href="#">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of The Groove Makers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSd0t8R9HeNViV7HFZpAQF-dcEUOAJeVA4NZD8bEMmQluVKq-94zj7rhaC52KYPAdv8D0Bbu3tYgn_d7WdMyUmkn4L7d-P2OO2rcZktxIEsopN6BjSP1kobwRFdat8ki8ZWCTMTH1usY2JCnZ82355xdqwA2CIeRuN0diXYOCo-WQPYOqBY_pHkQ60IXzUivPLYbnwHFVC29gn5dQ2T8PSQhL9jyL-4v2vUfPA9nkeoYiwTLx46ZxPd4Rg9PQZ5P8pV6-qjHJ5Sw");'></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="flex justify-between items-center">
+<p class="font-semibold text-text-light truncate">The Groove Makers</p>
+<span class="text-xs text-text-muted">2d</span>
+</div>
+<p class="text-sm text-text-muted truncate">Hemos recibido la solicitud. Estamos...</p>
+</div>
+</a>
+</nav>
+</div>
+</div>
+<div class="flex-1 flex flex-col bg-background-dark">
+<header class="flex items-center gap-4 p-4 border-b border-white/5 shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of DJ Electra" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCh9yzmmVd6U44riEQKex9b_2v-jfyz2RSIE_gnuLXIKYCXRBtUGKVD2IQoIpvKupQ66jUZ3EbB9OsgIT6lH4VZvCIB7PNg6sJs7nyHzaef32Ltg62l_oNNnWrQkuhBHWMw5qE2pLf9ZJjusSGkavZdnIJq1t3SXpV26GigByHcaiyAiQ6ES0Vvhs1kQ0OTA_x93Gy184r6bGnbYHQXVDkKVmghWQJ8QcSwLeW7I3dhQ1GdDl9MDoLYSwWqAzHUeTvkti3zKEwgOg");'></div>
+<div>
+<h3 class="text-lg font-bold text-text-light">DJ Electra</h3>
+<p class="text-sm text-green-400 flex items-center gap-1.5"><span class="block h-2 w-2 rounded-full bg-green-500"></span> En línea</p>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-6 space-y-4">
+<div class="flex justify-start">
+<div class="bg-card-dark rounded-lg rounded-bl-none p-3 max-w-sm">
+<p class="text-sm text-text-light">Hola Elena, gracias por contactarme. ¿Cómo puedo ayudarte con tu evento corporativo?</p>
+</div>
+</div>
+<div class="flex justify-end">
+<div class="bg-accent rounded-lg rounded-br-none p-3 max-w-sm">
+<p class="text-sm text-black">¡Hola! Estamos muy emocionados. ¿Podrías enviarme una lista de canciones sugeridas?</p>
+</div>
+</div>
+<div class="flex justify-start">
+<div class="bg-card-dark rounded-lg rounded-bl-none p-3 max-w-sm">
+<p class="text-sm text-text-light">¡Claro! Enviaré la lista de canciones en un momento. ¿Alguna preferencia de género en particular?</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-white/5 bg-background-dark mt-auto shrink-0">
+<div class="flex items-center gap-4">
+<input class="flex-1 bg-card-dark border border-white/10 rounded-lg px-4 py-2.5 text-sm text-text-light placeholder-text-muted focus:ring-accent focus:border-accent" placeholder="Escribe un mensaje..." type="text"/>
+<button class="flex items-center justify-center size-10 rounded-lg bg-accent text-black hover:bg-accent/80 shrink-0">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

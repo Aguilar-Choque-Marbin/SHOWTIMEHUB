@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Dashboard del Administrador</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "accent": "#22d3ee","accent-light": "rgba(34, 211, 238, 0.2)",
+              "background-light": "#f6f6f8",
+              "background-dark": "#000000",
+              "surface-dark": "#111111",
+              "border-dark": "rgba(255, 255, 255, 0.1)",
+              "text-primary-dark": "#e5e7eb",
+              "text-secondary-dark": "#9ca3af",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-dark">
+<div class="flex min-h-screen w-full flex-row">
+<aside class="flex w-64 flex-col bg-surface-dark p-4">
+<div class="flex items-center gap-3 p-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPXDaH4tXzBQsDnfTCamMG-WACKgZ1sowgl31Ucl4w_egTQXmMLAYS9U4j8LBgVLd--RnnO-VJHBJwc-o1B_wdao1FurYauUpizL5ovPxkhBQemAaEtaiPzyGGpOqBiQ5XY7xTtup5dFkK21zxvErIoG3l3hi4Acwb4kmwJlNZrSeV6CkKpngfgd8CbWWzmI1tdowpJEZNGhnxDL1kEG9veppDsy0Y7aUnfpumwwTxwJTtcTOTH61hPvWCKIXAk7v_fdgxeoaf1g");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-semibold leading-normal text-text-primary-dark">Admin</h1>
+<p class="text-sm font-normal leading-normal text-text-secondary-dark">ShowTime Hub</p>
+</div>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg bg-accent-light px-3 py-2 text-accent" href="#">
+<span class="material-symbols-outlined text-accent">dashboard</span>
+<p class="text-sm font-medium leading-normal text-accent">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark" href="#">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium leading-normal">Gestión de Usuarios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark" href="#">
+<span class="material-symbols-outlined">theater_comedy</span>
+<p class="text-sm font-medium leading-normal">Gestión de Artistas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Gestión de Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Reportes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium leading-normal">Configuración</p>
+</a>
+</nav>
+</aside>
+<main class="flex-1 bg-background-dark">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-border-dark p-6">
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-text-primary-dark">Dashboard</h1>
+<div class="flex items-center gap-2">
+<button class="rounded-full p-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="rounded-full p-2 text-text-secondary-dark hover:bg-white/5 hover:text-text-primary-dark">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="p-6">
+<section class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+<div class="flex flex-col gap-2 rounded-lg border border-border-dark bg-surface-dark p-6 transition-all hover:border-accent/50 hover:bg-[#181818]">
+<div class="flex items-center justify-between">
+<p class="text-base font-medium leading-normal text-text-secondary-dark">Total Usuarios</p>
+<span class="material-symbols-outlined text-text-secondary-dark">groups</span>
+</div>
+<p class="text-3xl font-bold leading-tight tracking-tight text-text-primary-dark">1,250</p>
+<p class="text-sm font-medium leading-normal text-green-400">+5.4%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-lg border border-border-dark bg-surface-dark p-6 transition-all hover:border-accent/50 hover:bg-[#181818]">
+<div class="flex items-center justify-between">
+<p class="text-base font-medium leading-normal text-text-secondary-dark">Artistas Activos</p>
+<span class="material-symbols-outlined text-text-secondary-dark">mic</span>
+</div>
+<p class="text-3xl font-bold leading-tight tracking-tight text-text-primary-dark">340</p>
+<p class="text-sm font-medium leading-normal text-green-400">+2.1%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-lg border border-border-dark bg-surface-dark p-6 transition-all hover:border-accent/50 hover:bg-[#181818]">
+<div class="flex items-center justify-between">
+<p class="text-base font-medium leading-normal text-text-secondary-dark">Total de Reservas</p>
+<span class="material-symbols-outlined text-text-secondary-dark">calendar_today</span>
+</div>
+<p class="text-3xl font-bold leading-tight tracking-tight text-text-primary-dark">890</p>
+<p class="text-sm font-medium leading-normal text-green-400">+10.2%</p>
+</div>
+<div class="flex flex-col gap-2 rounded-lg border border-border-dark bg-surface-dark p-6 transition-all hover:border-accent/50 hover:bg-[#181818]">
+<div class="flex items-center justify-between">
+<p class="text-base font-medium leading-normal text-text-secondary-dark">Ingresos Totales</p>
+<span class="material-symbols-outlined text-text-secondary-dark">monetization_on</span>
+</div>
+<p class="text-3xl font-bold leading-tight tracking-tight text-text-primary-dark">$54,800</p>
+<p class="text-sm font-medium leading-normal text-green-400">+15.8%</p>
+</div>
+</section>
+<div class="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
+<section class="lg:col-span-2">
+<h2 class="px-1 pb-4 text-xl font-semibold leading-tight tracking-tight text-text-primary-dark">Ingresos en los últimos 30 días</h2>
+<div class="flex h-80 items-center justify-center rounded-lg border border-border-dark bg-surface-dark p-4">
+<div class="flex flex-col items-center gap-2 text-center text-text-secondary-dark">
+<span class="material-symbols-outlined text-4xl text-accent">monitoring</span>
+<p class="text-sm">Data chart placeholder</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="px-1 pb-4 text-xl font-semibold leading-tight tracking-tight text-text-primary-dark">Actividad Reciente</h2>
+<div class="rounded-lg border border-border-dark bg-surface-dark">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-text-secondary-dark">
+<thead class="text-xs uppercase text-text-secondary-dark">
+<tr>
+<th class="px-6 py-3" scope="col">Artista</th>
+<th class="px-6 py-3" scope="col">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-t border-border-dark">
+<td class="px-6 py-4 font-medium text-text-primary-dark">DJ Electra</td>
+<td class="px-6 py-4"><span class="rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">Reserva Confirmada</span></td>
+</tr>
+<tr class="border-t border-border-dark">
+<td class="px-6 py-4 font-medium text-text-primary-dark">Mago Supremo</td>
+<td class="px-6 py-4"><span class="rounded-full bg-accent-light px-2.5 py-0.5 text-xs font-medium text-accent">Nuevo Artista</span></td>
+</tr>
+<tr class="border-t border-border-dark">
+<td class="px-6 py-4 font-medium text-text-primary-dark">Banda "The Echoes"</td>
+<td class="px-6 py-4"><span class="rounded-full bg-yellow-500/10 px-2.5 py-0.5 text-xs font-medium text-yellow-400">Reserva Pendiente</span></td>
+</tr>
+<tr class="border-t border-border-dark">
+<td class="px-6 py-4 font-medium text-text-primary-dark">Comediante Risa</td>
+<td class="px-6 py-4"><span class="rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">Reserva Confirmada</span></td>
+</tr>
+<tr class="border-t border-border-dark">
+<td class="px-6 py-4 font-medium text-text-primary-dark">Acróbatas Volare</td>
+<td class="px-6 py-4"><span class="rounded-full bg-accent-light px-2.5 py-0.5 text-xs font-medium text-accent">Nuevo Artista</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

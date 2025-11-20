@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solicitar Presupuesto - ShowTime Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "accent": "#00BCD4",
+            "background-dark": "#000000",
+            "container-dark": "#1A1A1A",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<header class="sticky top-0 z-10 flex items-center justify-between whitespace-nowrap border-b border-solid border-white/10 bg-background-dark/80 px-4 py-3 backdrop-blur-sm sm:px-8 md:px-10 lg:px-20">
+<div class="flex items-center gap-4 text-white">
+<span class="material-symbols-outlined text-accent text-3xl">
+          local_activity
+        </span>
+<h1 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">ShowTime Hub</h1>
+</div>
+<div class="flex flex-1 items-center justify-end gap-3">
+<p class="hidden text-sm text-gray-300 sm:block">Solicitud para:</p>
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Profile picture of DJ Elena" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCM-EpeR0yzF7i9H-ERxwHW4w4gCaoLLaFmcxz1JWdxCU7xECJ6KECcAlcNG8d3GbUg06t9WE00hTSG0tEVQydWeLaBS7_1LlCv673Kmy8dqwNtNauREayGVfovopiVoVGOUIsBV3AoaikmWpcOLDUXR_pecyPHF1TT9y3fFt4cR6pUsmFYCD31qz6oCV0yfCGmusL5ciMU9JMntmOYadXe8w9yRDBHJ4YQcBpDmD8OHHjtniMgY-Rc8qsNMjTjCNiQMqOcUk1LjA");'></div>
+<p class="text-white font-bold">DJ Elena</p>
+</div>
+</div>
+</header>
+<main class="flex flex-1 justify-center px-4 py-8 sm:py-12 md:py-16">
+<div class="flex w-full max-w-4xl flex-col gap-8">
+<div>
+<p class="text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72 text-center sm:text-left">Solicitar Presupuesto a DJ Elena</p>
+</div>
+<div class="flex w-full flex-col gap-10 rounded-xl bg-container-dark p-6 sm:p-8">
+<section>
+<h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-4 border-b border-white/10 mb-6">1. Detalles del Evento</h3>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<div>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Tipo de Evento</p>
+<div class="relative flex w-full flex-1 items-center">
+<select class="form-select w-full min-w-0 flex-1 appearance-none overflow-hidden rounded-lg border border-white/20 bg-container-dark p-3 pr-10 text-base font-normal leading-normal text-white placeholder:text-gray-400 focus:border-accent focus:outline-0 focus:ring-2 focus:ring-accent/50 h-12">
+<option disabled="" selected="" value="">Selecciona un tipo de evento</option>
+<option value="boda">Boda</option>
+<option value="cumpleanos">Cumpleaños</option>
+<option value="evento-corporativo">Evento Corporativo</option>
+<option value="fiesta-privada">Fiesta Privada</option>
+<option value="otro">Otro</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 pointer-events-none text-gray-400">expand_more</span>
+</div>
+</label>
+</div>
+<div>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Fecha y Hora del Evento</p>
+<div class="relative flex w-full flex-1 items-center">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-white/20 bg-container-dark focus:border-accent h-12 placeholder:text-gray-400 p-3 pr-10 text-base font-normal leading-normal [color-scheme:dark]" placeholder="Seleccionar fecha y hora" type="datetime-local" value=""/>
+<span class="material-symbols-outlined absolute right-3 text-gray-400 pointer-events-none">calendar_today</span>
+</div>
+</label>
+</div>
+<div class="md:col-span-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Ubicación del Evento</p>
+<div class="relative flex w-full flex-1 items-center">
+<span class="material-symbols-outlined absolute left-3 text-gray-400">
+                      location_on
+                    </span>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-white/20 bg-container-dark focus:border-accent h-12 placeholder:text-gray-400 pl-10 p-3 text-base font-normal leading-normal" placeholder="Ej: Calle Falsa 123, Springfield" value=""/>
+</div>
+</label>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-4 border-b border-white/10 mb-6">2. Mensaje al Artista</h3>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Tu Mensaje</p>
+<textarea class="form-textarea w-full min-h-32 resize-y rounded-lg border border-white/20 bg-container-dark p-3 text-base text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent" placeholder="Describe tu evento, número de invitados, necesidades especiales, estilo de música preferido, etc."></textarea>
+</label>
+</section>
+<section>
+<h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-4 border-b border-white/10 mb-6">3. Tus Datos de Contacto</h3>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Nombre Completo</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-white/20 bg-container-dark focus:border-accent h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Tu nombre y apellido" value=""/>
+</label>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Correo Electrónico</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-white/20 bg-container-dark focus:border-accent h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="tu@email.com" type="email" value=""/>
+</label>
+<div class="md:col-span-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-gray-200 text-sm font-medium leading-normal pb-2">Teléfono (Opcional)</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-white/20 bg-container-dark focus:border-accent h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="+1 (555) 123-4567" type="tel" value=""/>
+</label>
+</div>
+</div>
+</section>
+<section class="border-t border-white/10 pt-8 mt-4">
+<div class="flex flex-col items-center justify-center gap-6 sm:flex-row sm:justify-between sm:gap-4">
+<p class="text-sm text-gray-400 text-center sm:text-left max-w-md">Al enviar, aceptas nuestros Términos de Servicio. El artista recibirá tus datos para contactarte.</p>
+<button class="flex w-full sm:w-auto max-w-sm cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-accent text-black gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-8 transition-transform duration-200 hover:scale-105 active:scale-100">
+                Enviar Solicitud de Presupuesto
+              </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

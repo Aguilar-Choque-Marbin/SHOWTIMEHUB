@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Artistas Favoritos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "accent": "#00f5d4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#000000",
+              "text-light": "#f0f0f0",
+              "text-muted": "#a0a0a0",
+              "card-dark": "#181818",
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-dark font-display text-text-light">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex flex-grow">
+<aside class="sticky top-0 h-screen w-64 shrink-0 bg-card-dark p-4 border-r border-white/5 hidden md:flex flex-col">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="ShowTime Hub company logo, an abstract shape resembling a stage light" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATT-7QW1wp1JcF-OlaahqJuM2nhB3dtBbgQBuroSVMUhCYY8uAeBsO2-l2BziXUlhRPKU8I0FnOEH4nEJONYmbWJ35DhKRdWRhxqe8fy2lXVE5d5h4GWFrYZx88Dw20N_7lM4yfj_5kbbX4Q_CPQ-FWvPlA2Gdo6DkG5lHIY0m3UA3IqEyYLEDbOBL9x2eSmH0BmR4QBrfLKDq-I9dM4l01nseNVA2Cu-nXmq9zRg_OMx-0a_-PloKyrGTSMzlUGo2Igq9Q2N7zA");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-light text-base font-medium leading-normal">ShowTime Hub</h1>
+<p class="text-text-muted text-sm font-normal leading-normal">Marketplace Profesional</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">home</span>
+<p class="text-text-light text-sm font-medium leading-normal">Inicio</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">calendar_month</span>
+<p class="text-text-light text-sm font-medium leading-normal">Mis Reservas</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-accent" href="#">
+<span class="material-symbols-outlined fill text-black">favorite</span>
+<p class="text-black text-sm font-medium leading-normal">Artistas Favoritos</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">mail</span>
+<p class="text-text-light text-sm font-medium leading-normal">Mensajes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">notifications</span>
+<p class="text-text-light text-sm font-medium leading-normal">Notificaciones</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-text-light">person</span>
+<p class="text-text-light text-sm font-medium leading-normal">Perfil</p>
+</a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+<div class="max-w-7xl mx-auto">
+<header class="flex flex-wrap justify-between items-center gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-text-light text-4xl font-black leading-tight tracking-[-0.033em]">Artistas Favoritos</h1>
+<p class="text-text-muted text-base font-normal leading-normal">Tus artistas guardados en un solo lugar.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-white/10 text-text-light">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="User avatar of Elena, a smiling woman with dark hair" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTf93qIt4Her6Mw5FkNCBb6ry_OkWqMy8YBwazO_ot-FwFxqOg2WgbUCUh4eDTJzNXI-JTAhIXC4cFaStvj8z65-2NWVgJtGxShBlx5P5NBxcedH-kX38GqF9UezKdE_p46TNE77A_getwAmBGhJ-lvHbCXRHNJpDSLUq370l0HSsFFqM3pSNTXPynPzMEt7G-gI_N-ouk45K9VaFHpOgk3Pq6p7fj__o-QjimSME6pS1LRKcMzj55u6D32b5QR374fcPLAG5JlA");'></div>
+</div>
+</header>
+<section>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div class="flex flex-col bg-card-dark rounded-xl overflow-hidden group">
+<div class="relative">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" data-alt="Portrait of DJ Sonic, a DJ with headphones" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZ9rzexRo_kUsbcLmyuE1Q3mqv80sQRDyUuhjKkixFs4YD9Yg1eJ8axFMkw4WFAD13dycRjhIqq2mDbC_SAlg08ob_Fnwh6tYVRyrCQfDRvVx56_VieDV3UvYfo0kzwGM2g8EdQZiAAWVhG8CAz4TY1AnDt-OH9rIClBe-508ATru2gtBn5rY5k8loKWspcia6wTDZl9GgGmInwUDnRDRodZcrqYddweJ4cmOUpMsvsjh8xw2TEh6y2gmyRUFRnvyyvKhfyIZZYQ");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-accent hover:bg-black/70 transition-colors">
+<span class="material-symbols-outlined fill">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-text-light">DJ Sonic</h3>
+<p class="text-sm text-text-muted mb-4">Música Electrónica</p>
+<div class="mt-auto">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/80 transition-colors">
+<span class="truncate">Ver Perfil</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-dark rounded-xl overflow-hidden group">
+<div class="relative">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" data-alt="Acoustic guitarist Luna playing her guitar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJGXYDimijBWKhaec9qez3hSTlxSKYZhmYeeAHMmTol9wq8Ugyeac500h9-4b8h0-tp2Z_a8DME5XGJKlMke2mlgkhgJ294p09oraOyT8ijMdFvSyeFe_JP63zGRkib405E7oa4C0uehviCmZ2Ik5SlOL0a3Kn7SvYjiIvjsqvVWyaWX_e1-iiZ1B9xCMryIZN3dm-2Z6o1PekK-Lky5edyggEa0hzZn8-HZTYOHNVNFu18BrUgIFu48b1v2-RDK3oO6Wk0c4S0w");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-accent hover:bg-black/70 transition-colors">
+<span class="material-symbols-outlined fill">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-text-light">Acoustic Luna</h3>
+<p class="text-sm text-text-muted mb-4">Cantante y Guitarrista</p>
+<div class="mt-auto">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/80 transition-colors">
+<span class="truncate">Ver Perfil</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-dark rounded-xl overflow-hidden group">
+<div class="relative">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" data-alt="Comedian Jack standing on a stage with a microphone" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAE9WPbzN10DAIPYd_OM8TDKtBEZ63f_KQn7cXxuwTe1uhh_Usky6jAqsvTX7uTy6xegyxdqGe-KdzdOKrCV1aMBtw1BnsYEgJWk7sC_0DtcjiDOOuF9B-zAj79L8uBKXwKetkmuMVdnngwOu3t2YWXbBjoTCfZWertaX9V_y35VcJFqxkiaHEJdBHkohkFR86eZVynIfNTnQY2PGRrDLPBKkES82HrNQ4XwF6Y_8Y1yBB8Ikz3UP2tBuoTP4wsoBVhlsMiwxnfbA");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-accent hover:bg-black/70 transition-colors">
+<span class="material-symbols-outlined fill">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-text-light">Joking Jack</h3>
+<p class="text-sm text-text-muted mb-4">Comediante Stand-up</p>
+<div class="mt-auto">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/80 transition-colors">
+<span class="truncate">Contactar</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-dark rounded-xl overflow-hidden group">
+<div class="relative">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" data-alt="Portrait of a Jazz Trio playing saxophone, bass, and drums" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVg4N_IKxjUtC90HR9KGgAE_ZLIlgM0_fCiYafuIsMNqV85BLZEhufcSFPKRDwGVmMMcQzr4Y__SplM2y_aAdBTTfo_siq0sTyk1oPamV8H26Hdg8Wr-U5CFm2NV4Eltw8czds6a1CdAERgVZCSF11YcmKu6jpvO9ATMl4ASSvxnxD8X3zTz--PPmdByQfiNT37EYHOdRBlYjw5ViHP0xXBcW_xm46MWvGAGSP266xJxddiwB9M8xn494VkLEZhks5V0o0GiSIug");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-accent hover:bg-black/70 transition-colors">
+<span class="material-symbols-outlined fill">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-text-light">The Jazz Trio</h3>
+<p class="text-sm text-text-muted mb-4">Banda de Jazz</p>
+<div class="mt-auto">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/80 transition-colors">
+<span class="truncate">Ver Perfil</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-dark rounded-xl overflow-hidden group">
+<div class="relative">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" data-alt="DJ Electra performing at a corporate event with vibrant lights" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCh9yzmmVd6U44riEQKex9b_2v-jfyz2RSIE_gnuLXIKYCXRBtUGKVD2IQoIpvKupQ66jUZ3EbB9OsgIT6lH4VZvCIB7PNg6sJs7nyHzaef32Ltg62l_oNNnWrQkuhBHWMw5qE2pLf9ZJjusSGkavZdnIJq1t3SXpV26GigByHcaiyAiQ6ES0Vvhs1kQ0OTA_x93Gy184r6bGnbYHQXVDkKVmghWQJ8QcSwLeW7I3dhQ1GdDl9MDoLYSwWqAzHUeTvkti3zKEwgOg");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-accent hover:bg-black/70 transition-colors">
+<span class="material-symbols-outlined fill">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-text-light">DJ Electra</h3>
+<p class="text-sm text-text-muted mb-4">Eventos Corporativos</p>
+<div class="mt-auto">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/80 transition-colors">
+<span class="truncate">Contactar</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-card-dark rounded-xl overflow-hidden group">
+<div class="relative">
+<div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" data-alt="Magnifico the Great performing magic tricks at a birthday party" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDY7xgth6ItTKqr7soLIBM4G3iCqpRD1EoQsYRbiYmYnk-SyE-rYxppSjoCzH0ecnDuNRjIItP0plJmf44sTvi6wHwiIBXEp6nfGXGE-PnQTRsmAw9MzLkbs5sjrrvbwMaTNDz9wGqTuoAgMUpvre9N_H8qiQP3xvCdHCMiRny4DN4bl8AWkh4mAURIQuIiC0MkzZWyX83YhKg1Di3cPug8WiAztS3SsLiuNyF3iSIyvQiwgMU4jRIf8kkrZRTgV8q8VKt1QiJlIw");'></div>
+<button class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-accent hover:bg-black/70 transition-colors">
+<span class="material-symbols-outlined fill">favorite</span>
+</button>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<h3 class="text-lg font-bold text-text-light">Magnifico the Great</h3>
+<p class="text-sm text-text-muted mb-4">Mago</p>
+<div class="mt-auto">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-accent text-black text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent/80 transition-colors">
+<span class="truncate">Ver Perfil</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registro de Artista - ShowTime Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#22d3ee", // Light Cyan accent
+              "background-light": "#f6f6f8",
+              "background-dark": "#0a0a0a", // Professional black background
+              "card-dark": "#1a1a1a", // Slightly lighter black for the card
+              "border-dark": "#2c2c2c",
+              "text-main": "#f0f0f0", // Very light gray for main text
+              "text-secondary": "#a0a0a0", // Lighter gray for secondary text
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }select.form-select {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCDaamybcDabX35nAJC1raCdEfDDgTozjBhxAVzxvVwFeYgeXxOduof-7ecqwNWSfkub24ouED3OpA66e2LzmOTCHhzoKfCN0ah805oJdkVCvmOafZwVnCiJV9bNaMcOOuUVPZVBU3odmNIwr1swlzWW8RkhYL525y8qbwjoKgvUV4YdkBXIuZLIgOtH52oENDvoHjl8DZhymotqz9cYb92wI89zvQv7-J7Mtm41kO-K6lI9D_ByST_Go2w2KIlaZ49mrQq9zLntw);
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+    }</style>
+</head>
+<body class="bg-background-dark font-display text-text-main">
+<div class="relative flex min-h-screen w-full items-center justify-center p-4 sm:p-6 lg:p-8">
+<div class="w-full max-w-2xl">
+<div class="flex justify-center items-center gap-2 pb-8">
+<span class="material-symbols-outlined text-primary text-4xl">celebration</span>
+<span class="text-2xl font-bold text-white">ShowTime Hub</span>
+</div>
+<div class="bg-card-dark p-6 sm:p-8 lg:p-10 rounded-xl shadow-lg border border-border-dark">
+<div class="flex flex-col gap-8">
+<div class="flex flex-wrap justify-between gap-2">
+<h1 class="text-white text-3xl sm:text-4xl font-black tracking-tighter">Regístrate como Artista - ¡Casi listo para brillar!</h1>
+</div>
+<div class="flex flex-col gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Nombre Completo</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal" placeholder="Ingresa tu nombre completo" value=""/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Nombre Artístico/Escénico</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal" placeholder="p. ej., La Asombrosa Jane" value=""/>
+</label>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Correo Electrónico de Contacto</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal" placeholder="tu@ejemplo.com" type="email" value=""/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Número de Teléfono</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal" placeholder="(123) 456-7890" type="tel" value=""/>
+</label>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Tipo de Artista/Categoría Principal</p>
+<select class="form-select flex w-full overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal">
+<option class="text-text-secondary" disabled="" selected="">Selecciona una categoría</option>
+<option>Músico</option>
+<option>Mago</option>
+<option>Bailarín</option>
+<option>Comediante</option>
+<option>Artista Circense</option>
+</select>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Ubicación</p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal" placeholder="Ciudad, Estado" value=""/>
+</label>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Breve descripción de tus servicios <span class="text-text-secondary">(Opcional)</span></p>
+<textarea class="form-textarea flex w-full resize-y overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary min-h-[80px] placeholder:text-text-secondary px-4 py-3 text-base font-normal" placeholder="Describe brevemente lo que ofreces..."></textarea>
+</label>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<label class="flex flex-col flex-1">
+<p class="text-text-main text-sm font-medium leading-normal pb-2">Precio inicial / Desde <span class="text-text-secondary">(Opcional)</span></p>
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-dark bg-background-dark focus:border-primary h-12 placeholder:text-text-secondary px-4 text-base font-normal" placeholder="p. ej., $150" type="text" value=""/>
+</label>
+</div>
+<div class="flex flex-col gap-4">
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="form-checkbox h-5 w-5 rounded bg-background-dark border-border-dark text-primary focus:ring-primary/50" type="checkbox"/>
+<span class="text-text-main text-sm">Acepto los <a class="text-primary hover:underline" href="#">Términos y Condiciones</a></span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="form-checkbox h-5 w-5 rounded bg-background-dark border-border-dark text-primary focus:ring-primary/50" type="checkbox"/>
+<span class="text-text-main text-sm">Acepto la <a class="text-primary hover:underline" href="#">Política de Privacidad</a></span>
+</label>
+</div>
+</div>
+<div class="pt-8 mt-8 border-t border-border-dark">
+<button class="flex items-center justify-center gap-2 w-full h-12 px-6 font-semibold text-sm rounded-lg bg-primary text-slate-900 hover:bg-primary/90 transition-colors">
+<span>Completar Registro</span>
+<span class="material-symbols-outlined text-xl">rocket_launch</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

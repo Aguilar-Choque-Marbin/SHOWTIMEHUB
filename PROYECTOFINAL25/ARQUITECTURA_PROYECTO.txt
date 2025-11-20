@@ -1,0 +1,619 @@
+================================================================================
+    ANÁLISIS DE ARQUITECTURA - SHOWTIME HUB
+    Explicación completa del flujo de datos y estructura del proyecto
+================================================================================
+
+================================================================================
+1. ¿QUÉ TIPO DE ARQUITECTURA TIENES?
+================================================================================
+
+RESPUESTA: ARQUITECTURA MODULAR (NO son microservicios)
+
+¿Por qué?
+- Tienes UN SOLO SERVIDOR corriendo en el puerto 3000
+- Todo está en el archivo servidor.js
+- Usas UNA SOLA BASE DE DATOS PostgreSQL
+- Los "módulos" están separados por carpetas pero todos funcionan juntos
+
+DIAGRAMA:
+┌─────────────────────────────────────────┐
+│    UN SERVIDOR (Puerto 3000)            │
+│  ┌─────────────────────────────────┐   │
+│  │  Express.js (servidor.js)       │   │
+│  │  ┌────────┐ ┌────────┐         │   │
+│  │  │ Rutas  │ │Contro- │         │   │
+│  │  │        │→│ladores │→Modelos │   │
+│  │  └────────┘ └────────┘         │   │
+│  └─────────────────────────────────┘   │
+└─────────────────────────────────────────┘
+            ↓
+    ┌──────────────┐
+    │  PostgreSQL  │
+    │   (1 BD)     │
+    └──────────────┘
+
+Microservicios sería:
+Servidor Auth (Puerto 3001) → BD Auth
+Servidor Pagos (Puerto 3002) → BD Pagos
+Servidor Reservas (Puerto 3003) → BD Reservas
+❌ NO tienes esto
+
+
+================================================================================
+2. FLUJO DE DATOS COMPLETO (Frontend → Backend)
+================================================================================
+
+PASO 1: Usuario abre la página web
+───────────────────────────────────
+
+📱 Navegador
+   ↓
+🌐 Frontend (Puerto 5173) - Vue.js
+   ↓ Lee archivo
+📄 index.html
+   ↓ Carga
+📄 main.js
+   ↓ Inicializa
+📄 App.vue (Aplicación principal)
+   ↓ Carga
+📄 router/index.js (Rutas de las páginas)
+   ↓ Muestra
+📄 views/InicioView.vue (Página de inicio)
+
+Archivos clave Frontend:
+• main.js → Punto de entrada, como el interruptor principal
+• router/index.js → Mapa de páginas (decide qué vista mostrar)
+• stores/auth.js → Memoria temporal (guarda usuario logueado)
+• services/api.js → Teléfono (llama al backend)
+
+
+PASO 2: Usuario hace click en "Login"
+──────────────────────────────────────
+
+👤 Usuario → Click "Iniciar Sesión"
+   ↓
+📄 LoginView.vue (Formulario)
+   ↓ Usuario escribe email/contraseña
+🔌 services/api.js → autenticacionService.iniciarSesion()
+   ↓ Axios hace HTTP POST
+🌐 http://localhost:3000/api/autenticacion/iniciar-sesion
+
+
+PASO 3: Backend recibe la petición
+───────────────────────────────────
+
+🚪 BACKEND (Puerto 3000)
+   ↓ Express recibe petición
+📄 servidor.js → Lee URL "/api/autenticacion/..."
+   ↓ Busca ruta
+📁 src/rutas/autenticacion.js → router.post('/iniciar-sesion')
+   ↓ Llama a función
+📁 src/controladores/autenticacionControlador.js → iniciarSesion()
+   ↓ Busca en base de datos
+📁 src/modelos/usuarioModelo.js → buscarPorEmail()
+   ↓ Consulta SQL
+🗄️ PostgreSQL → SELECT * FROM usuarios WHERE email = '...'
+   ↓ Devuelve datos
+📁 Modelo → Devuelve usuario
+   ↓ Compara contraseña
+📁 Controlador → Genera token JWT
+   ↓ Responde
+🌐 Respuesta JSON: { token: "...", usuario: {...} }
+
+
+PASO 4: Frontend recibe la respuesta
+─────────────────────────────────────
+
+🔌 services/api.js → Recibe respuesta
+   ↓ Guarda en
+📦 localStorage (navegador)
+   ↓ Actualiza
+📦 stores/auth.js → usuario = {...}
+   ↓ Redirige a
+📄 views/DashboardView.vue
+
+
+================================================================================
+3. UBICACIÓN DE CADA MÓDULO EN TU CÓDIGO
+================================================================================
+
+A) AUTENTICACIÓN (AUTH)
+───────────────────────
+
+FRONTEND:
+📂 frontend/src/
+├── 📄 stores/auth.js ← ⭐ Estado del usuario logueado
+├── 📄 services/api.js ← autenticacionService
+└── 📂 views/
+    ├── 📄 LoginView.vue ← Pantalla login
+    ├── 📄 RegistroView.vue ← Pantalla registro
+    ├── 📄 RecuperarContrasenaView.vue
+    └── 📄 RestablecerContrasenaView.vue
+
+BACKEND:
+📂 BACKEND/src/
+├── 📄 rutas/autenticacion.js ← ⭐ Rutas: POST /registrar, /iniciar-sesion
+├── 📄 controladores/autenticacionControlador.js ← ⭐ Lógica (generar token JWT)
+├── 📄 modelos/usuarioModelo.js ← ⭐ Consultas BD
+└── 📄 middlewares/autenticacion.js ← Verificar token en otras rutas
+
+BASE DE DATOS:
+🗄️ PostgreSQL
+└── 📊 Tabla: usuarios
+    ├── id_usuario
+    ├── email
+    ├── contrasena_hash ← Contraseña encriptada con bcrypt
+    ├── tipo_usuario (cliente, artista, admin)
+    └── ...
+
+
+B) RESERVAS (BOOKING) - Sistema de Contratos
+─────────────────────────────────────────────
+
+FRONTEND:
+📂 frontend/src/views/
+├── 📄 ArtistasView.vue ← Ver artistas disponibles
+├── 📄 ArtistaDetalleView.vue ← Perfil del artista
+├── 📄 SolicitarPresupuestoView.vue ← ⭐ Solicitar servicio específico
+├── 📄 SolicitarPresupuestoPersonalizadoView.vue ← ⭐ Solicitar evento custom
+├── 📄 ResponderSolicitudView.vue ← ⭐ Artista responde (crea propuesta)
+├── 📄 PropuestaEnviadaView.vue ← Confirmación
+└── 📄 ContratosView.vue ← Ver mis contratos
+
+BACKEND:
+📂 BACKEND/src/
+├── 📄 rutas/contratos.js ← ⭐ Endpoints de reservas
+│   ├── POST /solicitar ← Cliente pide presupuesto
+│   ├── POST /solicitar-personalizado
+│   ├── GET /solicitudes/:id ← Ver solicitud
+│   └── POST /solicitudes/:id/propuesta ← Artista envía precio
+│
+├── 📄 controladores/contratoControlador.js ← ⭐ Lógica de negocio
+│   ├── solicitarPresupuesto()
+│   ├── crearPropuesta()
+│   └── crearContrato()
+│
+└── 📄 modelos/contratoModelo.js ← ⭐ Consultas BD
+    ├── crearSolicitudPresupuesto()
+    └── crearPropuestaArtista()
+
+BASE DE DATOS:
+🗄️ PostgreSQL
+├── 📊 cotizaciones_eventos ← ⭐ Solicitudes del cliente
+│   ├── id_cotizacion
+│   ├── id_usuario (cliente)
+│   ├── id_artista
+│   ├── id_servicio
+│   ├── fecha_evento
+│   ├── estado (pendiente, propuesta_enviada, aceptada)
+│
+├── 📊 propuestas_artistas ← ⭐ Ofertas del artista
+│   ├── id_propuesta
+│   ├── id_cotizacion
+│   ├── precio_propuesto
+│   ├── descripcion_propuesta
+│   ├── estado (pendiente, aceptada, rechazada)
+│
+└── 📊 contratos ← ⭐ Reserva confirmada
+    ├── id_contrato
+    ├── id_cotizacion
+    ├── id_propuesta
+    ├── fecha_inicio
+    ├── fecha_fin
+    └── estado (activo, completado, cancelado)
+
+
+C) PAGOS (PAYMENT)
+──────────────────
+
+FRONTEND:
+📂 frontend/src/views/
+├── 📄 ProcesoPagoView.vue ← ⭐ Seleccionar método (Tarjeta/QR)
+├── 📄 PagoQRView.vue ← ⭐ Mostrar código QR
+├── 📄 ReservaConfirmadaView.vue ← ⭐ ¡Pago exitoso!
+└── 📄 HistorialPagosView.vue ← Ver mis pagos
+
+BACKEND:
+📂 BACKEND/src/
+├── 📄 rutas/pagos.js ← ⭐ Endpoints de pagos
+│   ├── GET /propuestas/:id ← Ver precio a pagar
+│   ├── POST /generar-qr ← Crear código QR
+│   └── POST /procesar ← ⭐ Procesar pago (crea contrato)
+│
+├── 📄 controladores/pagoControlador.js ← ⭐ Lógica de pagos
+│   ├── generarCodigoQR() ← Usa librería 'qrcode'
+│   └── procesarPago() ← Guarda pago + crea contrato
+│
+└── 📄 modelos/pagoModelo.js ← ⭐ Consultas BD
+    ├── crearPago()
+    └── crearContratoDesdePropouesta()
+
+BASE DE DATOS:
+🗄️ PostgreSQL
+└── 📊 pagos ← ⭐ Registro de pagos
+    ├── id_pago
+    ├── id_contrato
+    ├── monto
+    ├── metodo_pago (tarjeta, qr, paypal)
+    ├── estado_pago (pendiente, completado, fallido)
+    ├── comision_plataforma (10%)
+    └── fecha_pago
+
+
+================================================================================
+4. DIAGRAMA VISUAL COMPLETO
+================================================================================
+
+┌─────────────────────────────────────────────────────────────┐
+│                    👤 USUARIO (Navegador)                    │
+└─────────────────────────────────────────────────────────────┘
+                            ↓ HTTP
+┌─────────────────────────────────────────────────────────────┐
+│  🌐 FRONTEND (Puerto 5173) - Vue.js                         │
+│                                                              │
+│  ┌────────────┐    ┌─────────────┐    ┌───────────────┐   │
+│  │ main.js    │───→│ App.vue     │───→│ router/       │   │
+│  │ (Entrada)  │    │ (Aplicación)│    │ index.js      │   │
+│  └────────────┘    └─────────────┘    │ (Navegación)  │   │
+│                                         └───────┬───────┘   │
+│                                                 ↓           │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │               📄 VISTAS (views/)                      │  │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌────────────┐ │  │
+│  │  │ LoginView   │  │ ArtistasView │  │ PagoView   │ │  │
+│  │  └─────────────┘  └──────────────┘  └────────────┘ │  │
+│  └──────────────────────────────────────────────────────┘  │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │          🔌 SERVICIOS (services/api.js)               │  │
+│  │   autenticacionService, contratoService, pagoService │  │
+│  └────────────────────────┬─────────────────────────────┘  │
+│                            │                                │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │          📦 STORES (Pinia)                            │  │
+│  │   stores/auth.js (guarda usuario logueado)           │  │
+│  └──────────────────────────────────────────────────────┘  │
+└──────────────────────────────┬───────────────────────────────┘
+                               │ Axios HTTP Request
+                               ↓
+┌─────────────────────────────────────────────────────────────┐
+│  🚪 BACKEND (Puerto 3000) - Node.js + Express              │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │           servidor.js (Punto de entrada)              │  │
+│  └────────────────────────┬─────────────────────────────┘  │
+│                            ↓                                │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │          🛣️ RUTAS (src/rutas/)                        │  │
+│  │  ┌───────────────┐  ┌────────────┐  ┌───────────┐   │  │
+│  │  │autenticacion  │  │ contratos  │  │  pagos    │   │  │
+│  │  │     .js       │  │   .js      │  │   .js     │   │  │
+│  │  └───────┬───────┘  └──────┬─────┘  └─────┬─────┘   │  │
+│  └──────────┼──────────────────┼──────────────┼─────────┘  │
+│             ↓                  ↓              ↓            │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │       🎮 CONTROLADORES (src/controladores/)           │  │
+│  │  ┌──────────────────┐  ┌──────────────────┐         │  │
+│  │  │autenticacion     │  │   contrato       │         │  │
+│  │  │Controlador.js    │  │   Controlador    │  etc... │  │
+│  │  │ • registrar()    │  │   • solicitar()  │         │  │
+│  │  │ • iniciarSesion()│  │   • crearPropuesta()      │  │
+│  │  └────────┬─────────┘  └────────┬─────────┘         │  │
+│  └───────────┼──────────────────────┼───────────────────┘  │
+│              ↓                      ↓                      │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │         📊 MODELOS (src/modelos/)                     │  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────┐  │  │
+│  │  │usuario       │  │ contrato     │  │  pago    │  │  │
+│  │  │Modelo.js     │  │ Modelo.js    │  │Modelo.js │  │  │
+│  │  │• buscarPorEmail()│ • crearSolicitud()│ • crear()│  │
+│  │  └──────┬───────┘  └──────┬───────┘  └────┬─────┘  │  │
+│  └─────────┼──────────────────┼───────────────┼────────┘  │
+│            └──────────────────┴───────────────┘           │
+│                            ↓                               │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │     🔧 configuracion/baseDatos.js (Pool conexión)     │  │
+│  └────────────────────────┬─────────────────────────────┘  │
+└───────────────────────────┼────────────────────────────────┘
+                            ↓ SQL Query
+┌─────────────────────────────────────────────────────────────┐
+│           🗄️ PostgreSQL (Base de Datos)                    │
+│                                                              │
+│  ┌──────────────┐  ┌────────────────────┐  ┌──────────┐   │
+│  │  usuarios    │  │ cotizaciones_      │  │  pagos   │   │
+│  │              │  │   eventos          │  │          │   │
+│  ├──────────────┤  ├────────────────────┤  ├──────────┤   │
+│  │id_usuario    │  │id_cotizacion       │  │id_pago   │   │
+│  │email         │  │id_usuario (FK)     │  │id_contrato│   │
+│  │contrasena    │  │id_artista (FK)     │  │monto     │   │
+│  │tipo_usuario  │  │estado              │  │metodo    │   │
+│  └──────────────┘  └────────────────────┘  └──────────┘   │
+│                                                              │
+│  ┌────────────────────┐  ┌──────────────────────────────┐  │
+│  │ propuestas_        │  │      contratos               │  │
+│  │   artistas         │  │                              │  │
+│  ├────────────────────┤  ├──────────────────────────────┤  │
+│  │id_propuesta        │  │id_contrato                   │  │
+│  │id_cotizacion (FK)  │  │id_cotizacion (FK)            │  │
+│  │precio_propuesto    │  │id_propuesta (FK)             │  │
+│  │estado              │  │estado                        │  │
+│  └────────────────────┘  └──────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+
+
+================================================================================
+5. FLUJO COMPLETO DE UNA RESERVA CON PAGO
+================================================================================
+
+1️⃣ Usuario busca artistas
+   LoginView.vue → POST /api/autenticacion/iniciar-sesion
+   
+2️⃣ Ve marketplace
+   ArtistasView.vue → GET /api/artistas
+   
+3️⃣ Click en artista
+   ArtistaDetalleView.vue → GET /api/artistas/:id
+   
+4️⃣ Solicita presupuesto
+   SolicitarPresupuestoView.vue → POST /api/contratos/solicitar
+   BD: INSERT INTO cotizaciones_eventos
+   
+5️⃣ Artista recibe notificación
+   ResponderSolicitudView.vue → GET /api/contratos/solicitudes/:id
+   
+6️⃣ Artista envía propuesta
+   ResponderSolicitudView.vue → POST /api/contratos/solicitudes/:id/propuesta
+   BD: INSERT INTO propuestas_artistas
+   
+7️⃣ Cliente ve propuesta y decide pagar
+   ProcesoPagoView.vue → GET /api/pagos/propuestas/:id
+   
+8️⃣ Cliente selecciona QR
+   PagoQRView.vue → POST /api/pagos/generar-qr
+   Genera QR con librería 'qrcode'
+   
+9️⃣ Cliente confirma pago
+   PagoQRView.vue → POST /api/pagos/procesar
+   BD: INSERT INTO pagos
+   BD: INSERT INTO contratos (¡Reserva creada!)
+   BD: UPDATE propuestas_artistas SET estado = 'aceptada'
+   
+🔟 Confirmación
+   ReservaConfirmadaView.vue → ¡Éxito!
+
+
+================================================================================
+6. RESUMEN PARA DIAGRAMAS
+================================================================================
+
+3 CAJAS PRINCIPALES:
+
+┌──────────────┐       ┌──────────────┐       ┌──────────────┐
+│   FRONTEND   │──────→│   BACKEND    │──────→│  BASE DATOS  │
+│   Vue.js     │← ← ← ←│   Express    │← ← ← ←│  PostgreSQL  │
+│  Puerto 5173 │  JSON │  Puerto 3000 │  SQL  │              │
+└──────────────┘       └──────────────┘       └──────────────┘
+
+
+DENTRO DE CADA CAJA:
+
+FRONTEND:
+• main.js → Entrada
+• router → Navegación
+• views → Pantallas
+• services/api.js → Comunicación
+• stores/auth.js → Memoria
+
+BACKEND:
+• servidor.js → Entrada
+• rutas → URLs (autenticacion.js, contratos.js, pagos.js)
+• controladores → Lógica de negocio
+• modelos → Consultas SQL
+
+BASE DE DATOS:
+• usuarios → Auth
+• cotizaciones_eventos + propuestas_artistas → Booking
+• pagos + contratos → Payment
+
+
+================================================================================
+7. ESTRUCTURA DE CARPETAS COMPLETA
+================================================================================
+
+PROYECTO COMPLETO:
+──────────────────
+
+PROYECTOFINAL25/
+├── BACKEND/
+│   ├── servidor.js ⭐ (Punto de entrada del servidor)
+│   ├── package.json (Dependencias: express, pg, bcrypt, jwt, qrcode)
+│   ├── .env (Variables: DB_HOST, DB_PUERTO, JWT_SECRET)
+│   └── src/
+│       ├── configuracion/
+│       │   └── baseDatos.js ⭐ (Pool de PostgreSQL)
+│       │
+│       ├── middlewares/
+│       │   └── autenticacion.js ⭐ (verificarToken, verificarTipoUsuario)
+│       │
+│       ├── rutas/
+│       │   ├── autenticacion.js ⭐ (Login, Registro)
+│       │   ├── contratos.js ⭐ (Solicitudes, Propuestas)
+│       │   ├── pagos.js ⭐ (Generar QR, Procesar Pago)
+│       │   ├── artistas.js
+│       │   ├── categorias.js
+│       │   ├── mensajes.js
+│       │   └── admin.js
+│       │
+│       ├── controladores/
+│       │   ├── autenticacionControlador.js ⭐
+│       │   ├── contratoControlador.js ⭐
+│       │   ├── pagoControlador.js ⭐
+│       │   ├── artistaControlador.js
+│       │   └── mensajeControlador.js
+│       │
+│       └── modelos/
+│           ├── usuarioModelo.js ⭐
+│           ├── contratoModelo.js ⭐
+│           ├── pagoModelo.js ⭐
+│           ├── artistaModelo.js
+│           └── mensajeModelo.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── main.js ⭐ (Punto de entrada Vue)
+│   │   ├── App.vue ⭐ (Componente raíz)
+│   │   │
+│   │   ├── router/
+│   │   │   └── index.js ⭐ (Definición de rutas)
+│   │   │
+│   │   ├── stores/
+│   │   │   └── auth.js ⭐ (Pinia store - usuario logueado)
+│   │   │
+│   │   ├── services/
+│   │   │   └── api.js ⭐ (Axios + servicios HTTP)
+│   │   │
+│   │   └── views/
+│   │       ├── LoginView.vue ⭐
+│   │       ├── RegistroView.vue ⭐
+│   │       ├── ArtistasView.vue ⭐ (Marketplace)
+│   │       ├── ArtistaDetalleView.vue ⭐
+│   │       ├── SolicitarPresupuestoView.vue ⭐
+│   │       ├── ResponderSolicitudView.vue ⭐
+│   │       ├── PropuestaEnviadaView.vue ⭐
+│   │       ├── ProcesoPagoView.vue ⭐
+│   │       ├── PagoQRView.vue ⭐
+│   │       └── ReservaConfirmadaView.vue ⭐
+│   │
+│   ├── package.json (Dependencias: vue, vue-router, pinia, axios)
+│   └── vite.config.js (Puerto: 5173)
+│
+└── BD/
+    └── docker-compose.yml (PostgreSQL container)
+
+
+================================================================================
+8. TECNOLOGÍAS UTILIZADAS
+================================================================================
+
+FRONTEND:
+─────────
+• Vue.js 3 (Framework JavaScript)
+• Vue Router (Navegación entre páginas)
+• Pinia (Gestión de estado global)
+• Axios (Cliente HTTP para llamadas API)
+• Tailwind CSS (Estilos)
+• Vite (Build tool)
+
+BACKEND:
+────────
+• Node.js (Runtime JavaScript)
+• Express.js (Framework web)
+• PostgreSQL (Base de datos relacional)
+• pg (Driver PostgreSQL)
+• bcrypt (Encriptación de contraseñas)
+• jsonwebtoken (Autenticación JWT)
+• qrcode (Generación de códigos QR)
+• cors (Permitir peticiones cross-origin)
+• dotenv (Variables de entorno)
+
+BASE DE DATOS:
+──────────────
+• PostgreSQL 14+
+• Docker (Containerización de BD)
+
+
+================================================================================
+9. ENDPOINTS PRINCIPALES DE LA API
+================================================================================
+
+AUTENTICACIÓN:
+──────────────
+POST   /api/autenticacion/registrar
+POST   /api/autenticacion/iniciar-sesion
+POST   /api/autenticacion/recuperar-contrasena
+POST   /api/autenticacion/restablecer-contrasena
+
+ARTISTAS:
+─────────
+GET    /api/artistas (listar con filtros)
+GET    /api/artistas/:id (detalle)
+GET    /api/artistas/:id/servicios
+GET    /api/artistas/:id/servicios/:servicioId
+
+CONTRATOS/RESERVAS:
+───────────────────
+POST   /api/contratos/solicitar ⭐
+POST   /api/contratos/solicitar-personalizado ⭐
+GET    /api/contratos/solicitudes/:id ⭐
+POST   /api/contratos/solicitudes/:id/propuesta ⭐
+GET    /api/contratos/mis-contratos
+GET    /api/contratos/:id
+
+PAGOS:
+──────
+GET    /api/pagos/propuestas/:id ⭐
+POST   /api/pagos/generar-qr ⭐
+POST   /api/pagos/procesar ⭐
+GET    /api/pagos/historial
+GET    /api/pagos/ganancias/artista/:id
+
+MENSAJES:
+─────────
+GET    /api/mensajes/conversaciones
+POST   /api/mensajes/conversaciones
+GET    /api/mensajes/conversaciones/:id/mensajes
+POST   /api/mensajes
+PUT    /api/mensajes/:id/leer
+GET    /api/mensajes/no-leidos
+
+
+================================================================================
+10. CONCLUSIÓN
+================================================================================
+
+TU PROYECTO ES:
+───────────────
+✅ Arquitectura Modular (1 servidor, organizado en carpetas)
+✅ Monolito Modular (todo conectado, pero bien separado)
+❌ NO microservicios (sería 3+ servidores separados)
+
+ES UNA EXCELENTE ARQUITECTURA PARA:
+────────────────────────────────────
+• Proyectos medianos
+• Equipos pequeños
+• Fácil de mantener
+• Un solo despliegue
+• Menor complejidad operacional
+
+SERÍA MICROSERVICIOS SI TUVIERAS:
+──────────────────────────────────
+• auth-service en puerto 3001 + BD Auth
+• booking-service en puerto 3002 + BD Booking
+• payment-service en puerto 3003 + BD Payment
+• Comunicación entre servicios (REST/gRPC/Message Queue)
+• Despliegues independientes
+
+🎉 ¡Tienes un sistema completo y bien organizado!
+
+
+================================================================================
+GLOSARIO DE TÉRMINOS
+================================================================================
+
+Frontend: La parte visual de la aplicación que el usuario ve (navegador)
+Backend: El servidor que procesa la lógica de negocio (Node.js/Express)
+API: Interfaz de comunicación entre frontend y backend (HTTP/JSON)
+Ruta: URL que define un endpoint de la API (/api/contratos/solicitar)
+Controlador: Función que maneja la lógica de una petición
+Modelo: Función que interactúa con la base de datos (SQL)
+Middleware: Función que se ejecuta antes de los controladores (auth)
+JWT: Token de autenticación (JSON Web Token)
+ORM: No usas ORM, haces consultas SQL directas con pg
+Pool: Conjunto de conexiones reutilizables a PostgreSQL
+REST: Estilo de arquitectura para APIs (GET, POST, PUT, DELETE)
+CORS: Permite que frontend (5173) llame a backend (3000)
+Docker: Contenedor para ejecutar PostgreSQL aisladamente
+
+================================================================================
+FIN DEL DOCUMENTO
+================================================================================

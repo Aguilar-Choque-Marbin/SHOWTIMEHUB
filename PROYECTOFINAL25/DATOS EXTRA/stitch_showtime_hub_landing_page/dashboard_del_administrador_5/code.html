@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Configuración</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#38bdf8", // Light Cyan/Blue Accent
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0a0a", // Professional Black Background
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+        .form-input-dark {
+            @apply w-full rounded-md border border-gray-700 bg-gray-900/50 px-3 py-2 text-gray-200 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+        }
+        .form-checkbox-dark {
+            @apply rounded border-gray-600 bg-gray-800 text-primary shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50;
+        }.toggle-switch {
+            @apply relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark;
+        }
+        .toggle-switch-bg {
+            @apply bg-gray-700;
+        }
+        .toggle-switch-checked-bg {
+            @apply bg-primary;
+        }
+        .toggle-switch-indicator {
+            @apply pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+        }
+        .toggle-switch-indicator-on {
+            @apply translate-x-5;
+        }
+        .toggle-switch-indicator-off {
+            @apply translate-x-0;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex min-h-screen w-full flex-row">
+<aside class="flex w-64 flex-col bg-[#111111] p-4 text-gray-200">
+<div class="flex items-center gap-3 p-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPXDaH4tXzBQsDnfTCamMG-WACKgZ1sowgl31Ucl4w_egTQXmMLAYS9U4j8LBgVLd--RnnO-VJHBJwc-o1B_wdao1FurYauUpizL5ovPxkhBQemAaEtaiPzyGGpOqBiQ5XY7xTtup5dFkK21zxvErIoG3l3hi4Acwb4kmwJlNZrSeV6CkKpngfgd8CbWWzmI1tdowpJEZNGhnxDL1kEG9veppDsy0Y7aUnfpumwwTxwJTtcTOTH61hPvWCKIXAk7v_fdgxeoaf1g");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-semibold leading-normal text-gray-100">Admin</h1>
+<p class="text-sm font-normal leading-normal text-gray-400">ShowTime Hub</p>
+</div>
+</div>
+<nav class="mt-6 flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white" href="#">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium leading-normal">Gestión de Usuarios</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white" href="#">
+<span class="material-symbols-outlined">theater_comedy</span>
+<p class="text-sm font-medium leading-normal">Gestión de Artistas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white" href="#">
+<span class="material-symbols-outlined">book_online</span>
+<p class="text-sm font-medium leading-normal">Gestión de Reservas</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium leading-normal">Reportes</p>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/20 px-3 py-2 text-primary" href="#">
+<span class="material-symbols-outlined text-primary">settings</span>
+<p class="text-sm font-medium leading-normal">Configuración</p>
+</a>
+</nav>
+</aside>
+<main class="flex-1">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 p-6">
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-50">Configuración</h1>
+<div class="flex items-center gap-2">
+<button class="rounded-full p-2 text-gray-300 hover:bg-white/10 hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="rounded-full p-2 text-gray-300 hover:bg-white/10 hover:text-white">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="p-6">
+<div class="mx-auto max-w-4xl space-y-8">
+<section class="rounded-lg border border-gray-800 bg-[#111111] p-6">
+<h2 class="text-xl font-semibold leading-tight text-gray-50">Ajustes Generales</h2>
+<p class="mt-1 text-sm text-gray-400">Configura los parámetros generales de la aplicación.</p>
+<div class="mt-6 space-y-6">
+<div>
+<label class="block text-sm font-medium text-gray-300" for="app-name">Nombre de la Aplicación</label>
+<input class="form-input-dark mt-1" id="app-name" name="app-name" type="text" value="ShowTime Hub"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-300" for="contact-email">Email de Contacto</label>
+<input class="form-input-dark mt-1" id="contact-email" name="contact-email" type="email" value="contacto@showtimehub.com"/>
+</div>
+<div class="flex items-center">
+<input class="form-checkbox-dark" id="maintenance-mode" name="maintenance-mode" type="checkbox"/>
+<label class="ml-3 text-sm text-gray-300" for="maintenance-mode">Activar modo de mantenimiento</label>
+</div>
+</div>
+<div class="mt-6 border-t border-gray-800 pt-6">
+<button class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-black shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark" type="button">Guardar Cambios</button>
+</div>
+</section>
+<section class="rounded-lg border border-gray-800 bg-[#111111] p-6">
+<h2 class="text-xl font-semibold leading-tight text-gray-50">Roles y Permisos</h2>
+<p class="mt-1 text-sm text-gray-400">Gestiona los roles de usuario y sus permisos de acceso.</p>
+<div class="mt-6 space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-300">Permitir registro de nuevos artistas</span>
+<button aria-checked="true" class="toggle-switch toggle-switch-checked-bg" role="switch" type="button">
+<span class="toggle-switch-indicator toggle-switch-indicator-on"></span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-300">Requerir aprobación de administrador para nuevos artistas</span>
+<button aria-checked="true" class="toggle-switch toggle-switch-checked-bg" role="switch" type="button">
+<span class="toggle-switch-indicator toggle-switch-indicator-on"></span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-gray-300">Permitir a los clientes dejar reseñas</span>
+<button aria-checked="false" class="toggle-switch toggle-switch-bg" role="switch" type="button">
+<span class="toggle-switch-indicator toggle-switch-indicator-off"></span>
+</button>
+</div>
+</div>
+<div class="mt-6 border-t border-gray-800 pt-6">
+<button class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-black shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark" type="button">Guardar Cambios</button>
+</div>
+</section>
+<section class="rounded-lg border border-gray-800 bg-[#111111] p-6">
+<h2 class="text-xl font-semibold leading-tight text-gray-50">Métodos de Pago</h2>
+<p class="mt-1 text-sm text-gray-400">Configura las pasarelas de pago y las comisiones.</p>
+<div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+<div>
+<label class="block text-sm font-medium text-gray-300" for="paypal-key">Clave API de PayPal</label>
+<input class="form-input-dark mt-1" id="paypal-key" name="paypal-key" type="password" value="************"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-300" for="stripe-key">Clave API de Stripe</label>
+<input class="form-input-dark mt-1" id="stripe-key" name="stripe-key" type="password" value="************"/>
+</div>
+<div class="sm:col-span-2">
+<label class="block text-sm font-medium text-gray-300" for="commission-rate">Tasa de Comisión (%)</label>
+<input class="form-input-dark mt-1" id="commission-rate" name="commission-rate" type="number" value="15"/>
+</div>
+</div>
+<div class="mt-6 border-t border-gray-800 pt-6">
+<button class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-black shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark" type="button">Guardar Cambios</button>
+</div>
+</section>
+<section class="rounded-lg border border-gray-800 bg-[#111111] p-6">
+<h2 class="text-xl font-semibold leading-tight text-gray-50">Notificaciones</h2>
+<p class="mt-1 text-sm text-gray-400">Ajusta qué notificaciones por correo electrónico se envían.</p>
+<div class="mt-6 space-y-4">
+<div class="flex items-start">
+<div class="flex h-5 items-center">
+<input checked="" class="form-checkbox-dark" id="new-booking" name="new-booking" type="checkbox"/>
+</div>
+<div class="ml-3 text-sm">
+<label class="font-medium text-gray-300" for="new-booking">Nueva Reserva</label>
+<p class="text-gray-500">Notificar al artista y al administrador.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex h-5 items-center">
+<input checked="" class="form-checkbox-dark" id="booking-cancellation" name="booking-cancellation" type="checkbox"/>
+</div>
+<div class="ml-3 text-sm">
+<label class="font-medium text-gray-300" for="booking-cancellation">Cancelación de Reserva</label>
+<p class="text-gray-500">Notificar a las partes involucradas.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex h-5 items-center">
+<input class="form-checkbox-dark" id="new-artist" name="new-artist" type="checkbox"/>
+</div>
+<div class="ml-3 text-sm">
+<label class="font-medium text-gray-300" for="new-artist">Registro de Nuevo Artista</label>
+<p class="text-gray-500">Notificar al administrador para su aprobación.</p>
+</div>
+</div>
+</div>
+<div class="mt-6 border-t border-gray-800 pt-6">
+<button class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-black shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-dark" type="button">Guardar Cambios</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShowTime Hub - Encuentra Artistas</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#22D3EE",
+                        "primary-focus": "#67E8F9",
+                        "primary-content": "#0C1416",
+                        "base-100": "#000000",
+                        "base-200": "#111111",
+                        "base-300": "#222222",
+                        "base-content": "#E5E7EB",
+                        "base-content-secondary": "#9CA3AF",
+                    },
+                    fontFamily: {
+                        "sans": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            @apply font-sans bg-base-100 text-base-content;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body class="bg-base-100">
+<div class="relative flex min-h-screen w-full flex-col font-sans group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full bg-base-100/80 backdrop-blur-sm border-b border-base-300">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between whitespace-nowrap h-20">
+<div class="flex items-center gap-3 text-white">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-base-content text-xl font-bold">ShowTime Hub</h2>
+</div>
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-6">
+<div class="hidden sm:flex items-center gap-6">
+<a class="text-base-content-secondary hover:text-primary text-base font-medium transition-colors" href="#">Explore</a>
+<a class="text-base-content-secondary hover:text-primary text-base font-medium transition-colors" href="#">My Profile</a>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-primary-content text-base font-bold hover:bg-primary-focus transition-colors">
+<span class="truncate">Post a Gig</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-base-content text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">Find the Perfect Artist</h1>
+<p class="text-base-content-secondary text-lg">Browse our curated list of professional entertainers for your next event.</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="w-full">
+<label class="sr-only" for="search-artist">Search by name, specialty...</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-base-content-secondary">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-base-content focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-base-300 bg-base-200 h-14 placeholder:text-base-content-secondary pl-12 pr-4 text-base font-normal" id="search-artist" placeholder="Search by name, specialty, e.g. 'Rock Band'" value=""/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-base-content-secondary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-base-content focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-base-300 bg-base-200 h-12 placeholder:text-base-content-secondary pl-12 p-3 text-base font-normal" placeholder="Location"/>
+</div>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-base-content-secondary">
+<span class="material-symbols-outlined">paid</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-base-content focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-base-300 bg-base-200 h-12 placeholder:text-base-content-secondary pl-12 p-3 text-base font-normal" placeholder="Price Range"/>
+</div>
+</div>
+<div class="flex gap-2 sm:gap-3 py-2 overflow-x-auto">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-4 text-primary-content">
+<p class="text-sm font-semibold">All</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-base-200 border border-base-300 px-4 text-base-content hover:bg-base-300 transition-colors">
+<p class="text-sm font-semibold">Musicians</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-base-200 border border-base-300 px-4 text-base-content hover:bg-base-300 transition-colors">
+<p class="text-sm font-semibold">Magicians</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-base-200 border border-base-300 px-4 text-base-content hover:bg-base-300 transition-colors">
+<p class="text-sm font-semibold">DJs</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-base-200 border border-base-300 px-4 text-base-content hover:bg-base-300 transition-colors">
+<p class="text-sm font-semibold">Comedians</p>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-base-200 border border-base-300 px-4 text-base-content hover:bg-base-300 transition-colors">
+<p class="text-sm font-semibold">Dancers</p>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-12">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div class="flex flex-col bg-base-200 rounded-xl transition-shadow duration-300 overflow-hidden group border border-base-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+<div class="relative">
+<img class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Female musician playing guitar and singing into a microphone on stage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK5uFLsUieOy3hUFiRzm2H_kR-L2B695FZ7joFt40EyP7NhMnYSm7tNnSB8kzaHYOqVKZoT0U0quHYtiZZ-quhGpckNEUSyaZooqy4V9y8JSww1bWlKkMPe9vXbALuXdZsRxxaQuBk38v0naI0WdG8_Yvyf5wyLdnwrUDz_wXTVfLsss457gYaFUMTLz-3LnkWiP6WizMOmPOJh7Wq_Fr6Ceh00GjvBLslxQGmhnchEcH2y8b2dK_VaMgpEoCUPDajXkPB6nYtnQ"/>
+<div class="absolute top-4 right-4 flex items-center gap-1.5 bg-base-100/50 backdrop-blur-md text-primary-content px-3 py-1.5 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined !text-base !text-primary">verified</span>
+<span class="text-primary">Verified</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold text-base-content">Elena Rojas</h3>
+<div class="flex items-center gap-1 text-base-content-secondary">
+<span class="material-symbols-outlined !text-xl text-amber-400">star</span>
+<span class="font-bold text-sm">4.9</span>
+</div>
+</div>
+<p class="text-sm text-base-content-secondary">Musician • Madrid, ES</p>
+<div class="mt-4 flex-1 flex flex-col justify-end gap-4">
+<p class="text-lg font-semibold text-base-content-secondary"><span class="font-bold text-xl text-base-content">$120</span> /hr</p>
+<button class="w-full flex items-center justify-center rounded-lg h-11 px-4 bg-primary text-primary-content text-sm font-bold hover:bg-primary-focus transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-base-200 rounded-xl transition-shadow duration-300 overflow-hidden group border border-base-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+<div class="relative">
+<img class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Male magician in a suit holding a glowing orb between his hands." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQhhOhxOq5kXhNkp5CicXvNj-rVhdntjARvx8Vbgz7WxYeT4NoR29siQBB1Dae_NzPdysRYUZD-Vc-2iWhzycrcz6qOhMTghQW7l84eADcQTjcJRo3V9_yJldu-WS-wQMNJWIZpHya2IJzQRjrZjf-8DrPAe6F2H_v2YWq96Vxsg_puAu1PyxzliVnKQANXMgHn94l96D54Bfhn497oRkEHUGhcUHlXvHIY8YAi-KvlwnIU_T2C5_ntU-zO9eRUMSWdAeQadWzKw"/>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold text-base-content">Marco "The Illusionist"</h3>
+<div class="flex items-center gap-1 text-base-content-secondary">
+<span class="material-symbols-outlined !text-xl text-amber-400">star</span>
+<span class="font-bold text-sm">5.0</span>
+</div>
+</div>
+<p class="text-sm text-base-content-secondary">Magician • Barcelona, ES</p>
+<div class="mt-4 flex-1 flex flex-col justify-end gap-4">
+<p class="text-lg font-semibold text-base-content-secondary"><span class="font-bold text-xl text-base-content">$250</span> /event</p>
+<button class="w-full flex items-center justify-center rounded-lg h-11 px-4 bg-primary text-primary-content text-sm font-bold hover:bg-primary-focus transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-base-200 rounded-xl transition-shadow duration-300 overflow-hidden group border border-base-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+<div class="relative">
+<img class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" data-alt="DJ wearing headphones and mixing music on a turntable at a crowded concert." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5CuP8xRjYSHSSFotoRJti3qyl2COtJBjk2TGwdq3sBUVSLSs-ktKTHKeLOmgha-BPtDtbf8IgUj7tc96V8cJYMEUuevVbgYd9yFv-W4pGagOoYUishzLNQe3EDdPQfqw6IFiatT6yE-KO0_YC6SC2R16l2MDmoKO5aUKrTf2PUNAC9rIgtZiDfkwKK30lhWlF9Fp-2IWA6anstfpw-4J4jR8O1RIglUc_qZVXzF4twYafTJ0rlJv2eoiy5PFqY2m0FDcpF-4kYQ"/>
+<div class="absolute top-4 right-4 flex items-center gap-1.5 bg-base-100/50 backdrop-blur-md text-primary-content px-3 py-1.5 rounded-full text-xs font-bold">
+<span class="material-symbols-outlined !text-base !text-primary">verified</span>
+<span class="text-primary">Verified</span>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold text-base-content">DJ Sofia</h3>
+<div class="flex items-center gap-1 text-base-content-secondary">
+<span class="material-symbols-outlined !text-xl text-amber-400">star</span>
+<span class="font-bold text-sm">4.8</span>
+</div>
+</div>
+<p class="text-sm text-base-content-secondary">DJ • Valencia, ES</p>
+<div class="mt-4 flex-1 flex flex-col justify-end gap-4">
+<p class="text-lg font-semibold text-base-content-secondary"><span class="font-bold text-xl text-base-content">$180</span> /hr</p>
+<button class="w-full flex items-center justify-center rounded-lg h-11 px-4 bg-primary text-primary-content text-sm font-bold hover:bg-primary-focus transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-base-200 rounded-xl transition-shadow duration-300 overflow-hidden group border border-base-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+<div class="relative">
+<img class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Male comedian standing on stage with a microphone, making the audience laugh." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwANxl8OG9psmNP4C8sNoaAffxZMdUA9RElaxLG_kzbO4RjftteUvJgKVeJH2anPP6tpo5Iggv2YlmSKhBod8ZgjvnL6PG9xzw0eNJvk4eBhqGHAMbhBBzIiWvNvcxgS4TL0a79NgZsOdO6e_vS1HujwHZ26SSbo9GYVLH4dVbwwr5u6jlhGxFuVwd5n6TxyT93oyp6QrV-zNhQaS0eZhufxURW-x0Q9BgpWK0OwqJYgGYlYnb3OrPbk1SRtBLigLjaiLWMpK4Nw"/>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold text-base-content">Javier "The Comedian"</h3>
+<div class="flex items-center gap-1 text-base-content-secondary">
+<span class="material-symbols-outlined !text-xl text-amber-400">star</span>
+<span class="font-bold text-sm">4.7</span>
+</div>
+</div>
+<p class="text-sm text-base-content-secondary">Comedian • Seville, ES</p>
+<div class="mt-4 flex-1 flex flex-col justify-end gap-4">
+<p class="text-lg font-semibold text-base-content-secondary"><span class="font-bold text-xl text-base-content">$200</span> /show</p>
+<button class="w-full flex items-center justify-center rounded-lg h-11 px-4 bg-primary text-primary-content text-sm font-bold hover:bg-primary-focus transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-center items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-11 px-5 bg-base-200 border border-base-300 text-base-content-secondary text-sm font-bold hover:bg-base-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:text-base-content-secondary/50" disabled="">Previous</button>
+<span class="text-sm text-base-content-secondary">Page 1 of 10</span>
+<button class="flex items-center justify-center rounded-lg h-11 px-5 bg-base-200 border border-base-300 text-base-content text-sm font-bold hover:bg-base-300 transition-colors">Next</button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>
