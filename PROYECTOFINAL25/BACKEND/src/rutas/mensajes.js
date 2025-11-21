@@ -8,13 +8,13 @@ const { verificarToken } = require('../middlewares/autenticacion');
 router.use(verificarToken);
 
 // Conversaciones
-router.get('/conversaciones', mensajeControlador.obtenerConversaciones);
-router.post('/conversaciones', mensajeControlador.crearConversacion);
-router.get('/conversaciones/:id/mensajes', mensajeControlador.obtenerMensajesConversacion);
+router.get('/', mensajeControlador.obtenerConversaciones);
+router.post('/conversacion', mensajeControlador.obtenerOCrearConversacion);
+router.get('/:conversacionId/mensajes', mensajeControlador.obtenerMensajes);
+router.post('/:conversacionId/mensajes', mensajeControlador.enviarMensaje);
 
 // Mensajes
-router.post('/', mensajeControlador.enviarMensaje);
-router.put('/:id/leer', mensajeControlador.marcarComoLeido);
-router.get('/no-leidos', mensajeControlador.contarMensajesNoLeidos);
+router.put('/mensajes/:mensajeId/leer', mensajeControlador.marcarComoLeido);
+router.get('/no-leidos', mensajeControlador.contarNoLeidos);
 
 module.exports = router;

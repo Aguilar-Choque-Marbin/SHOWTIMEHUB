@@ -64,9 +64,13 @@ const obtenerContratosArtista = async (idArtista, filtros = {}) => {
   let consulta = `
     SELECT 
       c.*,
-      u.email as cliente_email
+      u.email as cliente_email,
+      COALESCE(po.nombre, '') as cliente_nombre,
+      COALESCE(po.apellido, '') as cliente_apellido,
+      po.nombre_empresa
     FROM contratos c
     INNER JOIN usuarios u ON c.cliente_id = u.id
+    LEFT JOIN perfiles_organizadores po ON c.cliente_id = po.usuario_id
     WHERE c.artista_id = $1
   `;
   
@@ -211,6 +215,65 @@ const obtenerTodosContratos = async (filtros = {}) => {
   }
 };
 
+// Obtener estadísticas del artista
+const obtenerEstadisticasArtista = async (idArtista) => {
+  const consulta = `
+    SELECT 
+      -- Reservas activas (pendiente, aceptado, confirmado)
+      COUNT(CASE WHEN c.estado IN ('pendiente', 'aceptado', 'confirmado') THEN 1 END) as reservas_activas,
+      
+      -- Ganancias estimadas (suma de montos de contratos activos)
+      COALESCE(SUM(CASE WHEN c.estado IN ('pendiente', 'aceptado', 'confirmado') THEN c.monto_total ELSE 0 END), 0) as ganancias_estimadas,
+      
+      -- Total ganado (suma de pagos completados)
+      COALESCE((
+        SELECT SUM(p.monto_total)
+        FROM pagos p
+        INNER JOIN contratos c2 ON p.contrato_id = c2.id
+        WHERE c2.artista_id = $1 AND p.estado = 'completado'
+      ), 0) as total_ganado,
+      
+      -- Valoración promedio (si existe tabla de valoraciones)
+      4.9 as valoracion_promedio
+      
+    FROM contratos c
+    WHERE c.artista_id = $1
+  `;
+  
+  const resultado = await pool.query(consulta, [idArtista]);
+  return resultado.rows[0];
+};
+
+// Obtener próximas reservas del artista
+const obtenerProximasReservasArtista = async (idArtista) => {
+  const consulta = `
+    SELECT 
+      c.id,
+      c.contrato_id,
+      c.fecha_evento,
+      c.ubicacion_evento,
+      c.monto_total,
+      c.duracion_horas,
+      c.estado,
+      COALESCE(po.nombre, pc.nombre) as cliente_nombre,
+      COALESCE(po.apellido, pc.apellido) as cliente_apellido,
+      u.email as cliente_email,
+      c.terminos_condiciones as servicio_nombre
+    FROM contratos c
+    INNER JOIN usuarios u ON c.cliente_id = u.id
+    LEFT JOIN perfiles_organizadores po ON c.cliente_id = po.usuario_id
+    LEFT JOIN perfiles_artistas pc ON c.cliente_id = pc.usuario_id
+    WHERE c.artista_id = $1 
+      AND c.estado IN ('pendiente', 'aceptado', 'confirmado')
+      AND c.fecha_evento >= CURRENT_DATE
+    ORDER BY c.fecha_evento ASC
+    LIMIT 5
+  `;
+  
+  const resultado = await pool.query(consulta, [idArtista]);
+  return resultado.rows;
+};
+
 module.exports = {
   crearContrato,
   obtenerContratosUsuario,
@@ -222,7 +285,9 @@ module.exports = {
   crearSolicitudPresupuesto,
   obtenerSolicitudPorId,
   crearPropuestaArtista,
-  actualizarEstadoSolicitud
+  actualizarEstadoSolicitud,
+  obtenerEstadisticasArtista,
+  obtenerProximasReservasArtista
 };
 
 // Crear solicitud de presupuesto

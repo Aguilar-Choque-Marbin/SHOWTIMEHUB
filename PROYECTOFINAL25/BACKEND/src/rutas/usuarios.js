@@ -7,6 +7,7 @@ const { verificarToken, verificarTipoUsuario } = require('../middlewares/autenti
 // Rutas protegidas - Perfil del usuario
 router.get('/perfil', verificarToken, usuarioControlador.obtenerPerfil);
 router.put('/perfil', verificarToken, usuarioControlador.actualizarPerfil);
+router.put('/cambiar-contrasena', verificarToken, usuarioControlador.cambiarContrasena);
 
 // Ruta para actualizar tipo de usuario (después de selección de rol)
 router.put('/actualizar-tipo', verificarToken, usuarioControlador.actualizarTipoUsuario);

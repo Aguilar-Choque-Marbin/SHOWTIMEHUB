@@ -174,10 +174,7 @@ const obtenerHistorialPagos = async (peticion, respuesta) => {
 
     const pagos = await pagoModelo.obtenerHistorialPagosUsuario(idUsuario);
 
-    respuesta.json({
-      exito: true,
-      datos: pagos
-    });
+    respuesta.json(pagos);
 
   } catch (error) {
     console.error('Error al obtener historial de pagos:', error);

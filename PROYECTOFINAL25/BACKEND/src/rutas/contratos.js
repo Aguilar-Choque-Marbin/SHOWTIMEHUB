@@ -18,6 +18,10 @@ router.post('/solicitar-personalizado', contratoControlador.solicitarPresupuesto
 router.get('/solicitudes/:id', contratoControlador.obtenerSolicitud);
 router.post('/solicitudes/:id/propuesta', contratoControlador.crearPropuesta);
 
+// Estadísticas del artista
+router.get('/artista/estadisticas', contratoControlador.obtenerEstadisticasArtista);
+router.get('/artista/proximas-reservas', contratoControlador.obtenerProximasReservasArtista);
+
 // Gestión de contratos
 router.post('/', contratoControlador.crearContrato);
 router.get('/mis-contratos', contratoControlador.obtenerMisContratos);

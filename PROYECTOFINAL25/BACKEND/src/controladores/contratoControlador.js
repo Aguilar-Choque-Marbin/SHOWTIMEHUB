@@ -389,6 +389,42 @@ const crearPropuesta = async (peticion, respuesta) => {
   }
 };
 
+// Obtener estadísticas del artista
+const obtenerEstadisticasArtista = async (peticion, respuesta) => {
+  try {
+    const idArtista = peticion.usuario.id;
+    
+    const estadisticas = await contratoModelo.obtenerEstadisticasArtista(idArtista);
+    
+    respuesta.json(estadisticas);
+  } catch (error) {
+    console.error('Error al obtener estadísticas:', error);
+    respuesta.status(500).json({
+      exito: false,
+      mensaje: 'Error al obtener estadísticas',
+      error: error.message
+    });
+  }
+};
+
+// Obtener próximas reservas del artista
+const obtenerProximasReservasArtista = async (peticion, respuesta) => {
+  try {
+    const idArtista = peticion.usuario.id;
+    
+    const reservas = await contratoModelo.obtenerProximasReservasArtista(idArtista);
+    
+    respuesta.json(reservas);
+  } catch (error) {
+    console.error('Error al obtener próximas reservas:', error);
+    respuesta.status(500).json({
+      exito: false,
+      mensaje: 'Error al obtener próximas reservas',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   crearContrato,
   obtenerMisContratos,
@@ -401,5 +437,7 @@ module.exports = {
   solicitarPresupuesto,
   solicitarPresupuestoPersonalizado,
   obtenerSolicitud,
-  crearPropuesta
+  crearPropuesta,
+  obtenerEstadisticasArtista,
+  obtenerProximasReservasArtista
 };

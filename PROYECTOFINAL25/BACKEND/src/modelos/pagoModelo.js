@@ -40,21 +40,42 @@ const obtenerPagosContrato = async (idContrato) => {
 const obtenerHistorialPagosUsuario = async (idUsuario) => {
   const consulta = `
     SELECT 
-      p.*,
+      p.id,
+      p.contrato_id,
+      p.monto_total as monto,
+      p.estado,
+      p.metodo_pago,
+      p.referencia_pago as id_transaccion,
+      p.fecha_pago as fecha,
       c.fecha_evento,
+      c.contrato_id as numero_contrato,
       pa.nombre_artistico,
-      u.nombre as artista_nombre,
-      u.apellido as artista_apellido
+      pa.nombre as artista_nombre,
+      pa.apellido as artista_apellido,
+      se.titulo_servicio as servicio
     FROM pagos p
-    INNER JOIN contratos c ON p.id_contrato = c.id_contrato
-    INNER JOIN perfiles_artistas pa ON c.id_perfil_artista = pa.id_perfil_artista
-    INNER JOIN usuarios u ON pa.id_usuario = u.id_usuario
-    WHERE c.id_usuario_organizador = $1
+    INNER JOIN contratos c ON p.contrato_id = c.id
+    INNER JOIN perfiles_artistas pa ON c.artista_id = pa.usuario_id
+    LEFT JOIN servicios_artista se ON c.propuesta_id = se.id
+    WHERE c.cliente_id = $1
     ORDER BY p.fecha_pago DESC
   `;
   
   const resultado = await pool.query(consulta, [idUsuario]);
-  return resultado.rows;
+  
+  // Formatear los resultados
+  return resultado.rows.map(row => ({
+    id: row.id,
+    id_transaccion: row.id_transaccion || row.numero_contrato,
+    fecha: row.fecha || row.fecha_evento,
+    artista: row.nombre_artistico || `${row.artista_nombre} ${row.artista_apellido}`,
+    servicio: row.servicio || 'Servicio de entretenimiento',
+    monto: parseFloat(row.monto),
+    estado: row.estado === 'completado' ? 'Completado' : 
+            row.estado === 'pendiente' ? 'Pendiente' : 
+            row.estado === 'reembolsado' ? 'Reembolsado' : 'Pendiente',
+    metodo_pago: row.metodo_pago || 'Tarjeta'
+  }));
 };
 
 // Obtener ganancias del artista

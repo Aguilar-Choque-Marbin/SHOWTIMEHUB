@@ -1,5 +1,6 @@
 // src/controladores/usuarioControlador.js
 const usuarioModelo = require('../modelos/usuarioModelo');
+const bcrypt = require('bcrypt');
 
 // Obtener perfil del usuario actual
 const obtenerPerfil = async (peticion, respuesta) => {
@@ -14,14 +15,24 @@ const obtenerPerfil = async (peticion, respuesta) => {
       });
     }
 
-    const estadisticas = await usuarioModelo.obtenerEstadisticasUsuario(idUsuario);
+    // Si es cliente y no tiene perfil, crear uno básico
+    const pool = require('../configuracion/baseDatos');
+    if (usuario.tipo_usuario === 'cliente' && !usuario.nombre) {
+      await pool.query(
+        'INSERT INTO perfiles_organizadores (usuario_id, nombre, apellido) VALUES ($1, $2, $3) ON CONFLICT (usuario_id) DO NOTHING',
+        [idUsuario, 'Usuario', 'Nuevo']
+      );
+      // Recargar usuario
+      const usuarioActualizado = await usuarioModelo.buscarPorId(idUsuario);
+      return respuesta.json({
+        exito: true,
+        datos: usuarioActualizado
+      });
+    }
 
     respuesta.json({
       exito: true,
-      datos: {
-        ...usuario,
-        estadisticas
-      }
+      datos: usuario
     });
 
   } catch (error) {
@@ -44,8 +55,74 @@ const actualizarPerfil = async (peticion, respuesta) => {
     delete datos.email;
     delete datos.tipo_usuario;
     delete datos.contrasena_hash;
+    delete datos.password_hash;
 
-    const usuarioActualizado = await usuarioModelo.actualizarUsuario(idUsuario, datos);
+    const pool = require('../configuracion/baseDatos');
+    
+    // Obtener tipo de usuario
+    const usuarioActual = await usuarioModelo.buscarPorId(idUsuario);
+    
+    // Actualizar tabla usuarios (teléfono)
+    if (datos.telefono) {
+      await pool.query(
+        'UPDATE usuarios SET telefono = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
+        [datos.telefono, idUsuario]
+      );
+    }
+    
+    // Actualizar tabla de perfil según tipo de usuario
+    if (usuarioActual.tipo_usuario === 'artista') {
+      const camposActualizar = [];
+      const valores = [];
+      let contador = 1;
+      
+      if (datos.nombre) {
+        camposActualizar.push(`nombre = $${contador}`);
+        valores.push(datos.nombre);
+        contador++;
+      }
+      
+      if (datos.ciudad) {
+        camposActualizar.push(`ciudad = $${contador}`);
+        valores.push(datos.ciudad);
+        contador++;
+      }
+      
+      if (camposActualizar.length > 0) {
+        valores.push(idUsuario);
+        await pool.query(
+          `UPDATE perfiles_artistas SET ${camposActualizar.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE usuario_id = $${contador}`,
+          valores
+        );
+      }
+    } else if (usuarioActual.tipo_usuario === 'cliente') {
+      const camposActualizar = [];
+      const valores = [];
+      let contador = 1;
+      
+      if (datos.nombre) {
+        camposActualizar.push(`nombre = $${contador}`);
+        valores.push(datos.nombre);
+        contador++;
+      }
+      
+      if (datos.ciudad) {
+        camposActualizar.push(`ciudad = $${contador}`);
+        valores.push(datos.ciudad);
+        contador++;
+      }
+      
+      if (camposActualizar.length > 0) {
+        valores.push(idUsuario);
+        await pool.query(
+          `UPDATE perfiles_organizadores SET ${camposActualizar.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE usuario_id = $${contador}`,
+          valores
+        );
+      }
+    }
+    
+    // Obtener usuario actualizado
+    const usuarioActualizado = await usuarioModelo.buscarPorId(idUsuario);
 
     respuesta.json({
       exito: true,
@@ -230,6 +307,69 @@ const cambiarEstadoUsuario = async (peticion, respuesta) => {
   }
 };
 
+// Cambiar contraseña
+const cambiarContrasena = async (peticion, respuesta) => {
+  try {
+    const idUsuario = peticion.usuario.id;
+    const { contrasena_actual, contrasena_nueva } = peticion.body;
+
+    if (!contrasena_actual || !contrasena_nueva) {
+      return respuesta.status(400).json({
+        exito: false,
+        mensaje: 'Se requieren la contraseña actual y la nueva contraseña'
+      });
+    }
+
+    if (contrasena_nueva.length < 6) {
+      return respuesta.status(400).json({
+        exito: false,
+        mensaje: 'La nueva contraseña debe tener al menos 6 caracteres'
+      });
+    }
+
+    // Obtener usuario
+    const usuario = await usuarioModelo.buscarPorId(idUsuario);
+    if (!usuario) {
+      return respuesta.status(404).json({
+        exito: false,
+        mensaje: 'Usuario no encontrado'
+      });
+    }
+
+    // Verificar contraseña actual
+    const contrasenaValida = await bcrypt.compare(contrasena_actual, usuario.password_hash);
+    if (!contrasenaValida) {
+      return respuesta.status(401).json({
+        exito: false,
+        mensaje: 'La contraseña actual es incorrecta'
+      });
+    }
+
+    // Hashear nueva contraseña
+    const nuevaContrasenaHash = await bcrypt.hash(contrasena_nueva, 10);
+
+    // Actualizar contraseña
+    const pool = require('../configuracion/baseDatos');
+    await pool.query(
+      'UPDATE usuarios SET password_hash = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
+      [nuevaContrasenaHash, idUsuario]
+    );
+
+    respuesta.json({
+      exito: true,
+      mensaje: 'Contraseña actualizada exitosamente'
+    });
+
+  } catch (error) {
+    console.error('Error al cambiar contraseña:', error);
+    respuesta.status(500).json({
+      exito: false,
+      mensaje: 'Error al cambiar contraseña',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   obtenerPerfil,
   actualizarPerfil,
@@ -238,5 +378,6 @@ module.exports = {
   eliminarUsuario,
   obtenerReservas,
   obtenerFavoritos,
-  actualizarTipoUsuario
+  actualizarTipoUsuario,
+  cambiarContrasena
 };

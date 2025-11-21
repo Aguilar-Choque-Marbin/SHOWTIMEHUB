@@ -83,10 +83,13 @@
           </button>
 
           <button
-            @click="router.push('/historial-pagos')"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg text-left text-white hover:bg-white/10"
+            @click="seccionActual = 'pagos'"
+            :class="[
+              'flex items-center gap-3 px-3 py-2 rounded-lg text-left',
+              seccionActual === 'pagos' ? 'bg-[#00f5d4] text-black' : 'text-white hover:bg-white/10'
+            ]"
           >
-            <span class="material-symbols-outlined">payments</span>
+            <span class="material-symbols-outlined" :class="seccionActual === 'pagos' ? 'fill' : ''">payments</span>
             <span class="text-sm font-medium">Historial de Pagos</span>
           </button>
         </nav>
@@ -94,10 +97,10 @@
         <!-- Botón de Cerrar Sesión -->
         <div class="mt-auto pt-4 border-t border-white/10">
           <button
-            @click="cerrarSesion"
+            @click="abrirModalCerrarSesion"
             class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-red-500/20 w-full text-left"
           >
-            <span class="material-symbols-outlined"></span>
+            <span class="material-symbols-outlined">logout</span>
             <span class="text-sm font-medium">Cerrar Sesión</span>
           </button>
         </div>
@@ -301,7 +304,7 @@
               <div v-for="favorito in favoritos" :key="favorito.id_favorito" class="flex flex-col bg-[#181818] rounded-xl overflow-hidden group">
                 <div class="relative">
                   <div class="w-full bg-center bg-no-repeat aspect-[4/3] bg-cover" :style="`background-image: url('${favorito.foto_perfil || 'https://picsum.photos/400/300'}');`"></div>
-                  <button @click="eliminarFavorito(favorito.id_perfil_artista)" class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-[#00f5d4] hover:bg-black/70 transition-colors">
+                  <button @click="abrirModalEliminarFavorito(favorito)" class="absolute top-3 right-3 flex items-center justify-center size-9 bg-black/50 backdrop-blur-sm rounded-full text-[#00f5d4] hover:bg-black/70 transition-colors">
                     <span class="material-symbols-outlined fill">favorite</span>
                   </button>
                 </div>
@@ -320,7 +323,7 @@
         </div>
 
         <!-- Sección Mensajes -->
-        <div v-if="seccionActual === 'mensajes'" class="flex h-[calc(100vh-8rem)] -m-8">
+        <div v-if="seccionActual === 'mensajes'" class="flex h-screen -m-8">
           <!-- Lista de Conversaciones -->
           <div class="flex-shrink-0 w-full md:w-80 lg:w-96 bg-[#181818] border-r border-white/5 flex flex-col">
             <div class="p-4 border-b border-white/5">
@@ -331,21 +334,37 @@
               </div>
             </div>
             <div class="flex-1 overflow-y-auto">
-              <nav>
+              <div v-if="cargandoConversaciones" class="flex items-center justify-center h-64">
+                <div class="animate-spin rounded-full h-8 w-8 border-2 border-[#00f5d4] border-t-transparent"></div>
+              </div>
+              <div v-else-if="conversaciones.length === 0" class="flex flex-col items-center justify-center h-64 text-center px-6">
+                <span class="material-symbols-outlined text-5xl text-[#a0a0a0] mb-4">mail</span>
+                <p class="text-[#a0a0a0]">No tienes conversaciones aún</p>
+                <p class="text-sm text-[#a0a0a0] mt-2">Contacta a un artista desde tus reservas</p>
+              </div>
+              <nav v-else>
                 <a v-for="conv in conversacionesFiltradas" :key="conv.id" @click="seleccionarConversacion(conv)" :class="[
                   'flex items-center gap-4 p-4 border-b border-white/10 cursor-pointer',
                   conversacionActual?.id === conv.id ? 'bg-white/5' : 'hover:bg-white/5'
                 ]">
                   <div class="relative">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#00f5d4]/20 to-[#00f5d4]/5"></div>
-                    <span v-if="conv.en_linea" class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 ring-2 ring-[#181818]"></span>
+                    <div class="w-12 h-12 rounded-full bg-cover bg-center bg-no-repeat" :style="`background-image: url('https://picsum.photos/seed/${conv.otro_usuario_id}/100/100')`">
+                      <div v-if="!conv.otro_usuario_id" class="w-full h-full rounded-full bg-gradient-to-br from-[#00f5d4]/20 to-[#00f5d4]/5 flex items-center justify-center">
+                        <span class="text-[#00f5d4] text-xl font-bold">{{ conv.nombre?.charAt(0).toUpperCase() }}</span>
+                      </div>
+                    </div>
                   </div>
                   <div class="flex-1 overflow-hidden">
                     <div class="flex justify-between items-center">
                       <p class="font-semibold text-[#f0f0f0] truncate">{{ conv.nombre }}</p>
-                      <span class="text-xs text-[#a0a0a0]">{{ conv.hora }}</span>
+                      <span v-if="conv.fecha_ultimo_mensaje" class="text-xs text-[#a0a0a0]">
+                        {{ formatearFechaHora(conv.fecha_ultimo_mensaje) }}
+                      </span>
                     </div>
-                    <p class="text-sm text-[#a0a0a0] truncate">{{ conv.ultimo_mensaje }}</p>
+                    <p v-if="conv.ultimo_mensaje" class="text-sm text-[#a0a0a0] truncate">{{ conv.ultimo_mensaje }}</p>
+                    <span v-if="conv.mensajes_no_leidos > 0" class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-black bg-[#00f5d4] rounded-full mt-1">
+                      {{ conv.mensajes_no_leidos }}
+                    </span>
                   </div>
                 </a>
               </nav>
@@ -355,16 +374,25 @@
           <!-- Área de Chat -->
           <div v-if="conversacionActual" class="flex-1 flex flex-col bg-[#000000]">
             <header class="flex items-center gap-4 p-4 border-b border-white/5 shrink-0">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#00f5d4]/20 to-[#00f5d4]/5"></div>
+              <div class="w-12 h-12 rounded-full bg-cover bg-center bg-no-repeat" :style="`background-image: url('https://picsum.photos/seed/${conversacionActual.otro_usuario_id}/100/100')`">
+                <div v-if="!conversacionActual.otro_usuario_id" class="w-full h-full rounded-full bg-gradient-to-br from-[#00f5d4]/20 to-[#00f5d4]/5 flex items-center justify-center">
+                  <span class="text-[#00f5d4] text-xl font-bold">{{ conversacionActual.nombre?.charAt(0).toUpperCase() }}</span>
+                </div>
+              </div>
               <div>
                 <h3 class="text-lg font-bold text-[#f0f0f0]">{{ conversacionActual.nombre }}</h3>
-                <p v-if="conversacionActual.en_linea" class="text-sm text-green-400 flex items-center gap-1.5">
-                  <span class="block h-2 w-2 rounded-full bg-green-500"></span> En línea
-                </p>
               </div>
             </header>
             <div ref="mensajesContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
-              <div v-for="mensaje in conversacionActual.mensajes" :key="mensaje.id" :class="[
+              <div v-if="cargandoMensajes" class="flex items-center justify-center h-full">
+                <div class="animate-spin rounded-full h-8 w-8 border-2 border-[#00f5d4] border-t-transparent"></div>
+              </div>
+              <div v-else-if="conversacionActual.mensajes?.length === 0" class="flex flex-col items-center justify-center h-full text-center">
+                <span class="material-symbols-outlined text-5xl text-[#a0a0a0] mb-4">chat_bubble</span>
+                <p class="text-[#a0a0a0]">No hay mensajes aún</p>
+                <p class="text-sm text-[#a0a0a0] mt-2">Inicia la conversación</p>
+              </div>
+              <div v-else v-for="mensaje in conversacionActual.mensajes" :key="mensaje.id" :class="[
                 'flex',
                 mensaje.es_propio ? 'justify-end' : 'justify-start'
               ]">
@@ -373,17 +401,20 @@
                   mensaje.es_propio ? 'bg-[#00f5d4] rounded-br-none' : 'bg-[#181818] rounded-bl-none'
                 ]">
                   <p :class="[
-                    'text-sm',
+                    'text-sm leading-relaxed',
                     mensaje.es_propio ? 'text-black' : 'text-[#f0f0f0]'
                   ]">{{ mensaje.texto }}</p>
+                  <span v-if="mensaje.hora" :class="['text-[10px] block mt-1.5', mensaje.es_propio ? 'text-black/60' : 'text-[#a0a0a0]']">
+                    {{ mensaje.hora }}
+                  </span>
                 </div>
               </div>
             </div>
             <div class="p-4 border-t border-white/5 bg-[#000000] mt-auto shrink-0">
               <form @submit.prevent="enviarMensaje" class="flex items-center gap-4">
                 <input v-model="nuevoMensaje" class="flex-1 bg-[#181818] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-[#f0f0f0] placeholder-[#a0a0a0] focus:ring-[#00f5d4] focus:border-[#00f5d4]" placeholder="Escribe un mensaje..." type="text"/>
-                <button type="submit" class="flex items-center justify-center size-10 rounded-lg bg-[#00f5d4] text-black hover:bg-[#00f5d4]/80 shrink-0">
-                  <span class="material-symbols-outlined">send</span>
+                <button type="submit" class="flex items-center justify-center w-10 h-10 rounded-lg bg-[#00f5d4] text-black hover:bg-[#00f5d4]/80 shrink-0">
+                  <span class="material-symbols-outlined text-[20px]">send</span>
                 </button>
               </form>
             </div>
@@ -411,9 +442,20 @@
               </button>
             </div>
           </header>
-          <section class="flex flex-col gap-2">
-            <div v-for="notif in notificaciones" :key="notif.id" :class="[
-              'relative flex items-start gap-4 p-4 rounded-xl bg-[#181818] border border-transparent hover:border-[#00f5d4]/50 transition-colors duration-300',
+          
+          <div v-if="cargandoNotificaciones" class="flex items-center justify-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-2 border-[#00f5d4] border-t-transparent"></div>
+          </div>
+          
+          <div v-else-if="notificaciones.length === 0" class="flex flex-col items-center justify-center py-16 text-center">
+            <span class="material-symbols-outlined text-6xl text-[#a0a0a0] mb-4">notifications_off</span>
+            <p class="text-[#f0f0f0] text-lg font-semibold mb-2">No tienes notificaciones</p>
+            <p class="text-[#a0a0a0] text-sm">Cuando tengas nuevas reservas o mensajes aparecerán aquí</p>
+          </div>
+          
+          <section v-else class="flex flex-col gap-2">
+            <div v-for="notif in notificaciones" :key="notif.id" @click="manejarClickNotificacion(notif)" :class="[
+              'relative flex items-start gap-4 p-4 rounded-xl bg-[#181818] border border-transparent hover:border-[#00f5d4]/50 transition-colors duration-300 cursor-pointer',
               !notif.leida ? '' : 'bg-[#181818]/60'
             ]">
               <div :class="[
@@ -470,14 +512,6 @@
             </section>
 
             <section>
-              <h2 class="text-xl font-semibold text-[#f0f0f0] border-b border-white/10 pb-3 mb-6">Historial de Reservas</h2>
-              <a @click="irAHistorialPagos" class="inline-flex items-center gap-2 text-[#00f5d4] hover:underline cursor-pointer">
-                <span>Ver listado completo de reservas</span>
-                <span class="material-symbols-outlined text-lg">arrow_forward</span>
-              </a>
-            </section>
-
-            <section>
               <h2 class="text-xl font-semibold text-[#f0f0f0] border-b border-white/10 pb-3 mb-6">Métodos de Pago</h2>
               <div class="space-y-4">
                 <div v-for="tarjeta in metodosPago" :key="tarjeta.id" class="flex items-center justify-between p-4 rounded-lg bg-[#181818] border border-white/10">
@@ -488,11 +522,11 @@
                       <p class="text-sm text-[#a0a0a0]">Expira {{ tarjeta.expira }}</p>
                     </div>
                   </div>
-                  <button @click="eliminarMetodoPago(tarjeta.id)" class="text-[#a0a0a0] hover:text-[#00f5d4]">
+                  <button @click="abrirModalEliminarPago(tarjeta)" class="text-[#a0a0a0] hover:text-[#00f5d4]">
                     <span class="material-symbols-outlined">delete</span>
                   </button>
                 </div>
-                <button @click="agregarMetodoPago" class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md h-10 px-4 border border-[#00f5d4] text-[#00f5d4] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#00f5d4]/10">
+                <button @click="abrirModalAgregarPago" class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md h-10 px-4 border border-[#00f5d4] text-[#00f5d4] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#00f5d4]/10">
                   <span class="material-symbols-outlined text-lg">add</span>
                   <span class="truncate">Añadir nuevo método de pago</span>
                 </button>
@@ -502,7 +536,7 @@
             <section>
               <h2 class="text-xl font-semibold text-[#f0f0f0] border-b border-white/10 pb-3 mb-6">Configuración de la Cuenta</h2>
               <div class="space-y-4">
-                <a @click="cambiarContrasena" class="flex items-center justify-between text-[#f0f0f0] hover:text-[#00f5d4] group cursor-pointer">
+                <a @click="abrirModalCambiarContrasena" class="flex items-center justify-between text-[#f0f0f0] hover:text-[#00f5d4] group cursor-pointer">
                   <span>Cambiar contraseña</span>
                   <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">chevron_right</span>
                 </a>
@@ -516,14 +550,135 @@
               </div>
             </section>
 
-            <div class="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-white/10">
-              <button @click="guardarPerfil" class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-11 px-6 bg-[#00f5d4] text-black text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#00f5d4]/80">
+            <div class="flex justify-start pt-6 border-t border-white/10">
+              <button @click="guardarPerfil" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-11 px-6 bg-[#00f5d4] text-black text-base font-bold leading-normal tracking-[0.015em] hover:bg-[#00f5d4]/80">
                 <span class="truncate">Guardar Cambios</span>
               </button>
-              <button @click="cerrarSesion" class="w-full sm:w-auto flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-11 px-6 bg-transparent text-[#a0a0a0] hover:bg-white/10 hover:text-[#f0f0f0] text-base font-bold leading-normal tracking-[0.015em]">
-                <span class="truncate">Cerrar Sesión</span>
-              </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Historial de Pagos -->
+      <div v-if="seccionActual === 'pagos'">
+        <h2 class="text-3xl font-bold text-[#f0f0f0] mb-6">Historial de Pagos</h2>
+        
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-[#181818] p-6 rounded-lg border border-white/10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[#a0a0a0] text-sm">Total Gastado</span>
+              <span class="material-symbols-outlined text-[#00f5d4]">payments</span>
+            </div>
+            <p class="text-3xl font-bold text-[#00f5d4]">{{ formatearMonto(totalGastado) }}</p>
+          </div>
+          <div class="bg-[#181818] p-6 rounded-lg border border-white/10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[#a0a0a0] text-sm">Pagos Realizados</span>
+              <span class="material-symbols-outlined text-[#00f5d4]">receipt_long</span>
+            </div>
+            <p class="text-3xl font-bold">{{ pagosList.length }}</p>
+          </div>
+          <div class="bg-[#181818] p-6 rounded-lg border border-white/10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[#a0a0a0] text-sm">Último Pago</span>
+              <span class="material-symbols-outlined text-[#00f5d4]">schedule</span>
+            </div>
+            <p class="text-lg font-semibold">{{ ultimoPago }}</p>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-[#181818] p-6 rounded-lg border border-white/10 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-sm text-[#a0a0a0] mb-2">Buscar</label>
+              <div class="relative">
+                <input
+                  v-model="busquedaPagos"
+                  type="text"
+                  placeholder="Buscar por artista o servicio..."
+                  class="w-full bg-[#111111] border border-white/10 rounded-lg px-4 py-2 pl-10 text-[#f0f0f0] focus:outline-none focus:border-[#00f5d4] transition-colors"
+                />
+                <span class="material-symbols-outlined absolute left-3 top-2.5 text-[#a0a0a0] text-xl">search</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-[#a0a0a0] mb-2">Estado</label>
+              <select
+                v-model="filtroEstadoPago"
+                class="w-full bg-[#111111] border border-white/10 rounded-lg px-4 py-2 text-[#f0f0f0] focus:outline-none focus:border-[#00f5d4] transition-colors"
+              >
+                <option value="">Todos</option>
+                <option value="Completado">Completado</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Reembolsado">Reembolsado</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm text-[#a0a0a0] mb-2">Periodo</label>
+              <select
+                v-model="filtroPeriodoPago"
+                class="w-full bg-[#111111] border border-white/10 rounded-lg px-4 py-2 text-[#f0f0f0] focus:outline-none focus:border-[#00f5d4] transition-colors"
+              >
+                <option value="">Todos</option>
+                <option value="30">Últimos 30 días</option>
+                <option value="90">Últimos 3 meses</option>
+                <option value="180">Últimos 6 meses</option>
+                <option value="365">Último año</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagos Table -->
+        <div class="bg-[#181818] rounded-lg border border-white/10 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-[#111111] border-b border-white/10">
+                <tr>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">Fecha</th>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">ID Transacción</th>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">Artista</th>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">Servicio</th>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">Monto</th>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">Estado</th>
+                  <th class="text-left px-6 py-4 text-sm font-semibold text-[#a0a0a0]">Acciones</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/10">
+                <tr v-for="pago in pagosFiltrados" :key="pago.id" class="hover:bg-white/5 transition-colors">
+                  <td class="px-6 py-4 text-sm">{{ formatearFechaPago(pago.fecha) }}</td>
+                  <td class="px-6 py-4">
+                    <span class="text-[#00f5d4] font-mono text-sm">{{ pago.id_transaccion }}</span>
+                  </td>
+                  <td class="px-6 py-4">{{ pago.artista }}</td>
+                  <td class="px-6 py-4 text-sm text-[#a0a0a0]">{{ pago.servicio }}</td>
+                  <td class="px-6 py-4 font-semibold">{{ formatearMonto(pago.monto) }}</td>
+                  <td class="px-6 py-4">
+                    <span :class="[
+                      'px-3 py-1 rounded-full text-xs font-medium',
+                      pago.estado === 'Completado' ? 'bg-green-500/20 text-green-400' :
+                      pago.estado === 'Pendiente' ? 'bg-yellow-500/20 text-yellow-400' :
+                      'bg-red-500/20 text-red-400'
+                    ]">
+                      {{ pago.estado }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <button @click="verDetallePago(pago)" class="text-[#00f5d4] hover:text-[#00d4b8] transition-colors">
+                      <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="pagosFiltrados.length === 0">
+                  <td colspan="7" class="px-6 py-12 text-center text-[#a0a0a0]">
+                    <span class="material-symbols-outlined text-6xl mb-4 block opacity-50">receipt_long</span>
+                    <p class="text-lg">No se encontraron pagos</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -618,10 +773,231 @@
             <button @click="cerrarModalDetalle" class="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg font-semibold transition-colors">
               Cerrar
             </button>
-            <button class="flex-1 px-4 py-3 bg-[#00f5d4] hover:bg-[#00f5d4]/80 text-black rounded-lg font-semibold transition-colors">
+            <button @click="contactarArtista(reservaSeleccionada)" class="flex-1 px-4 py-3 bg-[#00f5d4] hover:bg-[#00f5d4]/80 text-black rounded-lg font-semibold transition-colors">
               Contactar Artista
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Eliminar Favorito -->
+    <div v-if="modalEliminarFavoritoAbierto" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="cerrarModalEliminarFavorito">
+      <div @click.stop class="bg-[#181818] rounded-xl p-6 max-w-md w-full mx-4 border border-white/10">
+        <div class="flex items-start gap-4">
+          <div class="flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10 shrink-0">
+            <span class="material-symbols-outlined text-red-500 text-2xl">delete</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-[#f0f0f0] mb-2">Eliminar de Favoritos</h3>
+            <p class="text-[#a0a0a0] text-sm mb-1">
+              ¿Estás seguro que deseas eliminar a 
+              <span class="text-[#f0f0f0] font-semibold">{{ favoritoAEliminar?.nombre_artistico || favoritoAEliminar?.nombre + ' ' + favoritoAEliminar?.apellido }}</span>
+              de tus favoritos?
+            </p>
+            <p class="text-[#a0a0a0] text-xs">Esta acción no se puede deshacer.</p>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button @click="cerrarModalEliminarFavorito" class="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[#f0f0f0] rounded-lg font-medium transition-colors">
+            Cancelar
+          </button>
+          <button @click="confirmarEliminarFavorito" class="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Agregar Método de Pago -->
+    <div v-if="modalAgregarPagoAbierto" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="cerrarModalAgregarPago">
+      <div @click.stop class="bg-[#181818] rounded-xl p-6 max-w-md w-full mx-4 border border-white/10">
+        <div class="flex items-start gap-4 mb-6">
+          <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#00f5d4]/10 shrink-0">
+            <span class="material-symbols-outlined text-[#00f5d4] text-2xl">credit_card</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-[#f0f0f0] mb-1">Agregar Método de Pago</h3>
+            <p class="text-[#a0a0a0] text-sm">Ingresa los datos de tu tarjeta</p>
+          </div>
+        </div>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Tipo de Tarjeta</label>
+            <select v-model="nuevoPago.tipo" class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]">
+              <option value="Visa">Visa</option>
+              <option value="Mastercard">Mastercard</option>
+              <option value="American Express">American Express</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Número de Tarjeta</label>
+            <input 
+              v-model="nuevoPago.numero" 
+              type="text" 
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              @input="formatearNumeroTarjeta"
+              class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+            />
+          </div>
+          
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Mes</label>
+              <input 
+                v-model="nuevoPago.expiraMes" 
+                type="text" 
+                placeholder="12"
+                maxlength="2"
+                @input="validarMes"
+                class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Año</label>
+              <input 
+                v-model="nuevoPago.expiraAnio" 
+                type="text" 
+                placeholder="2025"
+                maxlength="4"
+                @input="validarAnio"
+                class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#a0a0a0] mb-2">CVV</label>
+              <input 
+                v-model="nuevoPago.cvv" 
+                type="text" 
+                placeholder="123"
+                maxlength="3"
+                @input="validarCVV"
+                class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex gap-3 mt-6">
+          <button @click="cerrarModalAgregarPago" class="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[#f0f0f0] rounded-lg font-medium transition-colors">
+            Cancelar
+          </button>
+          <button @click="confirmarAgregarPago" class="flex-1 px-4 py-2.5 bg-[#00f5d4] hover:bg-[#00f5d4]/80 text-[#111111] rounded-lg font-medium transition-colors">
+            Agregar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Eliminar Método de Pago -->
+    <div v-if="modalEliminarPagoAbierto" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="cerrarModalEliminarPago">
+      <div @click.stop class="bg-[#181818] rounded-xl p-6 max-w-md w-full mx-4 border border-white/10">
+        <div class="flex items-start gap-4">
+          <div class="flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10 shrink-0">
+            <span class="material-symbols-outlined text-red-500 text-2xl">delete</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-[#f0f0f0] mb-2">Eliminar Método de Pago</h3>
+            <p class="text-[#a0a0a0] text-sm mb-1">
+              ¿Estás seguro que deseas eliminar la tarjeta 
+              <span class="text-[#f0f0f0] font-semibold">{{ pagoAEliminar?.tipo }} •••• {{ pagoAEliminar?.ultimos4 }}</span>?
+            </p>
+            <p class="text-[#a0a0a0] text-xs">Esta acción no se puede deshacer.</p>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button @click="cerrarModalEliminarPago" class="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[#f0f0f0] rounded-lg font-medium transition-colors">
+            Cancelar
+          </button>
+          <button @click="confirmarEliminarPago" class="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Cambiar Contraseña -->
+    <div v-if="modalCambiarContrasenaAbierto" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="cerrarModalCambiarContrasena">
+      <div @click.stop class="bg-[#181818] rounded-xl p-6 max-w-md w-full mx-4 border border-white/10">
+        <div class="flex items-start gap-4 mb-6">
+          <div class="flex items-center justify-center w-12 h-12 rounded-full bg-[#00f5d4]/10 shrink-0">
+            <span class="material-symbols-outlined text-[#00f5d4] text-2xl">lock</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-[#f0f0f0] mb-1">Cambiar Contraseña</h3>
+            <p class="text-[#a0a0a0] text-sm">Ingresa tu contraseña actual y la nueva</p>
+          </div>
+        </div>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Contraseña Actual</label>
+            <input 
+              v-model="contrasenas.actual" 
+              type="password" 
+              placeholder="••••••••"
+              class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Nueva Contraseña</label>
+            <input 
+              v-model="contrasenas.nueva" 
+              type="password" 
+              placeholder="••••••••"
+              class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+            />
+            <p class="text-[#a0a0a0] text-xs mt-1">Mínimo 6 caracteres</p>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-[#a0a0a0] mb-2">Confirmar Nueva Contraseña</label>
+            <input 
+              v-model="contrasenas.confirmar" 
+              type="password" 
+              placeholder="••••••••"
+              class="w-full px-3 py-2.5 bg-[#111111] border border-white/10 rounded-lg text-[#f0f0f0] placeholder:text-[#666666] focus:outline-none focus:ring-2 focus:ring-[#00f5d4] focus:border-[#00f5d4]"
+            />
+          </div>
+        </div>
+        
+        <div class="flex gap-3 mt-6">
+          <button @click="cerrarModalCambiarContrasena" class="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[#f0f0f0] rounded-lg font-medium transition-colors">
+            Cancelar
+          </button>
+          <button @click="confirmarCambiarContrasena" class="flex-1 px-4 py-2.5 bg-[#00f5d4] hover:bg-[#00f5d4]/80 text-[#111111] rounded-lg font-medium transition-colors">
+            Cambiar Contraseña
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Cerrar Sesión -->
+    <div v-if="modalCerrarSesionAbierto" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click="cerrarModalCerrarSesion">
+      <div @click.stop class="bg-[#181818] rounded-xl p-6 max-w-md w-full mx-4 border border-white/10">
+        <div class="flex items-start gap-4">
+          <div class="flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10 shrink-0">
+            <span class="material-symbols-outlined text-red-500 text-2xl">logout</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-[#f0f0f0] mb-2">Cerrar Sesión</h3>
+            <p class="text-[#a0a0a0] text-sm mb-1">
+              ¿Estás seguro que deseas cerrar sesión?
+            </p>
+            <p class="text-[#a0a0a0] text-xs">Tendrás que volver a iniciar sesión para acceder.</p>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button @click="cerrarModalCerrarSesion" class="flex-1 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[#f0f0f0] rounded-lg font-medium transition-colors">
+            Cancelar
+          </button>
+          <button @click="confirmarCerrarSesion" class="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors">
+            Cerrar Sesión
+          </button>
         </div>
       </div>
     </div>
@@ -643,6 +1019,15 @@ const cargandoReservas = ref(false);
 const cargandoFavoritos = ref(false);
 const modalDetalleAbierto = ref(false);
 const reservaSeleccionada = ref(null);
+const modalEliminarFavoritoAbierto = ref(false);
+const favoritoAEliminar = ref(null);
+const modalAgregarPagoAbierto = ref(false);
+const modalEliminarPagoAbierto = ref(false);
+const pagoAEliminar = ref(null);
+const modalCambiarContrasenaAbierto = ref(false);
+const modalCerrarSesionAbierto = ref(false);
+const nuevoPago = ref({ tipo: 'Visa', numero: '', expiraMes: '', expiraAnio: '', cvv: '' });
+const contrasenas = ref({ actual: '', nueva: '', confirmar: '' });
 
 // Datos
 const reservas = ref([]);
@@ -651,88 +1036,17 @@ const busquedaReservas = ref('');
 const filtroEstadoReserva = ref('');
 
 // Mensajes
-const conversaciones = ref([
-  {
-    id: 1,
-    nombre: 'DJ Electra',
-    ultimo_mensaje: '¡Claro! Enviaré la lista de canciones...',
-    hora: '10:42 AM',
-    en_linea: true,
-    mensajes: [
-      { id: 1, texto: 'Hola Elena, gracias por contactarme. ¿Cómo puedo ayudarte con tu evento corporativo?', es_propio: false },
-      { id: 2, texto: '¡Hola! Estamos muy emocionados. ¿Podrías enviarme una lista de canciones sugeridas?', es_propio: true },
-      { id: 3, texto: '¡Claro! Enviaré la lista de canciones en un momento. ¿Alguna preferencia de género en particular?', es_propio: false }
-    ]
-  },
-  {
-    id: 2,
-    nombre: 'Magnifico the Great',
-    ultimo_mensaje: 'Gracias por la oportunidad, ¡será un...',
-    hora: 'Ayer',
-    en_linea: false,
-    mensajes: [
-      { id: 1, texto: 'Gracias por la oportunidad, ¡será un placer trabajar contigo!', es_propio: false }
-    ]
-  },
-  {
-    id: 3,
-    nombre: 'The Groove Makers',
-    ultimo_mensaje: 'Hemos recibido la solicitud. Estamos...',
-    hora: '2d',
-    en_linea: false,
-    mensajes: [
-      { id: 1, texto: 'Hemos recibido la solicitud. Estamos revisando los detalles.', es_propio: false }
-    ]
-  }
-]);
+const conversaciones = ref([]);
 const busquedaMensajes = ref('');
 const conversacionActual = ref(null);
 const nuevoMensaje = ref('');
 const mensajesContainer = ref(null);
+const cargandoConversaciones = ref(false);
+const cargandoMensajes = ref(false);
 
 // Notificaciones
-const notificaciones = ref([
-  {
-    id: 1,
-    icono: 'calendar_add_on',
-    titulo: 'Nueva Reserva Confirmada',
-    mensaje: 'Tu reserva con DJ Electra para el 15 de Noviembre ha sido confirmada.',
-    tiempo: 'hace 5 min',
-    leida: false
-  },
-  {
-    id: 2,
-    icono: 'mail',
-    titulo: 'Nuevo Mensaje de Magnifico the Great',
-    mensaje: '"¡Hola! Solo para confirmar los detalles para la fiesta del Sábado..."',
-    tiempo: 'hace 1 hora',
-    leida: false
-  },
-  {
-    id: 3,
-    icono: 'update',
-    titulo: 'Actualización de Estado',
-    mensaje: 'Tu reserva con Magnifico the Great ahora está pendiente de pago.',
-    tiempo: 'hace 3 horas',
-    leida: false
-  },
-  {
-    id: 4,
-    icono: 'local_offer',
-    titulo: 'Promoción Especial de Halloween',
-    mensaje: '¡15% de descuento en artistas de terror y misterio hasta el 31 de Oct!',
-    tiempo: 'ayer',
-    leida: true
-  },
-  {
-    id: 5,
-    icono: 'calendar_add_on',
-    titulo: 'Reserva Completada',
-    mensaje: 'Tu evento con The Groove Makers fue completado. ¡No olvides dejar una reseña!',
-    tiempo: 'hace 2 días',
-    leida: true
-  }
-]);
+const notificaciones = ref([]);
+const cargandoNotificaciones = ref(false);
 
 // Perfil
 const perfilUsuario = ref({
@@ -745,6 +1059,13 @@ const metodosPago = ref([
   { id: 1, tipo: 'Visa', ultimos4: '1234', expira: '12/2025' }
 ]);
 const notificacionesEmail = ref(true);
+
+// Historial de Pagos
+const pagosList = ref([]);
+const busquedaPagos = ref('');
+const filtroEstadoPago = ref('');
+const filtroPeriodoPago = ref('');
+const pagoSeleccionado = ref(null);
 
 // Computadas
 const nombreUsuario = computed(() => {
@@ -796,6 +1117,49 @@ const conversacionesFiltradas = computed(() => {
   );
 });
 
+const pagosFiltrados = computed(() => {
+  let resultado = [...pagosList.value];
+
+  // Filtro por búsqueda
+  if (busquedaPagos.value) {
+    const termino = busquedaPagos.value.toLowerCase();
+    resultado = resultado.filter(pago =>
+      pago.artista.toLowerCase().includes(termino) ||
+      pago.servicio.toLowerCase().includes(termino) ||
+      pago.id_transaccion.toLowerCase().includes(termino)
+    );
+  }
+
+  // Filtro por estado
+  if (filtroEstadoPago.value) {
+    resultado = resultado.filter(pago => pago.estado === filtroEstadoPago.value);
+  }
+
+  // Filtro por periodo
+  if (filtroPeriodoPago.value) {
+    const dias = parseInt(filtroPeriodoPago.value);
+    const fechaLimite = new Date();
+    fechaLimite.setDate(fechaLimite.getDate() - dias);
+    
+    resultado = resultado.filter(pago => {
+      const fechaPago = new Date(pago.fecha);
+      return fechaPago >= fechaLimite;
+    });
+  }
+
+  return resultado;
+});
+
+const totalGastado = computed(() => {
+  return pagosFiltrados.value.reduce((total, pago) => total + pago.monto, 0);
+});
+
+const ultimoPago = computed(() => {
+  if (pagosList.value.length === 0) return 'N/A';
+  const ultimo = pagosList.value[0];
+  return formatearFechaPago(ultimo.fecha);
+});
+
 // Métodos
 const cargarReservas = async () => {
   try {
@@ -844,6 +1208,23 @@ const formatearFecha = (fecha) => {
   });
 };
 
+const formatearFechaHora = (fecha) => {
+  const date = new Date(fecha);
+  const ahora = new Date();
+  const diff = ahora - date;
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  
+  if (dias === 0) {
+    return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  } else if (dias === 1) {
+    return 'Ayer';
+  } else if (dias < 7) {
+    return `${dias}d`;
+  } else {
+    return date.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+  }
+};
+
 const formatearMonto = (monto, moneda = 'USD') => {
   return new Intl.NumberFormat('es-ES', {
     style: 'currency',
@@ -861,24 +1242,32 @@ const cerrarModalDetalle = () => {
   reservaSeleccionada.value = null;
 };
 
-const eliminarFavorito = async (idArtista) => {
-  if (!confirm('¿Estás seguro de eliminar este artista de favoritos?')) {
-    return;
-  }
+const abrirModalEliminarFavorito = (favorito) => {
+  favoritoAEliminar.value = favorito;
+  modalEliminarFavoritoAbierto.value = true;
+};
+
+const cerrarModalEliminarFavorito = () => {
+  modalEliminarFavoritoAbierto.value = false;
+  favoritoAEliminar.value = null;
+};
+
+const confirmarEliminarFavorito = async () => {
+  if (!favoritoAEliminar.value) return;
 
   try {
-    const response = await axios.delete(`http://localhost:3000/api/favoritos/artista/${idArtista}`, {
+    const response = await axios.delete(`http://localhost:3000/api/favoritos/artista/${favoritoAEliminar.value.id_perfil_artista}`, {
       headers: {
         'Authorization': `Bearer ${authStore.token}`
       }
     });
 
     if (response.data.exito) {
-      favoritos.value = favoritos.value.filter(f => f.id_perfil_artista !== idArtista);
+      favoritos.value = favoritos.value.filter(f => f.id_perfil_artista !== favoritoAEliminar.value.id_perfil_artista);
+      cerrarModalEliminarFavorito();
     }
   } catch (error) {
     console.error('Error al eliminar favorito:', error);
-    alert('Error al eliminar favorito');
   }
 };
 
@@ -887,9 +1276,53 @@ const verPerfilArtista = (idArtista) => {
 };
 
 // Mensajes
-const seleccionarConversacion = (conversacion) => {
+const cargarConversaciones = async () => {
+  try {
+    cargandoConversaciones.value = true;
+    const token = localStorage.getItem('token');
+    const respuesta = await axios.get('http://localhost:3000/api/mensajes', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    
+    conversaciones.value = respuesta.data.map(conv => ({
+      ...conv,
+      nombre: conv.otro_usuario_nombre || conv.otro_usuario_email,
+      mensajes: []
+    }));
+  } catch (error) {
+    console.error('Error al cargar conversaciones:', error);
+  } finally {
+    cargandoConversaciones.value = false;
+  }
+};
+
+const cargarMensajes = async (conversacionId) => {
+  try {
+    cargandoMensajes.value = true;
+    const token = localStorage.getItem('token');
+    const respuesta = await axios.get(`http://localhost:3000/api/mensajes/${conversacionId}/mensajes`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    
+    return respuesta.data.map(msg => ({
+      id: msg.id,
+      texto: msg.contenido_mensaje,
+      es_propio: msg.emisor_id === authStore.usuario.id,
+      hora: new Date(msg.fecha_envio).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+    }));
+  } catch (error) {
+    console.error('Error al cargar mensajes:', error);
+    return [];
+  } finally {
+    cargandoMensajes.value = false;
+  }
+};
+
+const seleccionarConversacion = async (conversacion) => {
   conversacionActual.value = conversacion;
-  // Simular scroll al final
+  conversacionActual.value.mensajes = await cargarMensajes(conversacion.id);
+  
+  // Scroll al final
   setTimeout(() => {
     if (mensajesContainer.value) {
       mensajesContainer.value.scrollTop = mensajesContainer.value.scrollHeight;
@@ -897,84 +1330,495 @@ const seleccionarConversacion = (conversacion) => {
   }, 100);
 };
 
-const enviarMensaje = () => {
+const enviarMensaje = async () => {
   if (!nuevoMensaje.value.trim() || !conversacionActual.value) return;
   
-  conversacionActual.value.mensajes.push({
-    id: Date.now(),
-    texto: nuevoMensaje.value,
-    es_propio: true
-  });
+  try {
+    const token = localStorage.getItem('token');
+    const respuesta = await axios.post(
+      `http://localhost:3000/api/mensajes/${conversacionActual.value.id}/mensajes`,
+      { contenido: nuevoMensaje.value },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    conversacionActual.value.mensajes.push({
+      id: respuesta.data.id,
+      texto: respuesta.data.contenido_mensaje,
+      es_propio: true,
+      hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+    });
+    
+    nuevoMensaje.value = '';
+    
+    // Scroll al final
+    setTimeout(() => {
+      if (mensajesContainer.value) {
+        mensajesContainer.value.scrollTop = mensajesContainer.value.scrollHeight;
+      }
+    }, 100);
+  } catch (error) {
+    console.error('Error al enviar mensaje:', error);
+  }
+};
+
+const contactarArtista = async (reserva) => {
+  cerrarModalDetalle();
+  seccionActual.value = 'mensajes';
   
-  nuevoMensaje.value = '';
-  
-  // Simular scroll al final
-  setTimeout(() => {
-    if (mensajesContainer.value) {
-      mensajesContainer.value.scrollTop = mensajesContainer.value.scrollHeight;
+  try {
+    const token = localStorage.getItem('token');
+    // Obtener o crear conversación con el artista
+    const respuesta = await axios.post(
+      'http://localhost:3000/api/mensajes/conversacion',
+      { otroUsuarioId: reserva.artista_id },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    // Recargar conversaciones y seleccionar la nueva
+    await cargarConversaciones();
+    const conversacion = conversaciones.value.find(c => c.id === respuesta.data.id);
+    if (conversacion) {
+      await seleccionarConversacion(conversacion);
     }
-  }, 100);
+  } catch (error) {
+    console.error('Error al contactar artista:', error);
+  }
 };
 
 // Notificaciones
+const cargarNotificaciones = async () => {
+  try {
+    cargandoNotificaciones.value = true;
+    const notifs = [];
+    
+    // Notificaciones de contratos recientes (últimos 7 días)
+    const contratosRecientes = reservas.value.filter(r => {
+      const fecha = new Date(r.created_at || r.fecha_evento);
+      const diasDesde = Math.floor((new Date() - fecha) / (1000 * 60 * 60 * 24));
+      return diasDesde <= 7;
+    });
+    
+    contratosRecientes.forEach(contrato => {
+      const fechaCreacion = new Date(contrato.created_at || contrato.fecha_evento);
+      const tiempoAtras = calcularTiempoAtras(fechaCreacion);
+      
+      if (contrato.estado === 'confirmado') {
+        notifs.push({
+          id: `contrato-${contrato.id}`,
+          icono: 'calendar_add_on',
+          titulo: 'Nueva Reserva Confirmada',
+          mensaje: `Tu reserva con ${contrato.nombre_artistico || contrato.artista_email} para el ${formatearFecha(contrato.fecha_evento)} ha sido confirmada.`,
+          tiempo: tiempoAtras,
+          leida: false,
+          fecha: fechaCreacion
+        });
+      } else if (contrato.estado === 'pendiente') {
+        notifs.push({
+          id: `contrato-pendiente-${contrato.id}`,
+          icono: 'update',
+          titulo: 'Actualización de Estado',
+          mensaje: `Tu reserva con ${contrato.nombre_artistico || contrato.artista_email} está pendiente de confirmación.`,
+          tiempo: tiempoAtras,
+          leida: false,
+          fecha: fechaCreacion
+        });
+      } else if (contrato.estado === 'completado') {
+        notifs.push({
+          id: `contrato-completado-${contrato.id}`,
+          icono: 'check_circle',
+          titulo: 'Reserva Completada',
+          mensaje: `Tu evento con ${contrato.nombre_artistico || contrato.artista_email} fue completado. ¡No olvides dejar una reseña!`,
+          tiempo: tiempoAtras,
+          leida: true,
+          fecha: fechaCreacion
+        });
+      }
+    });
+    
+    // Notificaciones de mensajes no leídos
+    const mensajesNoLeidos = conversaciones.value.filter(c => c.mensajes_no_leidos > 0);
+    mensajesNoLeidos.forEach(conv => {
+      notifs.push({
+        id: `mensaje-${conv.id}`,
+        icono: 'mail',
+        titulo: `Nuevo Mensaje de ${conv.nombre}`,
+        mensaje: conv.ultimo_mensaje ? `"${conv.ultimo_mensaje.substring(0, 80)}..."` : 'Tienes un mensaje nuevo',
+        tiempo: conv.fecha_ultimo_mensaje ? calcularTiempoAtras(new Date(conv.fecha_ultimo_mensaje)) : 'reciente',
+        leida: false,
+        fecha: new Date(conv.fecha_ultimo_mensaje || Date.now())
+      });
+    });
+    
+    // Ordenar por fecha más reciente
+    notificaciones.value = notifs.sort((a, b) => b.fecha - a.fecha);
+  } catch (error) {
+    console.error('Error al cargar notificaciones:', error);
+  } finally {
+    cargandoNotificaciones.value = false;
+  }
+};
+
+const calcularTiempoAtras = (fecha) => {
+  const ahora = new Date();
+  const diff = ahora - fecha;
+  const minutos = Math.floor(diff / (1000 * 60));
+  const horas = Math.floor(diff / (1000 * 60 * 60));
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  
+  if (minutos < 60) return `hace ${minutos} min`;
+  if (horas < 24) return `hace ${horas} hora${horas > 1 ? 's' : ''}`;
+  if (dias === 1) return 'ayer';
+  return `hace ${dias} días`;
+};
+
+const manejarClickNotificacion = async (notif) => {
+  // Marcar como leída
+  notif.leida = true;
+  
+  // Navegar según el tipo de notificación
+  if (notif.id.startsWith('contrato-')) {
+    // Ir a reservas y abrir el modal del contrato
+    seccionActual.value = 'reservas';
+    const contratoId = parseInt(notif.id.split('-')[1]) || parseInt(notif.id.split('-')[2]);
+    const contrato = reservas.value.find(r => r.id === contratoId);
+    if (contrato) {
+      verDetalleReserva(contrato);
+    }
+  } else if (notif.id.startsWith('mensaje-')) {
+    // Ir a mensajes y abrir la conversación
+    seccionActual.value = 'mensajes';
+    const conversacionId = parseInt(notif.id.split('-')[1]);
+    const conversacion = conversaciones.value.find(c => c.id === conversacionId);
+    if (conversacion) {
+      await seleccionarConversacion(conversacion);
+    }
+  }
+};
+
 const marcarTodasLeidas = () => {
-  notificaciones.value.forEach(n => n.leida = true);
+  notificaciones.value = notificaciones.value.map(n => ({ ...n, leida: true }));
 };
 
 const filtrarNotificaciones = () => {
-  alert('Filtrar notificaciones (por implementar)');
+  // Alternar entre mostrar todas o solo no leídas
+  const hayNoLeidas = notificaciones.value.some(n => !n.leida);
+  if (hayNoLeidas) {
+    notificaciones.value = notificaciones.value.filter(n => !n.leida);
+  } else {
+    cargarNotificaciones();
+  }
 };
 
 // Perfil
-const cargarPerfil = () => {
-  perfilUsuario.value = {
-    nombre: authStore.usuario?.nombre || '',
-    email: authStore.usuario?.email || '',
-    telefono: authStore.usuario?.telefono || '',
-    ubicacion: authStore.usuario?.ciudad || ''
-  };
-};
-
-const guardarPerfil = () => {
-  alert('Perfil guardado correctamente');
-  // TODO: Implementar guardado en backend
-};
-
-const agregarMetodoPago = () => {
-  alert('Agregar método de pago (por implementar)');
-};
-
-const eliminarMetodoPago = (id) => {
-  if (confirm('¿Eliminar este método de pago?')) {
-    metodosPago.value = metodosPago.value.filter(m => m.id !== id);
+const cargarPerfil = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/usuarios/perfil', {
+      headers: {
+        'Authorization': `Bearer ${authStore.token}`
+      }
+    });
+    
+    if (response.data.exito) {
+      const usuario = response.data.datos;
+      perfilUsuario.value = {
+        nombre: usuario.nombre || authStore.usuario?.nombre || '',
+        email: usuario.email || authStore.usuario?.email || '',
+        telefono: usuario.telefono || authStore.usuario?.telefono || '',
+        ubicacion: usuario.ciudad || authStore.usuario?.ciudad || ''
+      };
+      
+      // Actualizar authStore con los datos más recientes
+      if (usuario) {
+        authStore.usuario = { ...authStore.usuario, ...usuario };
+      }
+    }
+  } catch (error) {
+    console.error('Error al cargar perfil:', error);
+    // Fallback a datos del authStore
+    perfilUsuario.value = {
+      nombre: authStore.usuario?.nombre || '',
+      email: authStore.usuario?.email || '',
+      telefono: authStore.usuario?.telefono || '',
+      ubicacion: authStore.usuario?.ciudad || ''
+    };
   }
 };
 
-const cambiarContrasena = () => {
-  alert('Cambiar contraseña (por implementar)');
+const guardarPerfil = async () => {
+  try {
+    const datosActualizar = {
+      nombre: perfilUsuario.value.nombre,
+      telefono: perfilUsuario.value.telefono,
+      ciudad: perfilUsuario.value.ubicacion
+    };
+    
+    const response = await axios.put(
+      'http://localhost:3000/api/usuarios/perfil',
+      datosActualizar,
+      {
+        headers: {
+          'Authorization': `Bearer ${authStore.token}`
+        }
+      }
+    );
+    
+    if (response.data.exito) {
+      alert('Perfil actualizado exitosamente');
+      // Actualizar authStore
+      authStore.usuario = { ...authStore.usuario, ...response.data.datos };
+      await cargarPerfil();
+    }
+  } catch (error) {
+    console.error('Error al guardar perfil:', error);
+    alert('Error al guardar el perfil: ' + (error.response?.data?.mensaje || error.message));
+  }
+};
+
+const abrirModalAgregarPago = () => {
+  nuevoPago.value = { tipo: 'Visa', numero: '', expiraMes: '', expiraAnio: '', cvv: '' };
+  modalAgregarPagoAbierto.value = true;
+};
+
+const cerrarModalAgregarPago = () => {
+  modalAgregarPagoAbierto.value = false;
+};
+
+const formatearNumeroTarjeta = (e) => {
+  let valor = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+  let formateado = valor.match(/.{1,4}/g)?.join(' ') || valor;
+  nuevoPago.value.numero = formateado;
+};
+
+const validarMes = (e) => {
+  let valor = e.target.value.replace(/\D/g, '');
+  if (valor.length > 0) {
+    let num = parseInt(valor);
+    if (num > 12) valor = '12';
+    if (num < 1 && valor.length === 2) valor = '01';
+  }
+  nuevoPago.value.expiraMes = valor;
+};
+
+const validarAnio = (e) => {
+  let valor = e.target.value.replace(/\D/g, '');
+  nuevoPago.value.expiraAnio = valor;
+};
+
+const validarCVV = (e) => {
+  let valor = e.target.value.replace(/\D/g, '');
+  nuevoPago.value.cvv = valor;
+};
+
+const confirmarAgregarPago = () => {
+  // Limpiar espacios del número de tarjeta
+  const numeroLimpio = nuevoPago.value.numero.replace(/\s/g, '');
+  
+  if (!numeroLimpio || !nuevoPago.value.expiraMes || !nuevoPago.value.expiraAnio || !nuevoPago.value.cvv) {
+    alert('Por favor completa todos los campos');
+    return;
+  }
+  
+  if (numeroLimpio.length < 13 || numeroLimpio.length > 16) {
+    alert('Número de tarjeta inválido');
+    return;
+  }
+  
+  const mes = parseInt(nuevoPago.value.expiraMes);
+  if (mes < 1 || mes > 12) {
+    alert('Mes inválido (01-12)');
+    return;
+  }
+  
+  const anio = parseInt(nuevoPago.value.expiraAnio);
+  if (anio < 2025 || anio > 2040) {
+    alert('Año inválido');
+    return;
+  }
+  
+  if (nuevoPago.value.cvv.length !== 3) {
+    alert('CVV debe tener 3 dígitos');
+    return;
+  }
+  
+  const nuevoMetodo = {
+    id: Date.now(),
+    tipo: nuevoPago.value.tipo,
+    ultimos4: numeroLimpio.slice(-4),
+    expira: `${nuevoPago.value.expiraMes.padStart(2, '0')}/${nuevoPago.value.expiraAnio}`
+  };
+  
+  metodosPago.value.push(nuevoMetodo);
+  cerrarModalAgregarPago();
+};
+
+const abrirModalEliminarPago = (tarjeta) => {
+  pagoAEliminar.value = tarjeta;
+  modalEliminarPagoAbierto.value = true;
+};
+
+const cerrarModalEliminarPago = () => {
+  modalEliminarPagoAbierto.value = false;
+  pagoAEliminar.value = null;
+};
+
+const confirmarEliminarPago = () => {
+  if (pagoAEliminar.value) {
+    metodosPago.value = metodosPago.value.filter(m => m.id !== pagoAEliminar.value.id);
+    cerrarModalEliminarPago();
+  }
+};
+
+const abrirModalCambiarContrasena = () => {
+  contrasenas.value = { actual: '', nueva: '', confirmar: '' };
+  modalCambiarContrasenaAbierto.value = true;
+};
+
+const cerrarModalCambiarContrasena = () => {
+  modalCambiarContrasenaAbierto.value = false;
+};
+
+const confirmarCambiarContrasena = async () => {
+  if (!contrasenas.value.actual || !contrasenas.value.nueva || !contrasenas.value.confirmar) {
+    alert('Por favor completa todos los campos');
+    return;
+  }
+  
+  if (contrasenas.value.nueva !== contrasenas.value.confirmar) {
+    alert('Las contraseñas no coinciden');
+    return;
+  }
+  
+  if (contrasenas.value.nueva.length < 6) {
+    alert('La contraseña debe tener al menos 6 caracteres');
+    return;
+  }
+  
+  try {
+    const response = await axios.put(
+      'http://localhost:3000/api/usuarios/cambiar-contrasena',
+      {
+        contrasena_actual: contrasenas.value.actual,
+        contrasena_nueva: contrasenas.value.nueva
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${authStore.token}`
+        }
+      }
+    );
+    
+    if (response.data.exito) {
+      alert('Contraseña cambiada exitosamente');
+      cerrarModalCambiarContrasena();
+    }
+  } catch (error) {
+    console.error('Error al cambiar contraseña:', error);
+    alert('Error: ' + (error.response?.data?.mensaje || 'No se pudo cambiar la contraseña'));
+  }
 };
 
 const irAHistorialPagos = () => {
-  router.push('/historial-pagos');
+  seccionActual.value = 'pagos';
 };
 
-const cerrarSesion = () => {
-  if (confirm('¿Estás seguro de cerrar sesión?')) {
-    authStore.cerrarSesion();
-    router.push('/login');
+// Pagos
+const cargarPagos = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/pagos/historial', {
+      headers: {
+        Authorization: `Bearer ${authStore.token}`
+      }
+    });
+    
+    pagosList.value = response.data.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  } catch (error) {
+    console.error('Error al cargar pagos:', error);
+    // Datos de prueba como fallback
+    pagosList.value = [
+      {
+        id: 1,
+        id_transaccion: 'TXN-2024-001523',
+        fecha: '2024-01-19',
+        artista: 'Urban Flow Dancers',
+        servicio: 'Coreografía personalizada',
+        monto: 2000,
+        estado: 'Pendiente'
+      },
+      {
+        id: 2,
+        id_transaccion: 'TXN-2024-001234',
+        fecha: '2024-01-14',
+        artista: 'DJ Electra',
+        servicio: 'Presentación en vivo - 3 horas',
+        monto: 2500,
+        estado: 'Completado'
+      },
+      {
+        id: 3,
+        id_transaccion: 'TXN-2024-001189',
+        fecha: '2024-01-09',
+        artista: 'Magnifico the Great',
+        servicio: 'Show de magia corporativo',
+        monto: 1800,
+        estado: 'Completado'
+      },
+      {
+        id: 4,
+        id_transaccion: 'TXN-2024-001156',
+        fecha: '2024-01-04',
+        artista: 'The Groove Makers',
+        servicio: 'Banda en vivo - Boda',
+        monto: 3500,
+        estado: 'Completado'
+      },
+      {
+        id: 5,
+        id_transaccion: 'TXN-2024-001098',
+        fecha: '2023-12-20',
+        artista: 'Luna Acoustic',
+        servicio: 'Música acústica - Evento privado',
+        monto: 1200,
+        estado: 'Reembolsado'
+      }
+    ].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
   }
+};
+
+const formatearFechaPago = (fecha) => {
+  return new Date(fecha).toLocaleDateString('es-ES', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+};
+
+const verDetallePago = (pago) => {
+  pagoSeleccionado.value = pago;
+  // Aquí podrías abrir un modal con los detalles del pago
+  alert(`Detalles del pago:\nID: ${pago.id_transaccion}\nArtista: ${pago.artista}\nMonto: ${formatearMonto(pago.monto)}\nEstado: ${pago.estado}`);
+};
+
+const abrirModalCerrarSesion = () => {
+  modalCerrarSesionAbierto.value = true;
+};
+
+const cerrarModalCerrarSesion = () => {
+  modalCerrarSesionAbierto.value = false;
+};
+
+const confirmarCerrarSesion = () => {
+  authStore.cerrarSesion();
+  router.push('/login');
 };
 
 // Lifecycle
-onMounted(() => {
-  cargarReservas();
-  cargarFavoritos();
-  cargarPerfil();
-  
-  // Seleccionar primera conversación por defecto
-  if (conversaciones.value.length > 0) {
-    conversacionActual.value = conversaciones.value[0];
-  }
+onMounted(async () => {
+  await cargarReservas();
+  await cargarFavoritos();
+  await cargarPerfil();
+  await cargarConversaciones();
+  await cargarNotificaciones();
+  await cargarPagos();
 });
 </script>
 

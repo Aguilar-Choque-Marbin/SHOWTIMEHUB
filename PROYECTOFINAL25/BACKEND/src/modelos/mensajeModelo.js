@@ -2,69 +2,66 @@
 const pool = require('../configuracion/baseDatos');
 
 // Obtener conversaciones del usuario
-const obtenerConversacionesUsuario = async (usuario_id) => {
+const obtenerConversacionesUsuario = async (usuarioId) => {
   const consulta = `
     SELECT 
       c.*,
       CASE 
-        WHEN c.usuario_uno_id = $1 THEN u2.nombre
-        ELSE u1.nombre
-      END as otro_usuario_nombre,
-      CASE 
-        WHEN c.usuario_uno_id = $1 THEN u2.apellido
-        ELSE u1.apellido
-      END as otro_usuario_apellido,
-      CASE 
-        WHEN c.usuario_uno_id = $1 THEN u2.id_usuario
-        ELSE u1.id_usuario
+        WHEN c.usuario_uno_id = $1 THEN u2.id
+        ELSE u1.id
       END as otro_usuario_id,
       CASE 
-        WHEN c.usuario_uno_id = $1 THEN pa2.foto_perfil
-        ELSE pa1.foto_perfil
-      END as otro_usuario_foto,
+        WHEN c.usuario_uno_id = $1 THEN u2.email
+        ELSE u1.email
+      END as otro_usuario_email,
+      CASE 
+        WHEN c.usuario_uno_id = $1 THEN COALESCE(pa2.nombre_artistico, CONCAT(pa2.nombre, ' ', pa2.apellido))
+        ELSE COALESCE(pa1.nombre_artistico, CONCAT(pa1.nombre, ' ', pa1.apellido))
+      END as otro_usuario_nombre,
       m.contenido_mensaje as ultimo_mensaje,
       m.fecha_envio as fecha_ultimo_mensaje,
-      COUNT(CASE WHEN m2.leido = false AND m2.receptor_id = $1 THEN 1 END) as mensajes_no_leidos
+      m.leido as ultimo_leido,
+      m.emisor_id as ultimo_emisor_id,
+      (SELECT COUNT(*) FROM mensajes WHERE conversacion_id = c.id AND receptor_id = $1 AND leido = false) as mensajes_no_leidos
     FROM conversaciones c
-    INNER JOIN usuarios u1 ON c.usuario_uno_id = u1.id_usuario
-    INNER JOIN usuarios u2 ON c.usuario_dos_id = u2.id_usuario
-    LEFT JOIN perfiles_artistas pa1 ON u1.id_usuario = pa1.id_usuario
-    LEFT JOIN perfiles_artistas pa2 ON u2.id_usuario = pa2.id_usuario
+    INNER JOIN usuarios u1 ON c.usuario_uno_id = u1.id
+    INNER JOIN usuarios u2 ON c.usuario_dos_id = u2.id
+    LEFT JOIN perfiles_artistas pa1 ON u1.id = pa1.usuario_id
+    LEFT JOIN perfiles_artistas pa2 ON u2.id = pa2.usuario_id
     LEFT JOIN mensajes m ON c.ultimo_mensaje_id = m.id
-    LEFT JOIN mensajes m2 ON c.id = m2.conversacion_id
     WHERE c.usuario_uno_id = $1 OR c.usuario_dos_id = $1
-    GROUP BY c.id, u1.nombre, u1.apellido, u2.nombre, u2.apellido, 
-             u1.id_usuario, u2.id_usuario, pa1.foto_perfil, pa2.foto_perfil,
-             m.contenido_mensaje, m.fecha_envio
-    ORDER BY m.fecha_envio DESC NULLS LAST
+    ORDER BY COALESCE(m.fecha_envio, c.fecha_creacion) DESC
   `;
   
-  const resultado = await pool.query(consulta, [usuario_id]);
+  const resultado = await pool.query(consulta, [usuarioId]);
   return resultado.rows;
 };
 
-// Buscar conversación existente entre dos usuarios
-const buscarConversacion = async (usuario1_id, usuario2_id) => {
-  const consulta = `
-    SELECT * FROM conversaciones
-    WHERE (usuario_uno_id = $1 AND usuario_dos_id = $2)
-       OR (usuario_uno_id = $2 AND usuario_dos_id = $1)
-    LIMIT 1
-  `;
-  
-  const resultado = await pool.query(consulta, [usuario1_id, usuario2_id]);
-  return resultado.rows[0];
-};
+// Buscar o crear conversación entre dos usuarios
+const obtenerOCrearConversacion = async (usuario1Id, usuario2Id) => {
+  // Asegurar que usuario_uno_id sea siempre el menor ID
+  const [menorId, mayorId] = usuario1Id < usuario2Id 
+    ? [usuario1Id, usuario2Id] 
+    : [usuario2Id, usuario1Id];
 
-// Crear nueva conversación
-const crearConversacion = async (usuario1_id, usuario2_id) => {
-  const consulta = `
-    INSERT INTO conversaciones (usuario_uno_id, usuario_dos_id, fecha_creacion)
-    VALUES ($1, $2, NOW())
+  // Buscar conversación existente
+  let consulta = `
+    SELECT * FROM conversaciones
+    WHERE usuario_uno_id = $1 AND usuario_dos_id = $2
+  `;
+  let resultado = await pool.query(consulta, [menorId, mayorId]);
+
+  if (resultado.rows.length > 0) {
+    return resultado.rows[0];
+  }
+
+  // Crear nueva conversación
+  consulta = `
+    INSERT INTO conversaciones (usuario_uno_id, usuario_dos_id)
+    VALUES ($1, $2)
     RETURNING *
   `;
-  
-  const resultado = await pool.query(consulta, [usuario1_id, usuario2_id]);
+  resultado = await pool.query(consulta, [menorId, mayorId]);
   return resultado.rows[0];
 };
 
@@ -76,93 +73,113 @@ const obtenerConversacionPorId = async (id) => {
 };
 
 // Obtener mensajes de una conversación
-const obtenerMensajes = async (conversacion_id) => {
+const obtenerMensajes = async (conversacionId, usuarioId) => {
   const consulta = `
     SELECT 
       m.*,
-      u_emisor.nombre as emisor_nombre,
-      u_emisor.apellido as emisor_apellido,
-      pa_emisor.foto_perfil as emisor_foto,
-      u_receptor.nombre as receptor_nombre,
-      u_receptor.apellido as receptor_apellido
+      u.email as emisor_email
     FROM mensajes m
-    INNER JOIN usuarios u_emisor ON m.emisor_id = u_emisor.id_usuario
-    INNER JOIN usuarios u_receptor ON m.receptor_id = u_receptor.id_usuario
-    LEFT JOIN perfiles_artistas pa_emisor ON u_emisor.id_usuario = pa_emisor.id_usuario
+    INNER JOIN usuarios u ON m.emisor_id = u.id
     WHERE m.conversacion_id = $1
     ORDER BY m.fecha_envio ASC
   `;
   
-  const resultado = await pool.query(consulta, [conversacion_id]);
+  const resultado = await pool.query(consulta, [conversacionId]);
+  
+  // Marcar mensajes como leídos
+  if (usuarioId) {
+    await pool.query(`
+      UPDATE mensajes 
+      SET leido = true, fecha_lectura = CURRENT_TIMESTAMP
+      WHERE conversacion_id = $1 AND receptor_id = $2 AND leido = false
+    `, [conversacionId, usuarioId]);
+  }
+  
   return resultado.rows;
 };
 
 // Crear mensaje
 const crearMensaje = async (datos) => {
-  const consulta = `
-    INSERT INTO mensajes (
-      conversacion_id, emisor_id, receptor_id, contenido_mensaje,
-      leido, fecha_envio, url_adjunto, tipo_adjunto
-    ) VALUES ($1, $2, $3, $4, $5, NOW(), $6, $7)
-    RETURNING *
-  `;
+  const client = await pool.connect();
   
-  const valores = [
-    datos.conversacion_id,
-    datos.emisor_id,
-    datos.receptor_id,
-    datos.contenido_mensaje,
-    datos.leido || false,
-    datos.url_adjunto,
-    datos.tipo_adjunto
-  ];
-  
-  const resultado = await pool.query(consulta, valores);
-  return resultado.rows[0];
+  try {
+    await client.query('BEGIN');
+    
+    // Insertar mensaje
+    const consultaMensaje = `
+      INSERT INTO mensajes (conversacion_id, emisor_id, receptor_id, contenido_mensaje, url_adjunto, tipo_adjunto)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *
+    `;
+    const resultadoMensaje = await client.query(consultaMensaje, [
+      datos.conversacion_id,
+      datos.emisor_id,
+      datos.receptor_id,
+      datos.contenido_mensaje,
+      datos.url_adjunto || null,
+      datos.tipo_adjunto || null
+    ]);
+    
+    const mensaje = resultadoMensaje.rows[0];
+    
+    // Actualizar último mensaje de la conversación
+    await client.query(`
+      UPDATE conversaciones 
+      SET ultimo_mensaje_id = $1, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $2
+    `, [mensaje.id, datos.conversacion_id]);
+    
+    await client.query('COMMIT');
+    return mensaje;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 // Actualizar último mensaje de conversación
-const actualizarUltimoMensaje = async (conversacion_id, mensaje_id) => {
+const actualizarUltimoMensaje = async (conversacionId, mensajeId) => {
   const consulta = `
     UPDATE conversaciones
-    SET ultimo_mensaje_id = $1, updated_at = NOW()
+    SET ultimo_mensaje_id = $1, updated_at = CURRENT_TIMESTAMP
     WHERE id = $2
     RETURNING *
   `;
   
-  const resultado = await pool.query(consulta, [mensaje_id, conversacion_id]);
+  const resultado = await pool.query(consulta, [mensajeId, conversacionId]);
   return resultado.rows[0];
 };
 
 // Marcar mensaje como leído
-const marcarComoLeido = async (mensaje_id) => {
+const marcarComoLeido = async (mensajeId) => {
   const consulta = `
     UPDATE mensajes
-    SET leido = true, fecha_lectura = NOW()
+    SET leido = true, fecha_lectura = CURRENT_TIMESTAMP
     WHERE id = $1
     RETURNING *
   `;
   
-  const resultado = await pool.query(consulta, [mensaje_id]);
+  const resultado = await pool.query(consulta, [mensajeId]);
   return resultado.rows[0];
 };
 
 // Contar mensajes no leídos
-const contarNoLeidos = async (usuario_id) => {
+const contarNoLeidos = async (usuarioId) => {
   const consulta = `
     SELECT COUNT(*) as total
     FROM mensajes
     WHERE receptor_id = $1 AND leido = false
   `;
   
-  const resultado = await pool.query(consulta, [usuario_id]);
+  const resultado = await pool.query(consulta, [usuarioId]);
   return parseInt(resultado.rows[0].total);
 };
 
 module.exports = {
   obtenerConversacionesUsuario,
-  buscarConversacion,
-  crearConversacion,
+  obtenerOCrearConversacion,
   obtenerConversacionPorId,
   obtenerMensajes,
   crearMensaje,

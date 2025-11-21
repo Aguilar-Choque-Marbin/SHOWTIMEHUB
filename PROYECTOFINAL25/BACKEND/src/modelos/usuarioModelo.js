@@ -12,10 +12,15 @@ const buscarPorEmail = async (email) => {
 const buscarPorId = async (id) => {
   const consulta = `
     SELECT 
-      id, nombre, apellido, email, tipo_usuario, 
-      telefono, fecha_registro, esta_activo as activo
-    FROM usuarios 
-    WHERE id = $1
+      u.id, u.email, u.tipo_usuario, u.telefono, 
+      u.fecha_registro, u.esta_activo as activo, u.password_hash,
+      COALESCE(pa.nombre, po.nombre) as nombre,
+      COALESCE(pa.apellido, po.apellido) as apellido,
+      COALESCE(pa.ciudad, po.ciudad) as ciudad
+    FROM usuarios u
+    LEFT JOIN perfiles_artistas pa ON u.id = pa.usuario_id
+    LEFT JOIN perfiles_organizadores po ON u.id = po.usuario_id
+    WHERE u.id = $1
   `;
   const resultado = await pool.query(consulta, [id]);
   return resultado.rows[0];

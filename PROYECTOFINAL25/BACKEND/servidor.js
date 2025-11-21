@@ -17,6 +17,8 @@ const rutasContratos = require('./src/rutas/contratos');
 const rutasPagos = require('./src/rutas/pagos');
 const rutasAdmin = require('./src/rutas/admin');
 const rutasMensajes = require('./src/rutas/mensajes');
+const rutasServicios = require('./src/rutas/servicios');
+const rutasDisponibilidad = require('./src/rutas/disponibilidad');
 
 const aplicacion = express();
 const puerto = process.env.PUERTO || 3000;
@@ -97,6 +99,8 @@ aplicacion.use('/api/contratos', rutasContratos);
 aplicacion.use('/api/pagos', rutasPagos);
 aplicacion.use('/api/admin', rutasAdmin);
 aplicacion.use('/api/mensajes', rutasMensajes);
+aplicacion.use('/api/servicios', rutasServicios);
+aplicacion.use('/api/disponibilidad', rutasDisponibilidad);
 
 // ============================================
 // MANEJO DE ERRORES
